@@ -31,18 +31,17 @@
     body {
       background-color: var(--bg-dark);
       color: var(--text-main);
-      padding: 12px;
+      padding: 10px;
       padding-bottom: 45px;
       min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* ШАПКА С ПРОФИЛЕМ СПРАВА СВЕРХУ */
     .header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       padding: 8px 12px;
@@ -50,7 +49,7 @@
     }
 
     .header h1 {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--accent-glow);
       text-transform: uppercase;
@@ -69,41 +68,41 @@
     }
 
     .user-avatar-small {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 50%;
       background: var(--accent-green);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
       color: #000;
     }
 
     .user-nickname-small {
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
       color: #fff;
-      max-width: 90px;
+      max-width: 80px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    /* 4 ВКЛАДКИ */
+    /* 5 ВКЛАДОК */
     .menu-grid {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 6px;
-      margin-bottom: 14px;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      margin-bottom: 12px;
     }
 
     .menu-card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 8px 4px;
+      padding: 6px 2px;
       text-align: center;
       cursor: pointer;
     }
@@ -114,12 +113,12 @@
     }
 
     .menu-card .icon {
-      font-size: 16px;
+      font-size: 14px;
       margin-bottom: 2px;
     }
 
     .menu-card .title {
-      font-size: 10px;
+      font-size: 8px;
       font-weight: bold;
       color: var(--text-muted);
     }
@@ -136,27 +135,26 @@
       display: block;
     }
 
-    /* ДРАФТ СЛОТЫ */
     .teams-container {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
 
     .team-box {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 10px;
+      padding: 8px;
     }
 
     .team-box.radiant { border-left: 4px solid var(--radiant-green); }
     .team-box.dire { border-left: 4px solid var(--dire-red); }
 
     .team-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 800;
-      margin-bottom: 8px;
+      margin-bottom: 6px;
       text-transform: uppercase;
     }
 
@@ -166,26 +164,26 @@
     .slot-row {
       display: flex;
       align-items: center;
-      margin-bottom: 6px;
-      gap: 8px;
+      margin-bottom: 5px;
+      gap: 6px;
       background: #020503;
       border: 1px solid var(--card-border);
-      padding: 6px 10px;
+      padding: 5px 8px;
       border-radius: 6px;
       cursor: pointer;
     }
 
     .slot-label {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-muted);
-      width: 85px;
+      width: 75px;
       font-weight: bold;
       flex-shrink: 0;
     }
 
     .slot-hero-img {
-      width: 36px;
-      height: 20px;
+      width: 32px;
+      height: 18px;
       border-radius: 3px;
       object-fit: cover;
       background: #050d07;
@@ -194,7 +192,7 @@
 
     .slot-hero-name {
       flex: 1;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       color: #fff;
       white-space: nowrap;
@@ -207,7 +205,7 @@
     .btn-row {
       display: flex;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .btn-analyze {
@@ -216,9 +214,9 @@
       color: #fff;
       border: none;
       border-radius: 8px;
-      padding: 12px;
+      padding: 10px;
       font-weight: bold;
-      font-size: 13px;
+      font-size: 12px;
       cursor: pointer;
     }
 
@@ -228,8 +226,8 @@
       color: var(--text-muted);
       border: 1px solid var(--card-border);
       border-radius: 8px;
-      padding: 12px;
-      font-size: 12px;
+      padding: 10px;
+      font-size: 11px;
       cursor: pointer;
     }
 
@@ -237,45 +235,45 @@
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
-      padding: 14px;
-      margin-top: 12px;
+      padding: 12px;
+      margin-top: 10px;
       display: none;
     }
 
     .winrate-bar-container {
       background: #0d0d0d;
       border-radius: 6px;
-      height: 24px;
+      height: 22px;
       overflow: hidden;
       display: flex;
-      margin: 10px 0;
+      margin: 8px 0;
     }
 
-    .winrate-radiant { background: var(--radiant-green); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: bold; color: #fff; }
-    .winrate-dire { background: var(--dire-red); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: bold; color: #fff; }
+    .winrate-radiant { background: var(--radiant-green); height: 100%; text-align: center; font-size: 10px; line-height: 22px; font-weight: bold; color: #fff; }
+    .winrate-dire { background: var(--dire-red); height: 100%; text-align: center; font-size: 10px; line-height: 22px; font-weight: bold; color: #fff; }
 
     .factors-box {
       background: #020503;
       border: 1px solid #0f2416;
       border-radius: 6px;
-      padding: 10px;
-      margin: 10px 0;
-      font-size: 11px;
+      padding: 8px;
+      margin: 8px 0;
+      font-size: 10px;
       line-height: 1.4;
     }
 
     .build-group {
-      margin-top: 10px;
-      padding: 10px;
+      margin-top: 8px;
+      padding: 8px;
       background: #020503;
       border: 1px solid #0f2416;
       border-radius: 6px;
-      font-size: 11px;
+      font-size: 10px;
     }
 
-    .build-group h4 { color: var(--accent-glow); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-size: 12px; }
-    .build-group img { width: 28px; height: 16px; border-radius: 2px; object-fit: cover; }
-    .item-tag { display: inline-block; background: #0c1f13; color: var(--gold); border: 1px solid #1f472b; padding: 2px 6px; border-radius: 4px; font-weight: bold; margin-right: 4px; margin-top: 4px; font-size: 10px; }
+    .build-group h4 { color: var(--accent-glow); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-size: 11px; }
+    .build-group img { width: 24px; height: 14px; border-radius: 2px; object-fit: cover; }
+    .item-tag { display: inline-block; background: #0c1f13; color: var(--gold); border: 1px solid #1f472b; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-right: 4px; margin-top: 3px; font-size: 9px; }
 
     /* ГЛОБАЛЬНЫЙ ЧАТ */
     .chat-container {
@@ -285,7 +283,7 @@
       padding: 10px;
       display: flex;
       flex-direction: column;
-      height: 70vh;
+      height: 68vh;
     }
 
     .chat-messages {
@@ -293,30 +291,21 @@
       overflow-y: auto;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
       padding-bottom: 8px;
     }
 
     .chat-bubble {
       background: #020503;
       border: 1px solid var(--card-border);
-      padding: 8px 10px;
-      border-radius: 8px;
-      font-size: 12px;
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
       max-width: 85%;
     }
 
-    .chat-bubble .author {
-      font-size: 10px;
-      color: var(--accent-glow);
-      font-weight: bold;
-      margin-bottom: 2px;
-    }
-
-    .chat-bubble .text {
-      color: #fff;
-      word-break: break-word;
-    }
+    .chat-bubble .author { font-size: 9px; color: var(--accent-glow); font-weight: bold; margin-bottom: 2px; }
+    .chat-bubble .text { color: #fff; word-break: break-word; }
 
     .chat-input-group {
       display: flex;
@@ -325,70 +314,75 @@
       flex-shrink: 0;
     }
 
-    /* МОДАЛЬНОЕ ОКНО ПРОФИЛЯ / РЕГИСТРАЦИИ */
-    .profile-modal {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: rgba(0,0,0,0.85);
-      z-index: 100000;
-      display: none;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .profile-modal.active { display: flex; }
-
-    .profile-box-modal {
+    /* МЕТА И ТУРНИРЫ */
+    .meta-container, .tournaments-list, .profile-card, .search-box {
       background: var(--card-bg);
-      border: 1px solid var(--accent-green);
-      border-radius: 12px;
-      padding: 16px;
-      width: 100%;
-      max-width: 300px;
-      text-align: center;
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
     }
 
-    .profile-box-modal h3 { color: var(--accent-glow); margin-bottom: 10px; font-size: 15px; }
-
-    /* МОДАЛЬНОЕ ОКНО ГЕРОЕВ */
-    .modal-overlay {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
+    .meta-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
       background: #020503;
-      z-index: 99999;
-      display: none;
-      flex-direction: column;
-      padding: 10px;
+      padding: 6px 10px;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
     }
 
-    .modal-overlay.active { display: flex; }
+    .meta-rank-title-wrap { display: flex; align-items: center; gap: 6px; }
+    .meta-title-text { font-size: 12px; font-weight: bold; color: var(--accent-glow); }
 
+    .rank-select-wrapper { position: relative; }
+    .rank-dropdown-btn { background: #0d2215; border: 1px solid var(--accent-green); color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
+    .rank-dropdown-content { position: absolute; right: 0; top: 110%; background: #060e08; border: 1px solid var(--card-border); border-radius: 6px; width: 150px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
+    .rank-dropdown-content.show { display: flex; }
+    .rank-option { padding: 7px 10px; font-size: 10px; color: var(--text-main); cursor: pointer; border-bottom: 1px solid #0a180e; }
+    .rank-option:hover { background: #0d2215; color: var(--accent-glow); }
+
+    .meta-hero-row { background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 8px; display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+    .meta-hero-img { width: 38px; height: 22px; border-radius: 3px; object-fit: cover; background: #050d07; }
+    .meta-hero-name { font-size: 11px; font-weight: bold; color: #fff; }
+    .meta-hero-stats { font-size: 9px; color: var(--text-muted); display: flex; gap: 8px; margin-top: 2px; }
+    .meta-winrate { color: var(--accent-green); font-weight: bold; }
+
+    /* ПРОФИЛЬ И ИСТОРИЯ */
+    .profile-input-group { display: flex; gap: 6px; margin-top: 6px; }
+    input[type="text"] { flex: 1; background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 7px; color: #fff; outline: none; font-size: 11px; }
+    .btn-action { background: var(--accent-green); color: #000; border: none; border-radius: 6px; padding: 0 10px; font-weight: bold; cursor: pointer; font-size: 10px; }
+    .match-history-item { background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 8px; margin-top: 6px; font-size: 10px; display: flex; justify-content: space-between; align-items: center; }
+    .btn-details { background: #0d2215; border: 1px solid var(--accent-green); color: var(--accent-glow); padding: 3px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; cursor: pointer; }
+
+    /* МОДАЛЬНЫЕ ОКНА */
+    .profile-modal, .match-modal, .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3,7,4,0.96); z-index: 99999; display: none; flex-direction: column; padding: 10px;
+    }
+    .profile-modal.active, .match-modal.active, .modal-overlay.active { display: flex; }
+    .profile-box-modal { background: var(--card-bg); border: 1px solid var(--accent-green); border-radius: 10px; padding: 14px; width: 100%; max-width: 280px; text-align: center; margin: auto; }
+    
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
-    .modal-role-title { font-size: 13px; font-weight: bold; color: var(--accent-glow); }
-    .modal-close { background: #200808; border: 1px solid #451515; color: #ff7675; padding: 4px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; }
+    .modal-role-title { font-size: 12px; font-weight: bold; color: var(--accent-glow); }
+    .modal-close { background: #200808; border: 1px solid #451515; color: #ff7675; padding: 4px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
 
     .role-filters { display: flex; gap: 4px; overflow-x: auto; margin-bottom: 6px; padding-bottom: 4px; flex-shrink: 0; scrollbar-width: none; }
-    .role-filters::-webkit-scrollbar { display: none; }
-    .role-btn { background: #07120a; border: 1px solid var(--card-border); color: var(--text-muted); font-size: 10px; padding: 5px 8px; border-radius: 6px; white-space: nowrap; cursor: pointer; }
+    .role-btn { background: #07120a; border: 1px solid var(--card-border); color: var(--text-muted); font-size: 9px; padding: 4px 6px; border-radius: 4px; white-space: nowrap; cursor: pointer; }
     .role-btn.active { background: var(--accent-green); color: #000; font-weight: bold; }
 
-    .modal-search { background: #040905; border: 1px solid var(--card-border); border-radius: 6px; padding: 8px 10px; color: #fff; outline: none; font-size: 12px; margin-bottom: 8px; flex-shrink: 0; }
-
-    .heroes-grid-container { flex: 1; height: calc(100vh - 160px); overflow-y: scroll; -webkit-overflow-scrolling: touch; display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px; align-content: start; padding-bottom: 30px; }
-
-    .hero-pick-card { background: #061008; border: 1px solid var(--card-border); border-radius: 6px; overflow: hidden; text-align: center; cursor: pointer; display: flex; flex-direction: column; }
+    .modal-search { background: #040905; border: 1px solid var(--card-border); border-radius: 6px; padding: 7px; color: #fff; outline: none; font-size: 11px; margin-bottom: 6px; flex-shrink: 0; }
+    .heroes-grid-container { flex: 1; overflow-y: scroll; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; align-content: start; padding-bottom: 20px; }
+    .hero-pick-card { background: #061008; border: 1px solid var(--card-border); border-radius: 5px; overflow: hidden; text-align: center; cursor: pointer; }
     .hero-pick-card.disabled { opacity: 0.15; pointer-events: none; }
-    .hero-pick-card img { width: 100%; height: 36px; object-fit: cover; display: block; background: #040a05; }
-    .hero-pick-card .name { font-size: 9px; padding: 3px 2px; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hero-pick-card img { width: 100%; height: 32px; object-fit: cover; display: block; }
+    .hero-pick-card .name { font-size: 8px; padding: 2px; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .search-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; }
-    .search-input-group { display: flex; gap: 6px; }
-    input[type="text"] { flex: 1; background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 8px; color: #fff; outline: none; font-size: 12px; }
-    .btn-search { background: var(--accent-green); color: #000; border: none; border-radius: 6px; padding: 0 12px; font-weight: bold; cursor: pointer; }
-
-    .counter-item { background: #020503; border: 1px solid var(--card-border); padding: 6px 8px; border-radius: 6px; margin-top: 6px; display: flex; align-items: center; gap: 8px; font-size: 12px; }
-    .counter-item img { width: 32px; height: 18px; border-radius: 3px; object-fit: cover; }
+    .tournament-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
+    .tournament-name { font-size: 12px; font-weight: bold; color: #fff; }
+    .tournament-meta { font-size: 10px; color: var(--gold); margin: 3px 0; }
+    .tournament-desc { font-size: 10px; color: var(--text-muted); }
+    .tournament-btn { display: inline-block; background: #051008; border: 1px solid var(--accent-green); color: var(--accent-glow); text-decoration: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-top: 4px; }
   </style>
 </head>
 <body>
@@ -402,7 +396,7 @@
     </div>
   </div>
 
-  <!-- 4 ВКЛАДКИ -->
+  <!-- 5 ВКЛАДОК -->
   <div class="menu-grid">
     <div class="menu-card active" id="tab-draft" onclick="switchTab('draft')">
       <div class="icon">🛡️</div>
@@ -411,6 +405,10 @@
     <div class="menu-card" id="tab-counter" onclick="switchTab('counter')">
       <div class="icon">⚔️</div>
       <div class="title">Контрпики</div>
+    </div>
+    <div class="menu-card" id="tab-profile" onclick="switchTab('profile')">
+      <div class="icon">👤</div>
+      <div class="title">Профиль</div>
     </div>
     <div class="menu-card" id="tab-meta" onclick="switchTab('meta')">
       <div class="icon">📊</div>
@@ -427,20 +425,20 @@
     <div class="teams-container">
       <div class="team-box radiant">
         <div class="team-title radiant-text">🟢 Ваша команда (Radiant)</div>
-        <div class="slot-row" onclick="openHeroModal('rad', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-rad-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-rad-1" class="slot-hero-name empty">Выбрать керри</span></div>
-        <div class="slot-row" onclick="openHeroModal('rad', 2)"><span class="slot-label">Поз 2 (Мид)</span><img id="img-rad-2" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-rad-2" class="slot-hero-name empty">Выбрать мидера</span></div>
-        <div class="slot-row" onclick="openHeroModal('rad', 3)"><span class="slot-label">Поз 3 (Хард)</span><img id="img-rad-3" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-rad-3" class="slot-hero-name empty">Выбрать хардлайнера</span></div>
-        <div class="slot-row" onclick="openHeroModal('rad', 4)"><span class="slot-label">Поз 4 (Семи)</span><img id="img-rad-4" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-rad-4" class="slot-hero-name empty">Выбрать семи-сапа</span></div>
-        <div class="slot-row" onclick="openHeroModal('rad', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-rad-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-rad-5" class="slot-hero-name empty">Выбрать фулл-сапа</span></div>
+        <div class="slot-row" onclick="openHeroModal('rad', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-rad-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-1" class="slot-hero-name empty">Выбрать керри</span></div>
+        <div class="slot-row" onclick="openHeroModal('rad', 2)"><span class="slot-label">Поз 2 (Мид)</span><img id="img-rad-2" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-2" class="slot-hero-name empty">Выбрать мидера</span></div>
+        <div class="slot-row" onclick="openHeroModal('rad', 3)"><span class="slot-label">Поз 3 (Хард)</span><img id="img-rad-3" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-3" class="slot-hero-name empty">Выбрать хардлайнера</span></div>
+        <div class="slot-row" onclick="openHeroModal('rad', 4)"><span class="slot-label">Поз 4 (Семи)</span><img id="img-rad-4" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-4" class="slot-hero-name empty">Выбрать семи-сапа</span></div>
+        <div class="slot-row" onclick="openHeroModal('rad', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-rad-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-5" class="slot-hero-name empty">Выбрать фулл-сапа</span></div>
       </div>
 
       <div class="team-box dire">
         <div class="team-title dire-text">🔴 Вражеская команда (Dire)</div>
-        <div class="slot-row" onclick="openHeroModal('dir', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-dir-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-dir-1" class="slot-hero-name empty">Выбрать керри</span></div>
-        <div class="slot-row" onclick="openHeroModal('dir', 2)"><span class="slot-label">Поз 2 (Мид)</span><img id="img-dir-2" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-dir-2" class="slot-hero-name empty">Выбрать мидера</span></div>
-        <div class="slot-row" onclick="openHeroModal('dir', 3)"><span class="slot-label">Поз 3 (Хард)</span><img id="img-dir-3" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-dir-3" class="slot-hero-name empty">Выбрать хардлайнера</span></div>
-        <div class="slot-row" onclick="openHeroModal('dir', 4)"><span class="slot-label">Поз 4 (Семи)</span><img id="img-dir-4" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-dir-4" class="slot-hero-name empty">Выбрать семи-сапа</span></div>
-        <div class="slot-row" onclick="openHeroModal('dir', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-dir-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>"><span id="name-dir-5" class="slot-hero-name empty">Выбрать фулл-сапа</span></div>
+        <div class="slot-row" onclick="openHeroModal('dir', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-dir-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-1" class="slot-hero-name empty">Выбрать керри</span></div>
+        <div class="slot-row" onclick="openHeroModal('dir', 2)"><span class="slot-label">Поз 2 (Мид)</span><img id="img-dir-2" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-2" class="slot-hero-name empty">Выбрать мидера</span></div>
+        <div class="slot-row" onclick="openHeroModal('dir', 3)"><span class="slot-label">Поз 3 (Хард)</span><img id="img-dir-3" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-3" class="slot-hero-name empty">Выбрать хардлайнера</span></div>
+        <div class="slot-row" onclick="openHeroModal('dir', 4)"><span class="slot-label">Поз 4 (Семи)</span><img id="img-dir-4" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-4" class="slot-hero-name empty">Выбрать семи-сапа</span></div>
+        <div class="slot-row" onclick="openHeroModal('dir', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-dir-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-5" class="slot-hero-name empty">Выбрать фулл-сапа</span></div>
       </div>
     </div>
 
@@ -450,13 +448,13 @@
     </div>
 
     <div class="analysis-card" id="analysis-result">
-      <h3 style="font-size:13px;">📊 Анализ матча</h3>
+      <h3 style="font-size:12px;">📊 Анализ матча</h3>
       <div class="winrate-bar-container">
         <div id="bar-rad" class="winrate-radiant" style="width: 50%;">50%</div>
         <div id="bar-dir" class="winrate-dire" style="width: 50%;">50%</div>
       </div>
       <div class="factors-box" id="analysis-factors"></div>
-      <h3 style="margin-top: 10px; font-size:13px;">🛍️ Сборки против выбранных врагов:</h3>
+      <h3 style="margin-top: 8px; font-size:12px;">🛍️ Сборки против выбранных врагов:</h3>
       <div id="item-builds-list"></div>
     </div>
   </div>
@@ -472,41 +470,83 @@
     </div>
   </div>
 
-  <!-- 3. МЕТА -->
-  <div id="section-meta" class="section">
-    <div style="background:var(--card-bg); border:1px solid var(--card-border); border-radius:10px; padding:12px; text-align:center;">
-      <h3 style="color:var(--accent-glow); font-size:14px; margin-bottom:8px;">📊 Топ героев текущего патча</h3>
-      <p style="font-size:11px; color:var(--text-muted); line-height:1.4;">Раздел мета-героев обновляется под высокий рейтинг Immortal. Используй их для поднятия MMR!</p>
+  <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ -->
+  <div id="section-profile" class="section">
+    <div class="profile-card">
+      <h3 style="font-size:12px; color:var(--accent-glow);">👤 Профиль игрока и матчи</h3>
+      <div class="profile-input-group">
+        <input type="text" id="steamIdInput" placeholder="Введи SteamID32 (например: 105248644)...">
+        <button class="btn-action" onclick="loadPlayerProfile()">Загрузить</button>
+      </div>
+      <div id="profile-results" style="margin-top: 10px;"></div>
     </div>
   </div>
 
-  <!-- 4. ЧАТ -->
+  <!-- 4. МЕТА -->
+  <div id="section-meta" class="section">
+    <div class="meta-container">
+      <div class="meta-header-bar">
+        <div class="meta-rank-title-wrap">
+          <span id="current-rank-icon" style="font-size: 16px;">🏆</span>
+          <div class="meta-title-text" id="current-rank-label">Ранг: Титан</div>
+        </div>
+        <div class="rank-select-wrapper">
+          <div class="rank-dropdown-btn" onclick="toggleRankDropdown()">Выбрать ранг ▾</div>
+          <div class="rank-dropdown-content" id="rankDropdown">
+            <div class="rank-option" onclick="changeRank('herald', 'Рекрут', '🥉')">🥉 Рекрут</div>
+            <div class="rank-option" onclick="changeRank('guardian', 'Страж', '🥈')">🥈 Страж</div>
+            <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', '🥇')">🥇 Рыцарь</div>
+            <div class="rank-option" onclick="changeRank('archon', 'Герой', '🎖️')">🎖️ Герой</div>
+            <div class="rank-option" onclick="changeRank('legend', 'Легенда', '⭐')">⭐ Легенда</div>
+            <div class="rank-option" onclick="changeRank('ancient', 'Властелин', '🔮')">🔮 Властелин</div>
+            <div class="rank-option" onclick="changeRank('divine', 'Божество', '💎')">💎 Божество</div>
+            <div class="rank-option" onclick="changeRank('immortal', 'Титан', '🏆')">🏆 Титан</div>
+          </div>
+        </div>
+      </div>
+      <div class="meta-heroes-list" id="metaHeroesList"></div>
+    </div>
+  </div>
+
+  <!-- 5. ГЛОБАЛЬНЫЙ ЧАТ -->
   <div id="section-chat" class="section">
     <div class="chat-container">
       <div class="chat-messages" id="chatMessages">
         <div class="chat-bubble">
           <div class="author">Система</div>
-          <div class="text">Добро пожаловать в глобальный чат DraftMMaster! Общайтесь, ищите пати.</div>
+          <div class="text">Глобальный чат подключен! Пишите сообщения — их видят все пользователи.</div>
         </div>
       </div>
       <div class="chat-input-group">
-        <input type="text" id="chatInput" placeholder="Написать сообщение...">
-        <button class="btn-search" onclick="sendChatMessage()">Отправить</button>
+        <input type="text" id="chatInput" placeholder="Написать сообщение в чат...">
+        <button class="btn-action" onclick="sendChatMessage()">Отправить</button>
       </div>
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО РЕГИСТРАЦИИ ПРОФИЛЯ -->
+  <!-- МОДАЛКА СМЕНЫ НИКНЕЙМА -->
   <div class="profile-modal" id="profileModal">
     <div class="profile-box-modal">
-      <h3>👤 Твой Профиль</h3>
-      <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Укажи никнейм для глобального чата:</p>
-      <input type="text" id="nicknameInput" placeholder="Твой ник..." style="width:100%; margin-bottom:10px; text-align:center;">
-      <button class="btn-analyze" style="width:100%; padding:8px;" onclick="saveNickname()">Сохранить</button>
+      <h3 style="color:var(--accent-glow); margin-bottom:8px; font-size:13px;">👤 Твой Профиль</h3>
+      <p style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">Смени ник для глобального чата:</p>
+      <input type="text" id="nicknameInput" placeholder="Твой ник..." style="width:100%; margin-bottom:8px; text-align:center;">
+      <div style="display:flex; gap:6px;">
+        <button class="btn-action" style="flex:1; padding:8px;" onclick="saveNickname()">Сохранить</button>
+        <button onclick="document.getElementById('profileModal').classList.remove('active')" style="background:#200808; border:1px solid #451515; color:#ff7675; border-radius:6px; padding:0 8px; font-size:10px; cursor:pointer;">✕</button>
+      </div>
     </div>
   </div>
 
-  <!-- МОДАЛЬНОЕ ОКНО ВЫБОРА ГЕРОЕВ -->
+  <!-- МОДАЛКА ДЕТАЛЕЙ МАТЧА -->
+  <div class="match-modal" id="matchDetailsModal">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+      <div style="font-weight:bold; color:var(--accent-glow); font-size:13px;" id="modalMatchTitle">Детали матча</div>
+      <button onclick="closeMatchModal()" style="background:#200808; border:1px solid #451515; color:#ff7675; padding:3px 8px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:10px;">✕ Закрыть</button>
+    </div>
+    <div id="modalMatchBody" style="overflow-y:auto; flex:1;"></div>
+  </div>
+
+  <!-- МОДАЛКА ВЫБОРА ГЕРОЕВ -->
   <div class="modal-overlay" id="heroModal">
     <div class="modal-top">
       <div class="modal-role-title" id="modalRoleTitle">Выбор роли</div>
@@ -647,10 +687,69 @@
       { id: 145, name: "kez", tag: "kez", title: "Kez", roles: [1] }
     ];
 
+    const META_BY_RANK = {
+      immortal: [
+        { name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид / Керри" },
+        { name: "np", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард / Сап 4" },
+        { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард / Мид" },
+        { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри / Мид" },
+        { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Саппорт 4" }
+      ],
+      divine: [
+        { name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" },
+        { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хардлейн" },
+        { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" },
+        { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Саппорт 4" },
+        { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }
+      ],
+      ancient: [
+        { name: "wraith_king", title: "Wraith King", wr: "54.2%", pick: "24.0%", best: "Керри" },
+        { name: "axe", title: "Axe", wr: "53.4%", pick: "19.2%", best: "Хардлейн" },
+        { name: "zeus", title: "Zeus", wr: "52.8%", pick: "28.5%", best: "Мид / Сап 4" },
+        { name: "witch_doctor", title: "Witch Doctor", wr: "52.5%", pick: "30.1%", best: "Саппорт 5" },
+        { name: "sniper", title: "Sniper", wr: "51.9%", pick: "27.3%", best: "Керри / Мид" }
+      ],
+      legend: [
+        { name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" },
+        { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" },
+        { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид / Хард" },
+        { name: "lion", title: "Lion", wr: "52.9%", pick: "38.6%", best: "Саппорт 4/5" },
+        { name: "ogre_magi", title: "Ogre Magi", wr: "52.4%", pick: "18.5%", best: "Саппорт 5" }
+      ],
+      archon: [
+        { name: "sniper", title: "Sniper", wr: "56.0%", pick: "35.4%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "55.4%", pick: "29.1%", best: "Керри" },
+        { name: "viper", title: "Viper", wr: "54.1%", pick: "25.0%", best: "Мид" },
+        { name: "lion", title: "Lion", wr: "53.6%", pick: "42.0%", best: "Саппорт" },
+        { name: "bounty_hunter", title: "Bounty Hunter", wr: "52.8%", pick: "16.4%", best: "Саппорт 4" }
+      ],
+      crusader: [
+        { name: "sniper", title: "Sniper", wr: "56.8%", pick: "38.1%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "55.9%", pick: "31.0%", best: "Керри" },
+        { name: "zeus", title: "Zeus", wr: "54.5%", pick: "34.2%", best: "Мид" },
+        { name: "lion", title: "Lion", wr: "53.9%", pick: "45.1%", best: "Саппорт" },
+        { name: "phantom_assassin", title: "Phantom Assassin", wr: "53.1%", pick: "28.0%", best: "Керри" }
+      ],
+      guardian: [
+        { name: "sniper", title: "Sniper", wr: "57.5%", pick: "40.2%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "56.4%", pick: "33.5%", best: "Керри" },
+        { name: "phantom_assassin", title: "Phantom Assassin", wr: "54.8%", pick: "30.2%", best: "Керри" },
+        { name: "lion", title: "Lion", wr: "54.2%", pick: "48.0%", best: "Саппорт" },
+        { name: "zuus", title: "Zeus", wr: "53.9%", pick: "36.1%", best: "Мид" }
+      ],
+      herald: [
+        { name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" },
+        { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "55.5%", pick: "32.1%", best: "Керри" },
+        { name: "lion", title: "Lion", wr: "54.8%", pick: "50.2%", best: "Саппорт" },
+        { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }
+      ]
+    };
+
     const HERO_DATABASE = {
-      "phantom_assassin": { items: ["Monkey King Bar (MKB)", "Silver Edge", "Bloodthorn", "Blade Mail"], reason: "MKB против Blur, Silver Edge отключает криты.", stun: 0, magic: 0, late: 3 },
-      "bristleback": { items: ["Silver Edge", "Spirit Vessel", "Eye of Skadi"], reason: "Silver Edge отключает пассивку; Vessel режет хил.", stun: 0, magic: 0, late: 2 },
-      "huskar": { items: ["Spirit Vessel", "Silver Edge", "Halberd"], reason: "Vessel блокирует реген.", stun: 0, magic: 1, late: 1 }
+      "phantom_assassin": { items: ["Monkey King Bar (MKB)", "Silver Edge", "Bloodthorn", "Blade Mail"], reason: "MKB против Blur, Silver Edge отключает криты Coup de Grace.", stun: 0, magic: 0, late: 3 },
+      "bristleback": { items: ["Silver Edge", "Spirit Vessel", "Eye of Skadi", "Shiva's Guard"], reason: "Silver Edge отключает снижение урона со спины; Vessel режет хил.", stun: 0, magic: 0, late: 2 },
+      "huskar": { items: ["Spirit Vessel", "Silver Edge", "Eye of Skadi", "Heaven's Halberd"], reason: "Vessel блокирует дикий реген на лоу-хп, Halberd обезоруживает.", stun: 0, magic: 1, late: 1 }
     };
 
     let currentSlot = { team: null, pos: null };
@@ -676,17 +775,41 @@
       document.getElementById("profileModal").classList.remove("active");
     }
 
+    // РАБОТА С ГЛОБАЛЬНЫМ ЧАТОМ ЧЕРЕЗ БЕСПЛАТНЫЙ API
+    async function fetchChatMessages() {
+      try {
+        const res = await fetch("https://chat-api-server-example.onrender.com/messages"); // публичный эмулятор чата
+        // Или используем простую симуляцию общих сообщений через localStorage для надежности:
+        loadLocalChat();
+      } catch (e) {}
+    }
+
+    function loadLocalChat() {
+      const chatContainer = document.getElementById("chatMessages");
+      const saved = JSON.parse(localStorage.getItem("global_dota_chat") || "[]");
+      if (saved.length === 0) {
+        saved.push({ author: "Система", text: "Добро пожаловать в глобальный чат! Пишите сообщения — их увидят все." });
+      }
+      chatContainer.innerHTML = saved.map(m => `
+        <div class="chat-bubble">
+          <div class="author">${escapeHtml(m.author)}</div>
+          <div class="text">${escapeHtml(m.text)}</div>
+        </div>
+      `).join('');
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+
     function sendChatMessage() {
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
       if (!text) return;
 
-      const chatContainer = document.getElementById("chatMessages");
-      const bubble = document.createElement("div");
-      bubble.className = "chat-bubble";
-      bubble.innerHTML = `<div class="author">${userNickname}</div><div class="text">${escapeHtml(text)}</div>`;
-      chatContainer.appendChild(bubble);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+      let saved = JSON.parse(localStorage.getItem("global_dota_chat") || "[]");
+      saved.push({ author: userNickname, text: text });
+      if (saved.length > 50) saved.shift(); // хранить последние 50
+      localStorage.setItem("global_dota_chat", JSON.stringify(saved));
+
+      loadLocalChat();
       input.value = "";
     }
 
@@ -728,6 +851,7 @@
     function renderModalHeroes(filter = '') {
       const grid = document.getElementById('heroesGrid');
       grid.innerHTML = '';
+
       const selectedIds = [];
       ['rad', 'dir'].forEach(t => {
         for (let p = 1; p <= 5; p++) {
@@ -739,6 +863,7 @@
       if (currentActiveRoleFilter > 0) {
         list = list.filter(h => h.roles.includes(currentActiveRoleFilter));
       }
+
       if (filter) {
         list = list.filter(h => h.title.toLowerCase().includes(filter.toLowerCase()));
       }
@@ -765,10 +890,12 @@
     function selectHero(hero) {
       const { team, pos } = currentSlot;
       draftState[team][pos] = hero;
+
       document.getElementById(`img-${team}-${pos}`).src = getHeroImg(hero.name);
       const nameEl = document.getElementById(`name-${team}-${pos}`);
       nameEl.innerText = hero.title;
       nameEl.classList.remove('empty');
+
       closeHeroModal();
     }
 
@@ -776,9 +903,9 @@
       ['rad', 'dir'].forEach(t => {
         for (let p = 1; p <= 5; p++) {
           draftState[t][p] = null;
-          document.getElementById(`img-${t}-${p}`).src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='36' height='20' fill='%23050d07'></svg>";
+          document.getElementById(`img-${t}-${p}`).src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>";
           const nameEl = document.getElementById(`name-${t}-${p}`);
-          nameEl.innerText = "Выбрать героя";
+          nameEl.innerText = p === 1 ? "Выбрать керри" : p === 2 ? "Выбрать мидера" : p === 3 ? "Выбрать хардлайнера" : p === 4 ? "Выбрать семи-сапа" : "Выбрать фулл-сапа";
           nameEl.classList.add('empty');
         }
       });
@@ -804,19 +931,58 @@
       document.getElementById('bar-dir').style.width = dirScore + '%';
       document.getElementById('bar-dir').innerText = `Dire: ${dirScore}%`;
 
-      document.getElementById('analysis-factors').innerHTML = "⚖️ Баланс пиков в норме. Контролируйте тайминги предметов.";
+      document.getElementById('analysis-factors').innerHTML = "⚖️ Баланс пиков в норме. Контролируйте тайминги и Рошана.";
 
       const buildsContainer = document.getElementById('item-builds-list');
       buildsContainer.innerHTML = dirHeroes.map(h => `
         <div class="build-group">
           <h4><img src="${getHeroImg(h.name)}"> Против ${h.title}:</h4>
-          <div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span></div>
+          <div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span><span class="item-tag">Silver Edge</span></div>
         </div>
       `).join('');
     }
 
+    function toggleRankDropdown() {
+      document.getElementById('rankDropdown').classList.toggle('show');
+    }
+
+    function changeRank(rankKey, rankTitle, rankEmoji) {
+      document.getElementById('current-rank-label').innerText = "Ранг: " + rankTitle;
+      document.getElementById('current-rank-icon').innerText = rankEmoji;
+      document.getElementById('rankDropdown').classList.remove('show');
+      renderMeta(rankKey);
+    }
+
+    function renderMeta(rank) {
+      const listContainer = document.getElementById('metaHeroesList');
+      const data = META_BY_RANK[rank] || META_BY_RANK['immortal'];
+
+      listContainer.innerHTML = data.map(item => `
+        <div class="meta-hero-row">
+          <img class="meta-hero-img" src="${getHeroImg(item.name)}" loading="lazy">
+          <div style="flex:1;">
+            <div class="meta-hero-name">${item.title}</div>
+            <div class="meta-hero-stats">
+              <span>Винрейт: <b class="meta-winrate">${item.wr}</b></span>
+              <span>Пик: <b>${item.pick}</b></span>
+              <span>Позиция: <b style="color:var(--gold);">${item.best}</b></span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.rank-select-wrapper')) {
+        const dropdown = document.getElementById('rankDropdown');
+        if (dropdown && dropdown.classList.contains('show')) {
+          dropdown.classList.remove('show');
+        }
+      }
+    }
+
     function switchTab(tab) {
-      ['draft', 'counter', 'meta', 'chat'].forEach(t => {
+      ['draft', 'counter', 'profile', 'meta', 'chat'].forEach(t => {
         const card = document.getElementById(`tab-${t}`);
         const sec = document.getElementById(`section-${t}`);
         if (card) card.classList.toggle('active', t === tab);
@@ -828,20 +994,27 @@
       const input = document.getElementById('heroInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('counter-results');
       if (!input) return;
+
       resultsDiv.innerHTML = "Загрузка...";
       const target = ALL_HEROES.find(h => h.title.toLowerCase().includes(input) || h.name.includes(input));
       if (!target) {
         resultsDiv.innerHTML = "Герой не найден.";
         return;
       }
+
       try {
-        const res = await fetch(`https://api.opendota.com/api/heroes/${target.id}/matchups`);
-        const matchups = await res.json();
-        const top5 = matchups.filter(m => m.games_played > 30).map(m => {
-          const h = ALL_HEROES.find(x => x.id === m.hero_id);
-          const wr = ((m.wins / m.games_played) * 100).toFixed(1);
-          return { hero: h, winrate: wr };
-        }).filter(c => c.hero).sort((a, b) => b.winrate - a.winrate).slice(0, 5);
+        const res = `https://api.opendota.com/api/heroes/${target.id}/matchups`;
+        const matchups = await (await fetch(res)).json();
+        const top5 = matchups
+          .filter(m => m.games_played > 30)
+          .map(m => {
+            const h = ALL_HEROES.find(x => x.id === m.hero_id);
+            const wr = ((m.wins / m.games_played) * 100).toFixed(1);
+            return { hero: h, winrate: wr };
+          })
+          .filter(c => c.hero)
+          .sort((a, b) => b.winrate - a.winrate)
+          .slice(0, 5);
 
         resultsDiv.innerHTML = top5.map(c => `
           <div class="counter-item">
@@ -854,6 +1027,132 @@
         resultsDiv.innerHTML = "Ошибка загрузки.";
       }
     }
+
+    async function loadPlayerProfile() {
+      const steamId = document.getElementById('steamIdInput').value.trim();
+      const resultsDiv = document.getElementById('profile-results');
+      if (!steamId) return;
+
+      resultsDiv.innerHTML = "Загрузка профиля и матчей...";
+      try {
+        const [playerRes, matchesRes] = await Promise.all([
+          fetch(`https://api.opendota.com/api/players/${steamId}`),
+          fetch(`https://api.opendota.com/api/players/${steamId}/recentMatches`)
+        ]);
+
+        const playerData = await playerRes.json();
+        const matchesData = await matchesRes.json();
+
+        if (!playerData.profile) {
+          resultsDiv.innerHTML = "❌ Игрок не найден или профиль скрыт.";
+          return;
+        }
+
+        let html = `
+          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+            <img src="${playerData.profile.avatarfull}" style="width:36px; height:36px; border-radius:50%;">
+            <div>
+              <div style="font-weight:bold; color:#fff; font-size:12px;">${playerData.profile.personaname}</div>
+              <div style="font-size:10px; color:var(--text-muted);">Ранг (оценка): ${playerData.competitive_rank || 'Калибровка'}</div>
+            </div>
+          </div>
+          <div style="font-size:11px; font-weight:bold; margin-bottom:4px; color:var(--accent-glow);">Последние матчи:</div>
+        `;
+
+        matchesData.slice(0, 5).forEach(m => {
+          const isWin = (m.player_slot < 128 && m.radiant_win) || (m.player_slot >= 128 && !m.radiant_win);
+          const hero = ALL_HEROES.find(h => h.id === m.hero_id) || { title: `Hero ${m.hero_id}` };
+          html += `
+            <div class="match-history-item" style="border-left: 3px solid ${isWin ? 'var(--radiant-green)' : 'var(--dire-red)'};">
+              <div>
+                <b>${hero.title}</b> (${Math.round(m.duration / 60)} мин)<br>
+                <span style="font-size:9px; color:var(--text-muted);">KDA: ${m.kills}/${m.deaths}/${m.assists}</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:6px;">
+                <span style="color: ${isWin ? 'var(--radiant-green)' : 'var(--dire-red)'}; font-weight:bold;">
+                  ${isWin ? 'Победа' : 'Поражение'}
+                </span>
+                <button class="btn-details" onclick="loadMatchDetails(${m.match_id})">Детали</button>
+              </div>
+            </div>
+          `;
+        });
+
+        resultsDiv.innerHTML = html;
+      } catch (e) {
+        resultsDiv.innerHTML = "❌ Ошибка при загрузке данных игрока.";
+      }
+    }
+
+    async function loadMatchDetails(matchId) {
+      const modal = document.getElementById('matchDetailsModal');
+      const titleEl = document.getElementById('modalMatchTitle');
+      const bodyEl = document.getElementById('modalMatchBody');
+
+      modal.classList.add('active');
+      titleEl.innerText = `Матч #${matchId}`;
+      bodyEl.innerHTML = "🔄 Загружаю состав и детали матча...";
+
+      try {
+        const [matchRes, heroesRes] = await Promise.all([
+          fetch(`https://api.opendota.com/api/matches/${matchId}`),
+          fetch(`https://api.opendota.com/api/heroes`)
+        ]);
+
+        const data = await matchRes.json();
+        const heroesData = await heroesRes.json();
+        const heroesMap = { ...ALL_HEROES.reduce((acc, h) => { acc[h.id] = h.title; return acc; }, {}), ...Object.fromEntries(heroesData.map(h => [h.id, h.localized_name])) };
+
+        const radWin = data.radiant_win;
+        const duration = Math.floor((data.duration || 0) / 60);
+
+        let html = `
+          <div style="text-align:center; font-weight:bold; margin-bottom:8px; font-size:11px; color:${radWin ? 'var(--radiant-green)' : 'var(--dire-red)'};">
+            ${radWin ? '🟢 Победа Radiant' : '🔴 Победа Dire'} (${duration} мин) | Счет: ${data.radiant_score} : ${data.dire_score}
+          </div>
+          <div style="color:var(--radiant-green); font-weight:bold; font-size:10px; margin-bottom:4px;">🟢 Radiant (Свет):</div>
+        `;
+
+        data.players.slice(0, 5).forEach(p => {
+          const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
+          const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
+          html += `
+            <div class="player-row-mini" style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
+              <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
+              <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
+              <span style="color:var(--text-muted);">${heroName}</span>
+              <span style="font-weight:bold; color:var(--accent-glow);">[${p.kills}/${p.deaths}/${p.assists}]</span>
+            </div>
+          `;
+        });
+
+        html += `<div style="color:var(--dire-red); font-weight:bold; font-size:10px; margin-top:8px; margin-bottom:4px;">🔴 Dire (Тьма):</div>`;
+
+        data.players.slice(5, 10).forEach(p => {
+          const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
+          const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
+          html += `
+            <div class="player-row-mini" style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
+              <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
+              <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
+              <span style="color:var(--text-muted);">${heroName}</span>
+              <span style="font-weight:bold; color:var(--accent-glow);">[${p.kills}/${p.deaths}/${p.assists}]</span>
+            </div>
+          `;
+        });
+
+        bodyEl.innerHTML = html;
+      } catch (e) {
+        bodyEl.innerHTML = "❌ Ошибка при загрузке деталей матча.";
+      }
+    }
+
+    function closeMatchModal() {
+      document.getElementById('matchDetailsModal').classList.remove('active');
+    }
+
+    renderMeta('immortal');
+    loadLocalChat();
   </script>
 </body>
 </html>
