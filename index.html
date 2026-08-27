@@ -468,28 +468,19 @@
     </div>
   </div>
 
-  <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ (С АВТОРИЗАЦИЕЙ ТЕЛЕГРАМ) -->
+  <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ -->
   <div id="section-profile" class="section">
     <div class="profile-card">
+      
       <!-- Красивый заголовок "ЧЕК ПРОФИЛЬ" -->
       <div style="text-align: center; line-height: 1.1; margin-bottom: 15px;">
         <div style="font-size: 13px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Чек</div>
         <div style="font-size: 18px; color: var(--accent-glow); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Профиль</div>
       </div>
 
-      <!-- Карточка Telegram-аккаунта -->
-      <div id="tg-profile-card" style="display: flex; align-items: center; gap: 12px; background: #020503; padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 15px;">
-        <img id="tg-card-img" src="" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; display: none;">
-        <div id="tg-card-fallback" style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-green); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 18px;">U</div>
-        <div style="flex: 1;">
-          <div id="tg-card-name" style="font-weight: bold; color: #fff; font-size: 14px;">Загрузка...</div>
-          <div style="font-size: 10px; color: var(--accent-green); margin-top: 3px;">✅ Авторизовано через Telegram</div>
-        </div>
-      </div>
-
-      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: bold;">Привязка Dota 2 аккаунта (SteamID32):</p>
+      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: bold;">Поиск аккаунта Dota 2 (по SteamID32):</p>
       <div class="profile-input-group">
-        <input type="text" id="steamIdInput" placeholder="Введи SteamID32 (например: 105248644)...">
+        <input type="text" id="steamIdInput" placeholder="Например: 105248644...">
         <button class="btn-action" onclick="loadPlayerProfile()">Загрузить</button>
       </div>
       <div id="profile-results" style="margin-top: 10px;"></div>
@@ -538,14 +529,22 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА СМЕНЫ НИКНЕЙМА -->
+  <!-- МОДАЛКА АВТОРИЗАЦИИ (ВЕРХНИЙ ПРАВЫЙ УГОЛ) -->
   <div class="profile-modal" id="profileModal">
     <div class="profile-box-modal">
-      <h3 style="color:var(--accent-glow); margin-bottom:8px; font-size:13px;">👤 Твой Профиль</h3>
-      <p style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">Смени ник для глобального чата:</p>
-      <input type="text" id="nicknameInput" placeholder="Твой ник..." style="width:100%; margin-bottom:8px; text-align:center;">
+      <h3 style="color:var(--accent-glow); margin-bottom:8px; font-size:13px;">👤 Вход в аккаунт</h3>
+      <p style="font-size:10px; color:var(--text-muted); margin-bottom:12px;">Авторизуйся через Telegram, чтобы общаться в глобальном чате от своего имени.</p>
+      
+      <!-- Кнопка Telegram авторизации -->
+      <button class="btn-action" style="width:100%; padding:10px; margin-bottom:12px; background:#2481cc; color:#fff; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="loginWithTelegram()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.93 4.23L1.58 12.06C.39 12.52.39 13.19 1.36 13.48L6.6 15.11L18.73 7.45C19.3 7.07 19.82 7.28 19.39 7.66L9.58 16.51H9.57L9.58 16.52L9.26 21.28C9.73 21.28 9.94 21.06 10.22 20.8L12.53 18.55L17.34 22.1C18.23 22.59 18.86 22.33 19.08 21.28L22.25 6.36C22.56 5.14 21.84 4.56 21.93 4.23Z" fill="white"/></svg>
+        Зайти через Telegram
+      </button>
+
+      <p style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">Или просто придумай никнейм вручную:</p>
+      <input type="text" id="nicknameInput" placeholder="Твой ник..." style="width:100%; margin-bottom:8px; text-align:center; padding: 6px; border-radius: 4px; background: #040905; color: #fff; border: 1px solid var(--card-border);">
       <div style="display:flex; gap:6px;">
-        <button class="btn-action" style="flex:1; padding:8px;" onclick="saveNickname()">Сохранить</button>
+        <button class="btn-action" style="flex:1; padding:8px;" onclick="saveNickname()">Сохранить ник</button>
         <button onclick="document.getElementById('profileModal').classList.remove('active')" style="background:#200808; border:1px solid #451515; color:#ff7675; border-radius:6px; padding:0 8px; font-size:10px; cursor:pointer;">✕</button>
       </div>
     </div>
@@ -764,33 +763,11 @@
     let currentActiveRoleFilter = 0;
     let userNickname = "Игрок";
 
-    function initTelegramUser() {
-      const tg = window.Telegram?.WebApp;
-      if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
-        const tgUser = tg.initDataUnsafe.user;
-        const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
-        userNickname = localStorage.getItem("dota_nickname") || fullName || "Игрок";
-        document.getElementById('tg-card-name').innerText = fullName || userNickname;
-        document.getElementById('userNickname').innerText = userNickname;
-        if (tgUser.photo_url) {
-          document.getElementById('tg-card-img').src = tgUser.photo_url;
-          document.getElementById('tg-card-img').style.display = 'block';
-          document.getElementById('tg-card-fallback').style.display = 'none';
-          document.getElementById('nav-user-img').src = tgUser.photo_url;
-          document.getElementById('nav-user-img').style.display = 'flex';
-          document.getElementById('userInitial').style.display = 'none';
-        } else {
-          const initial = (fullName || 'U').charAt(0).toUpperCase();
-          document.getElementById('tg-card-fallback').innerText = initial;
-          document.getElementById('userInitial').innerText = initial;
-        }
-      } else {
-        userNickname = localStorage.getItem("dota_nickname") || "Гость";
-        document.getElementById('tg-card-name').innerText = "Гость (Браузер)";
-        document.getElementById('userNickname').innerText = userNickname;
-        document.getElementById('tg-card-fallback').innerText = "G";
-        document.getElementById('userInitial').innerText = "G";
-      }
+    // Устанавливаем базовое имя или имя из локального хранилища при загрузке
+    function setInitialName() {
+      userNickname = localStorage.getItem("dota_nickname") || "Игрок";
+      document.getElementById('userNickname').innerText = userNickname;
+      document.getElementById('userInitial').innerText = userNickname.charAt(0).toUpperCase();
     }
 
     function openProfileModal() {
@@ -798,6 +775,37 @@
       document.getElementById("profileModal").classList.add("active");
     }
 
+    // НОВАЯ ФУНКЦИЯ ДЛЯ КНОПКИ "ЗАЙТИ ЧЕРЕЗ TELEGRAM"
+    function loginWithTelegram() {
+      const tg = window.Telegram?.WebApp;
+      if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const tgUser = tg.initDataUnsafe.user;
+        const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
+        
+        userNickname = fullName || "Игрок";
+        localStorage.setItem("dota_nickname", userNickname);
+        
+        document.getElementById('userNickname').innerText = userNickname;
+        
+        // Подтягиваем аватарку
+        if (tgUser.photo_url) {
+          document.getElementById('nav-user-img').src = tgUser.photo_url;
+          document.getElementById('nav-user-img').style.display = 'flex';
+          document.getElementById('userInitial').style.display = 'none';
+        } else {
+          document.getElementById('userInitial').innerText = userNickname.charAt(0).toUpperCase();
+          document.getElementById('nav-user-img').style.display = 'none';
+          document.getElementById('userInitial').style.display = 'flex';
+        }
+        
+        alert("Успешно авторизовано как " + userNickname + "! Теперь вы можете общаться в глобальном чате от своего имени.");
+        document.getElementById('profileModal').classList.remove('active');
+      } else {
+        alert("Не удалось получить данные Telegram. Убедитесь, что вы открыли сайт внутри Telegram-бота (через кнопку Menu).");
+      }
+    }
+
+    // Ручное сохранение ника
     function saveNickname() {
       const val = document.getElementById("nicknameInput").value.trim();
       if (val) {
@@ -805,6 +813,8 @@
         localStorage.setItem("dota_nickname", userNickname);
         document.getElementById("userNickname").innerText = userNickname;
         document.getElementById("userInitial").innerText = userNickname.charAt(0).toUpperCase();
+        document.getElementById("nav-user-img").style.display = 'none';
+        document.getElementById("userInitial").style.display = 'flex';
       }
       document.getElementById("profileModal").classList.remove("active");
     }
@@ -1176,7 +1186,7 @@
       document.getElementById('matchDetailsModal').classList.remove('active');
     }
 
-    initTelegramUser();
+    setInitialName();
     renderMeta('immortal');
     loadLocalChat();
   </script>
