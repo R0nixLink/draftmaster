@@ -471,7 +471,6 @@
   <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ -->
   <div id="section-profile" class="section">
     <div class="profile-card">
-      
       <!-- Красивый заголовок "ЧЕК ПРОФИЛЬ" -->
       <div style="text-align: center; line-height: 1.1; margin-bottom: 15px;">
         <div style="font-size: 13px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Чек</div>
@@ -588,7 +587,6 @@
 
   <script>
     // --- ИНИЦИАЛИЗАЦИЯ TELEGRAM ---
-    // Это исправляет проблему с отсутствием данных в Desktop!
     const tg = window.Telegram?.WebApp;
     if (tg) {
       tg.ready();
@@ -793,7 +791,8 @@
     }
 
     function loginWithTelegram() {
-      if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+      // Проверяем, отдал ли нам Телеграм данные
+      if (tg && tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0 && tg.initDataUnsafe.user) {
         const tgUser = tg.initDataUnsafe.user;
         const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
         
@@ -817,12 +816,13 @@
           document.getElementById('tg-card-fallback').innerText = userNickname.charAt(0).toUpperCase();
         }
         
-        alert("Успешно авторизовано как " + userNickname + "! Теперь вы можете общаться в глобальном чате от своего имени.");
+        alert("Успешно авторизовано как " + userNickname + "!");
         document.getElementById('profileModal').classList.remove('active');
       } else {
-        // Если ошибка опять повторится, мы увидим JSON с тем, что именно вернул Телеграм
-        let debugInfo = tg ? JSON.stringify(tg.initDataUnsafe) : "tg undefined";
-        alert("Телеграм не передал данные.\nОтвет от ТГ: " + debugInfo + "\n\nПопробуйте запустить бота с телефона или изменить кнопку меню!");
+        // ЕСЛИ ТЕЛЕГРАМ СКРЫЛ ДАННЫЕ (на ПК):
+        // Никаких страшных ошибок с пустыми скобками. 
+        alert("Телеграм на ПК скрыл твои данные для приватности 🕵️‍♂️\n\nНичего страшного! Просто введи свой ник в поле ниже и нажми «Сохранить ник».");
+        document.getElementById("nicknameInput").focus();
       }
     }
 
