@@ -314,8 +314,8 @@
       flex-shrink: 0;
     }
 
-    /* МЕТА И ТУРНИРЫ */
-    .meta-container, .tournaments-list, .profile-card, .search-box {
+    /* МЕТА И ПРОФИЛЬ */
+    .meta-container, .profile-card, .search-box {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 10px;
@@ -349,7 +349,6 @@
     .meta-hero-stats { font-size: 9px; color: var(--text-muted); display: flex; gap: 8px; margin-top: 2px; }
     .meta-winrate { color: var(--accent-green); font-weight: bold; }
 
-    /* ПРОФИЛЬ И ИСТОРИЯ */
     .profile-input-group { display: flex; gap: 6px; margin-top: 6px; }
     input[type="text"] { flex: 1; background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 7px; color: #fff; outline: none; font-size: 11px; }
     .btn-action { background: var(--accent-green); color: #000; border: none; border-radius: 6px; padding: 0 10px; font-weight: bold; cursor: pointer; font-size: 10px; }
@@ -378,11 +377,8 @@
     .hero-pick-card img { width: 100%; height: 32px; object-fit: cover; display: block; }
     .hero-pick-card .name { font-size: 8px; padding: 2px; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-    .tournament-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px; margin-bottom: 8px; }
-    .tournament-name { font-size: 12px; font-weight: bold; color: #fff; }
-    .tournament-meta { font-size: 10px; color: var(--gold); margin: 3px 0; }
-    .tournament-desc { font-size: 10px; color: var(--text-muted); }
-    .tournament-btn { display: inline-block; background: #051008; border: 1px solid var(--accent-green); color: var(--accent-glow); text-decoration: none; padding: 4px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; margin-top: 4px; }
+    .counter-item { background: #020503; border: 1px solid var(--card-border); padding: 6px; border-radius: 6px; margin-top: 6px; display: flex; align-items: center; gap: 8px; font-size: 11px; }
+    .counter-item img { width: 30px; height: 16px; border-radius: 3px; object-fit: cover; }
   </style>
 </head>
 <body>
@@ -464,7 +460,7 @@
     <div class="search-box">
       <div class="search-input-group">
         <input type="text" id="heroInput" placeholder="Имя героя (СФ, Lina, Pudge)...">
-        <button class="btn-search" onclick="searchCounters()">Найти</button>
+        <button class="btn-action" onclick="searchCounters()">Найти</button>
       </div>
       <div id="counter-results" style="margin-top: 10px;"></div>
     </div>
@@ -775,15 +771,6 @@
       document.getElementById("profileModal").classList.remove("active");
     }
 
-    // РАБОТА С ГЛОБАЛЬНЫМ ЧАТОМ ЧЕРЕЗ БЕСПЛАТНЫЙ API
-    async function fetchChatMessages() {
-      try {
-        const res = await fetch("https://chat-api-server-example.onrender.com/messages"); // публичный эмулятор чата
-        // Или используем простую симуляцию общих сообщений через localStorage для надежности:
-        loadLocalChat();
-      } catch (e) {}
-    }
-
     function loadLocalChat() {
       const chatContainer = document.getElementById("chatMessages");
       const saved = JSON.parse(localStorage.getItem("global_dota_chat") || "[]");
@@ -806,7 +793,7 @@
 
       let saved = JSON.parse(localStorage.getItem("global_dota_chat") || "[]");
       saved.push({ author: userNickname, text: text });
-      if (saved.length > 50) saved.shift(); // хранить последние 50
+      if (saved.length > 50) saved.shift();
       localStorage.setItem("global_dota_chat", JSON.stringify(saved));
 
       loadLocalChat();
@@ -1117,7 +1104,7 @@
           const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
           const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
           html += `
-            <div class="player-row-mini" style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
+            <div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
               <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
               <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
               <span style="color:var(--text-muted);">${heroName}</span>
@@ -1132,7 +1119,7 @@
           const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
           const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
           html += `
-            <div class="player-row-mini" style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
+            <div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
               <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
               <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
               <span style="color:var(--text-muted);">${heroName}</span>
