@@ -78,6 +78,7 @@
       font-size: 10px;
       font-weight: bold;
       color: #000;
+      object-fit: cover;
     }
 
     .user-nickname-small {
@@ -361,7 +362,7 @@
     }
     .profile-modal.active, .match-modal.active, .modal-overlay.active { display: flex; }
     .profile-box-modal { background: var(--card-bg); border: 1px solid var(--accent-green); border-radius: 10px; padding: 14px; width: 100%; max-width: 280px; text-align: center; margin: auto; }
-    
+
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
     .modal-role-title { font-size: 12px; font-weight: bold; color: var(--accent-glow); }
     .modal-close { background: #200808; border: 1px solid #451515; color: #ff7675; padding: 4px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
@@ -387,6 +388,7 @@
   <div class="header">
     <h1>⚔️ DraftMMaster</h1>
     <div class="user-profile-badge" onclick="openProfileModal()">
+      <img id="nav-user-img" src="" class="user-avatar-small" style="display:none;">
       <div class="user-avatar-small" id="userInitial">U</div>
       <div class="user-nickname-small" id="userNickname">Игрок</div>
     </div>
@@ -466,10 +468,26 @@
     </div>
   </div>
 
-  <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ -->
+  <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ (С АВТОРИЗАЦИЕЙ ТЕЛЕГРАМ) -->
   <div id="section-profile" class="section">
     <div class="profile-card">
-      <h3 style="font-size:12px; color:var(--accent-glow);">👤 Профиль игрока и матчи</h3>
+      <!-- Красивый заголовок "ЧЕК ПРОФИЛЬ" -->
+      <div style="text-align: center; line-height: 1.1; margin-bottom: 15px;">
+        <div style="font-size: 13px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Чек</div>
+        <div style="font-size: 18px; color: var(--accent-glow); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Профиль</div>
+      </div>
+
+      <!-- Карточка Telegram-аккаунта -->
+      <div id="tg-profile-card" style="display: flex; align-items: center; gap: 12px; background: #020503; padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 15px;">
+        <img id="tg-card-img" src="" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; display: none;">
+        <div id="tg-card-fallback" style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-green); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 18px;">U</div>
+        <div style="flex: 1;">
+          <div id="tg-card-name" style="font-weight: bold; color: #fff; font-size: 14px;">Загрузка...</div>
+          <div style="font-size: 10px; color: var(--accent-green); margin-top: 3px;">✅ Авторизовано через Telegram</div>
+        </div>
+      </div>
+
+      <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: bold;">Привязка Dota 2 аккаунта (SteamID32):</p>
       <div class="profile-input-group">
         <input type="text" id="steamIdInput" placeholder="Введи SteamID32 (например: 105248644)...">
         <button class="btn-action" onclick="loadPlayerProfile()">Загрузить</button>
@@ -742,18 +760,38 @@
       ]
     };
 
-    const HERO_DATABASE = {
-      "phantom_assassin": { items: ["Monkey King Bar (MKB)", "Silver Edge", "Bloodthorn", "Blade Mail"], reason: "MKB против Blur, Silver Edge отключает криты Coup de Grace.", stun: 0, magic: 0, late: 3 },
-      "bristleback": { items: ["Silver Edge", "Spirit Vessel", "Eye of Skadi", "Shiva's Guard"], reason: "Silver Edge отключает снижение урона со спины; Vessel режет хил.", stun: 0, magic: 0, late: 2 },
-      "huskar": { items: ["Spirit Vessel", "Silver Edge", "Eye of Skadi", "Heaven's Halberd"], reason: "Vessel блокирует дикий реген на лоу-хп, Halberd обезоруживает.", stun: 0, magic: 1, late: 1 }
-    };
-
     let currentSlot = { team: null, pos: null };
     let currentActiveRoleFilter = 0;
-    let userNickname = localStorage.getItem("dota_nickname") || (window.Telegram?.WebApp?.initDataUnsafe?.user?.first_name) || "Игрок";
+    let userNickname = "Игрок";
 
-    document.getElementById("userNickname").innerText = userNickname;
-    document.getElementById("userInitial").innerText = userNickname.charAt(0).toUpperCase();
+    function initTelegramUser() {
+      const tg = window.Telegram?.WebApp;
+      if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
+        const tgUser = tg.initDataUnsafe.user;
+        const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
+        userNickname = localStorage.getItem("dota_nickname") || fullName || "Игрок";
+        document.getElementById('tg-card-name').innerText = fullName || userNickname;
+        document.getElementById('userNickname').innerText = userNickname;
+        if (tgUser.photo_url) {
+          document.getElementById('tg-card-img').src = tgUser.photo_url;
+          document.getElementById('tg-card-img').style.display = 'block';
+          document.getElementById('tg-card-fallback').style.display = 'none';
+          document.getElementById('nav-user-img').src = tgUser.photo_url;
+          document.getElementById('nav-user-img').style.display = 'flex';
+          document.getElementById('userInitial').style.display = 'none';
+        } else {
+          const initial = (fullName || 'U').charAt(0).toUpperCase();
+          document.getElementById('tg-card-fallback').innerText = initial;
+          document.getElementById('userInitial').innerText = initial;
+        }
+      } else {
+        userNickname = localStorage.getItem("dota_nickname") || "Гость";
+        document.getElementById('tg-card-name').innerText = "Гость (Браузер)";
+        document.getElementById('userNickname').innerText = userNickname;
+        document.getElementById('tg-card-fallback').innerText = "G";
+        document.getElementById('userInitial').innerText = "G";
+      }
+    }
 
     function openProfileModal() {
       document.getElementById("nicknameInput").value = userNickname;
@@ -1138,6 +1176,7 @@
       document.getElementById('matchDetailsModal').classList.remove('active');
     }
 
+    initTelegramUser();
     renderMeta('immortal');
     loadLocalChat();
   </script>
