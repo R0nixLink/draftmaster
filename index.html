@@ -545,7 +545,7 @@
       <div class="chat-messages" id="chatMessages">
         <div class="chat-bubble">
           <div class="author">Система</div>
-          <div class="text">Загрузка глобального чата...</div>
+          <div class="text">Ожидание подключения к чату...</div>
         </div>
       </div>
       <div class="chat-input-group">
@@ -604,27 +604,34 @@
   </div>
 
   <script>
-    // --- ИНИЦИАЛИЗАЦИЯ TELEGRAM ---
-    const tg = window.Telegram?.WebApp;
-    if (tg) {
+    // --- ЗАЩИТА ТЕЛЕГРАМА (ЧТОБЫ НЕ ПАДАЛ КОД НА ПК) ---
+    var tg = null;
+    if (window.Telegram && window.Telegram.WebApp) {
+      tg = window.Telegram.WebApp;
       tg.ready();
       tg.expand();
     }
 
-    // --- ИНИЦИАЛИЗАЦИЯ FIREBASE ---
-    const firebaseConfig = {
-      apiKey: "AIzaSyA5znZK90JTExNeyemOmxL5FR1K-wLhxXk",
-      authDomain: "draftmaster-chat.firebaseapp.com",
-      databaseURL: "https://draftmaster-chat-default-rtdb.firebaseio.com",
-      projectId: "draftmaster-chat",
-      storageBucket: "draftmaster-chat.firebasestorage.app",
-      messagingSenderId: "786437450609",
-      appId: "1:786437450609:web:4881fd4d2483687e5ba4d0",
-      measurementId: "G-MKD3DH88ZR"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
-    const chatRef = db.ref('global_chat');
+    // --- ЗАЩИТА FIREBASE ---
+    var db = null;
+    var chatRef = null;
+    try {
+      var firebaseConfig = {
+        apiKey: "AIzaSyA5znZK90JTExNeyemOmxL5FR1K-wLhxXk",
+        authDomain: "draftmaster-chat.firebaseapp.com",
+        databaseURL: "https://draftmaster-chat-default-rtdb.firebaseio.com",
+        projectId: "draftmaster-chat",
+        storageBucket: "draftmaster-chat.firebasestorage.app",
+        messagingSenderId: "786437450609",
+        appId: "1:786437450609:web:4881fd4d2483687e5ba4d0",
+        measurementId: "G-MKD3DH88ZR"
+      };
+      firebase.initializeApp(firebaseConfig);
+      db = firebase.database();
+      chatRef = db.ref('global_chat');
+    } catch (e) {
+      console.log("Firebase block:", e);
+    }
 
     const ALL_HEROES = [
       { id: 1, name: "antimage", tag: "anti-mage", title: "Anti-Mage", roles: [1] },
@@ -826,9 +833,9 @@
     function loginWithTelegram() {
       if (tg && tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0 && tg.initDataUnsafe.user) {
         const tgUser = tg.initDataUnsafe.user;
-        const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
+        const fullName = (tgUser.first_name || "") + " " + (tgUser.last_name || "");
         
-        userNickname = fullName || "Игрок";
+        userNickname = fullName.trim() || "Игрок";
         localStorage.setItem("dota_nickname", userNickname);
         
         document.getElementById('userNickname').innerText = userNickname;
@@ -878,11 +885,15 @@
     }
 
     function initGlobalChat() {
-      chatRef.limitToLast(50).on('value', (snapshot) => {
+      if (!chatRef) {
+        document.getElementById("chatMessages").innerHTML = '<div class="chat-bubble"><div class="author">Система</div><div class="text">Ошибка подключения к базе чата. Вероятно, блокировка браузера.</div></div>';
+        return;
+      }
+      chatRef.limitToLast(50).on('value', function(snapshot) {
         const chatContainer = document.getElementById("chatMessages");
         const messages = [];
         
-        snapshot.forEach((childSnapshot) => {
+        snapshot.forEach(function(childSnapshot) {
           messages.push(childSnapshot.val());
         });
 
@@ -890,18 +901,19 @@
           messages.push({ author: "Система", text: "Добро пожаловать в глобальный чат! Пишите сообщения — их увидят все." });
         }
 
-        chatContainer.innerHTML = messages.map(m => `
-          <div class="chat-bubble">
-            <div class="author">${escapeHtml(m.author)}</div>
-            <div class="text">${escapeHtml(m.text)}</div>
-          </div>
-        `).join('');
+        chatContainer.innerHTML = messages.map(function(m) {
+          return '<div class="chat-bubble"><div class="author">' + escapeHtml(m.author) + '</div><div class="text">' + escapeHtml(m.text) + '</div></div>';
+        }).join('');
         
         chatContainer.scrollTop = chatContainer.scrollHeight;
       });
     }
 
     function sendChatMessage() {
+      if (!chatRef) {
+         alert("Чат временно недоступен (нет подключения к базе).");
+         return;
+      }
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
       if (!text) return;
@@ -920,13 +932,13 @@
     }
 
     function getHeroImg(name) {
-      return `https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${name}.png`;
+      return "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/" + name + ".png";
     }
 
     function openHeroModal(team, pos) {
-      currentSlot = { team, pos };
+      currentSlot = { team: team, pos: pos };
       const roleNames = ["", "Поз 1 (Керри)", "Поз 2 (Мид)", "Поз 3 (Хард)", "Поз 4 (Семи)", "Поз 5 (Саппорт)"];
-      document.getElementById('modalRoleTitle').innerText = `${team === 'rad' ? 'Radiant' : 'Dire'} • ${roleNames[pos]}`;
+      document.getElementById('modalRoleTitle').innerText = (team === 'rad' ? 'Radiant' : 'Dire') + ' • ' + roleNames[pos];
       document.getElementById('modalSearch').value = '';
       setModalRole(pos);
       document.getElementById('heroModal').classList.add('active');
@@ -934,9 +946,15 @@
 
     function setModalRole(roleNum) {
       currentActiveRoleFilter = roleNum;
-      [1,2,3,4,5,'all'].forEach(r => {
-        const el = document.getElementById(`rbtn-${r}`);
-        if (el) el.classList.toggle('active', r === roleNum || (r === 'all' && roleNum === 0));
+      [1,2,3,4,5,'all'].forEach(function(r) {
+        const el = document.getElementById("rbtn-" + r);
+        if (el) {
+            if (r === roleNum || (r === 'all' && roleNum === 0)) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
+        }
       });
       renderModalHeroes(document.getElementById('modalSearch').value);
     }
@@ -945,12 +963,13 @@
       document.getElementById('heroModal').classList.remove('active');
     }
 
-    function renderModalHeroes(filter = '') {
+    function renderModalHeroes(filter) {
+      if (!filter) filter = '';
       const grid = document.getElementById('heroesGrid');
       grid.innerHTML = '';
 
       const selectedIds = [];
-      ['rad', 'dir'].forEach(t => {
+      ['rad', 'dir'].forEach(function(t) {
         for (let p = 1; p <= 5; p++) {
           if (draftState[t][p]) selectedIds.push(draftState[t][p].id);
         }
@@ -958,23 +977,20 @@
 
       let list = ALL_HEROES;
       if (currentActiveRoleFilter > 0) {
-        list = list.filter(h => h.roles.includes(currentActiveRoleFilter));
+        list = list.filter(function(h) { return h.roles.includes(currentActiveRoleFilter); });
       }
 
       if (filter) {
-        list = list.filter(h => h.title.toLowerCase().includes(filter.toLowerCase()));
+        list = list.filter(function(h) { return h.title.toLowerCase().includes(filter.toLowerCase()); });
       }
 
-      list.forEach(h => {
+      list.forEach(function(h) {
         const isPicked = selectedIds.includes(h.id);
         const card = document.createElement('div');
-        card.className = `hero-pick-card ${isPicked ? 'disabled' : ''}`;
-        card.innerHTML = `
-          <img src="${getHeroImg(h.name)}" loading="lazy">
-          <div class="name">${h.title}</div>
-        `;
+        card.className = "hero-pick-card " + (isPicked ? "disabled" : "");
+        card.innerHTML = '<img src="' + getHeroImg(h.name) + '" loading="lazy"><div class="name">' + h.title + '</div>';
         if (!isPicked) {
-          card.onclick = () => selectHero(h);
+          card.onclick = function() { selectHero(h); };
         }
         grid.appendChild(card);
       });
@@ -985,11 +1001,12 @@
     }
 
     function selectHero(hero) {
-      const { team, pos } = currentSlot;
+      const team = currentSlot.team;
+      const pos = currentSlot.pos;
       draftState[team][pos] = hero;
 
-      document.getElementById(`img-${team}-${pos}`).src = getHeroImg(hero.name);
-      const nameEl = document.getElementById(`name-${team}-${pos}`);
+      document.getElementById("img-" + team + "-" + pos).src = getHeroImg(hero.name);
+      const nameEl = document.getElementById("name-" + team + "-" + pos);
       nameEl.innerText = hero.title;
       nameEl.classList.remove('empty');
 
@@ -997,11 +1014,11 @@
     }
 
     function resetDraft() {
-      ['rad', 'dir'].forEach(t => {
+      ['rad', 'dir'].forEach(function(t) {
         for (let p = 1; p <= 5; p++) {
           draftState[t][p] = null;
-          document.getElementById(`img-${t}-${p}`).src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>";
-          const nameEl = document.getElementById(`name-${t}-${p}`);
+          document.getElementById("img-" + t + "-" + p).src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>";
+          const nameEl = document.getElementById("name-" + t + "-" + p);
           nameEl.innerText = p === 1 ? "Выбрать керри" : p === 2 ? "Выбрать мидера" : p === 3 ? "Выбрать хардлайнера" : p === 4 ? "Выбрать семи-сапа" : "Выбрать фулл-сапа";
           nameEl.classList.add('empty');
         }
@@ -1010,8 +1027,8 @@
     }
 
     function analyzeDraft() {
-      const radHeroes = [1,2,3,4,5].map(p => draftState.rad[p]).filter(Boolean);
-      const dirHeroes = [1,2,3,4,5].map(p => draftState.dir[p]).filter(Boolean);
+      const radHeroes = [1,2,3,4,5].map(function(p) { return draftState.rad[p]; }).filter(Boolean);
+      const dirHeroes = [1,2,3,4,5].map(function(p) { return draftState.dir[p]; }).filter(Boolean);
 
       if (radHeroes.length < 2 || dirHeroes.length < 2) {
         alert("Выбери минимум по 2 героя в каждую команду!");
@@ -1024,19 +1041,16 @@
 
       document.getElementById('analysis-result').style.display = 'block';
       document.getElementById('bar-rad').style.width = radScore + '%';
-      document.getElementById('bar-rad').innerText = `Radiant: ${radScore}%`;
+      document.getElementById('bar-rad').innerText = "Radiant: " + radScore + "%";
       document.getElementById('bar-dir').style.width = dirScore + '%';
-      document.getElementById('bar-dir').innerText = `Dire: ${dirScore}%`;
+      document.getElementById('bar-dir').innerText = "Dire: " + dirScore + "%";
 
       document.getElementById('analysis-factors').innerHTML = "⚖️ Баланс пиков в норме. Контролируйте тайминги и Рошана.";
 
       const buildsContainer = document.getElementById('item-builds-list');
-      buildsContainer.innerHTML = dirHeroes.map(h => `
-        <div class="build-group">
-          <h4><img src="${getHeroImg(h.name)}"> Против ${h.title}:</h4>
-          <div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span><span class="item-tag">Silver Edge</span></div>
-        </div>
-      `).join('');
+      buildsContainer.innerHTML = dirHeroes.map(function(h) {
+        return '<div class="build-group"><h4><img src="' + getHeroImg(h.name) + '"> Против ' + h.title + ':</h4><div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span><span class="item-tag">Silver Edge</span></div></div>';
+      }).join('');
     }
 
     function toggleRankDropdown() {
@@ -1054,19 +1068,9 @@
       const listContainer = document.getElementById('metaHeroesList');
       const data = META_BY_RANK[rank] || META_BY_RANK['immortal'];
 
-      listContainer.innerHTML = data.map(item => `
-        <div class="meta-hero-row">
-          <img class="meta-hero-img" src="${getHeroImg(item.name)}" loading="lazy">
-          <div style="flex:1;">
-            <div class="meta-hero-name">${item.title}</div>
-            <div class="meta-hero-stats">
-              <span>Винрейт: <b class="meta-winrate">${item.wr}</b></span>
-              <span>Пик: <b>${item.pick}</b></span>
-              <span>Позиция: <b style="color:var(--gold);">${item.best}</b></span>
-            </div>
-          </div>
-        </div>
-      `).join('');
+      listContainer.innerHTML = data.map(function(item) {
+        return '<div class="meta-hero-row"><img class="meta-hero-img" src="' + getHeroImg(item.name) + '" loading="lazy"><div style="flex:1;"><div class="meta-hero-name">' + item.title + '</div><div class="meta-hero-stats"><span>Винрейт: <b class="meta-winrate">' + item.wr + '</b></span><span>Пик: <b>' + item.pick + '</b></span><span>Позиция: <b style="color:var(--gold);">' + item.best + '</b></span></div></div></div>';
+      }).join('');
     }
 
     window.onclick = function(event) {
@@ -1079,11 +1083,17 @@
     }
 
     function switchTab(tab) {
-      ['draft', 'counter', 'profile', 'meta', 'chat'].forEach(t => {
-        const card = document.getElementById(`tab-${t}`);
-        const sec = document.getElementById(`section-${t}`);
-        if (card) card.classList.toggle('active', t === tab);
-        if (sec) sec.classList.toggle('active', t === tab);
+      ['draft', 'counter', 'profile', 'meta', 'chat'].forEach(function(t) {
+        const card = document.getElementById("tab-" + t);
+        const sec = document.getElementById("section-" + t);
+        if (card) {
+            if (t === tab) card.classList.add('active');
+            else card.classList.remove('active');
+        }
+        if (sec) {
+            if (t === tab) sec.classList.add('active');
+            else sec.classList.remove('active');
+        }
       });
     }
 
@@ -1093,33 +1103,30 @@
       if (!input) return;
 
       resultsDiv.innerHTML = "Загрузка...";
-      const target = ALL_HEROES.find(h => h.title.toLowerCase().includes(input) || h.name.includes(input));
+      const target = ALL_HEROES.find(function(h) { return h.title.toLowerCase().includes(input) || h.name.includes(input); });
       if (!target) {
         resultsDiv.innerHTML = "Герой не найден.";
         return;
       }
 
       try {
-        const res = `https://api.opendota.com/api/heroes/${target.id}/matchups`;
-        const matchups = await (await fetch(res)).json();
+        const res = "https://api.opendota.com/api/heroes/" + target.id + "/matchups";
+        const fetchRes = await fetch(res);
+        const matchups = await fetchRes.json();
         const top5 = matchups
-          .filter(m => m.games_played > 30)
-          .map(m => {
-            const h = ALL_HEROES.find(x => x.id === m.hero_id);
+          .filter(function(m) { return m.games_played > 30; })
+          .map(function(m) {
+            const h = ALL_HEROES.find(function(x) { return x.id === m.hero_id; });
             const wr = ((m.wins / m.games_played) * 100).toFixed(1);
             return { hero: h, winrate: wr };
           })
-          .filter(c => c.hero)
-          .sort((a, b) => b.winrate - a.winrate)
+          .filter(function(c) { return c.hero; })
+          .sort(function(a, b) { return b.winrate - a.winrate; })
           .slice(0, 5);
 
-        resultsDiv.innerHTML = top5.map(c => `
-          <div class="counter-item">
-            <img src="${getHeroImg(c.hero.name)}">
-            <span style="flex:1; font-weight:bold;">${c.hero.title}</span>
-            <span style="color:var(--accent-green)">Винрейт: <b>${c.winrate}%</b></span>
-          </div>
-        `).join('');
+        resultsDiv.innerHTML = top5.map(function(c) {
+          return '<div class="counter-item"><img src="' + getHeroImg(c.hero.name) + '"><span style="flex:1; font-weight:bold;">' + c.hero.title + '</span><span style="color:var(--accent-green)">Винрейт: <b>' + c.winrate + '%</b></span></div>';
+        }).join('');
       } catch (e) {
         resultsDiv.innerHTML = "Ошибка загрузки.";
       }
@@ -1132,47 +1139,26 @@
 
       resultsDiv.innerHTML = "Загрузка профиля и матчей...";
       try {
-        const [playerRes, matchesRes] = await Promise.all([
-          fetch(`https://api.opendota.com/api/players/${steamId}`),
-          fetch(`https://api.opendota.com/api/players/${steamId}/recentMatches`)
-        ]);
-
-        const playerData = await playerRes.json();
-        const matchesData = await matchesRes.json();
+        const playerResPromise = fetch("https://api.opendota.com/api/players/" + steamId);
+        const matchesResPromise = fetch("https://api.opendota.com/api/players/" + steamId + "/recentMatches");
+        
+        const responses = await Promise.all([playerResPromise, matchesResPromise]);
+        const playerData = await responses[0].json();
+        const matchesData = await responses[1].json();
 
         if (!playerData.profile) {
           resultsDiv.innerHTML = "❌ Игрок не найден или профиль скрыт.";
           return;
         }
 
-        let html = `
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-            <img src="${playerData.profile.avatarfull}" style="width:36px; height:36px; border-radius:50%;">
-            <div>
-              <div style="font-weight:bold; color:#fff; font-size:12px;">${playerData.profile.personaname}</div>
-              <div style="font-size:10px; color:var(--text-muted);">Ранг (оценка): ${playerData.competitive_rank || 'Калибровка'}</div>
-            </div>
-          </div>
-          <div style="font-size:11px; font-weight:bold; margin-bottom:4px; color:var(--accent-glow);">Последние матчи:</div>
-        `;
+        let html = '<div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><img src="' + playerData.profile.avatarfull + '" style="width:36px; height:36px; border-radius:50%;"><div><div style="font-weight:bold; color:#fff; font-size:12px;">' + playerData.profile.personaname + '</div><div style="font-size:10px; color:var(--text-muted);">Ранг (оценка): ' + (playerData.competitive_rank || 'Калибровка') + '</div></div></div><div style="font-size:11px; font-weight:bold; margin-bottom:4px; color:var(--accent-glow);">Последние матчи:</div>';
 
-        matchesData.slice(0, 5).forEach(m => {
+        matchesData.slice(0, 5).forEach(function(m) {
           const isWin = (m.player_slot < 128 && m.radiant_win) || (m.player_slot >= 128 && !m.radiant_win);
-          const hero = ALL_HEROES.find(h => h.id === m.hero_id) || { title: `Hero ${m.hero_id}` };
-          html += `
-            <div class="match-history-item" style="border-left: 3px solid ${isWin ? 'var(--radiant-green)' : 'var(--dire-red)'};">
-              <div>
-                <b>${hero.title}</b> (${Math.round(m.duration / 60)} мин)<br>
-                <span style="font-size:9px; color:var(--text-muted);">KDA: ${m.kills}/${m.deaths}/${m.assists}</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span style="color: ${isWin ? 'var(--radiant-green)' : 'var(--dire-red)'}; font-weight:bold;">
-                  ${isWin ? 'Победа' : 'Поражение'}
-                </span>
-                <button class="btn-details" onclick="loadMatchDetails(${m.match_id})">Детали</button>
-              </div>
-            </div>
-          `;
+          let hero = ALL_HEROES.find(function(h) { return h.id === m.hero_id; });
+          if (!hero) hero = { title: "Hero " + m.hero_id };
+          
+          html += '<div class="match-history-item" style="border-left: 3px solid ' + (isWin ? 'var(--radiant-green)' : 'var(--dire-red)') + ';"><div><b>' + hero.title + '</b> (' + Math.round(m.duration / 60) + ' мин)<br><span style="font-size:9px; color:var(--text-muted);">KDA: ' + m.kills + '/' + m.deaths + '/' + m.assists + '</span></div><div style="display:flex; align-items:center; gap:6px;"><span style="color: ' + (isWin ? 'var(--radiant-green)' : 'var(--dire-red)') + '; font-weight:bold;">' + (isWin ? 'Победа' : 'Поражение') + '</span><button class="btn-details" onclick="loadMatchDetails(' + m.match_id + ')">Детали</button></div></div>';
         });
 
         resultsDiv.innerHTML = html;
@@ -1187,55 +1173,42 @@
       const bodyEl = document.getElementById('modalMatchBody');
 
       modal.classList.add('active');
-      titleEl.innerText = `Матч #${matchId}`;
+      titleEl.innerText = "Матч #" + matchId;
       bodyEl.innerHTML = "🔄 Загружаю состав и детали матча...";
 
       try {
-        const [matchRes, heroesRes] = await Promise.all([
-          fetch(`https://api.opendota.com/api/matches/${matchId}`),
-          fetch(`https://api.opendota.com/api/heroes`)
-        ]);
-
-        const data = await matchRes.json();
-        const heroesData = await heroesRes.json();
-        const heroesMap = { ...ALL_HEROES.reduce((acc, h) => { acc[h.id] = h.title; return acc; }, {}), ...Object.fromEntries(heroesData.map(h => [h.id, h.localized_name])) };
+        const matchResPromise = fetch("https://api.opendota.com/api/matches/" + matchId);
+        const heroesResPromise = fetch("https://api.opendota.com/api/heroes");
+        
+        const responses = await Promise.all([matchResPromise, heroesResPromise]);
+        const data = await responses[0].json();
+        const heroesData = await responses[1].json();
+        
+        const heroesMap = {};
+        ALL_HEROES.forEach(function(h) { heroesMap[h.id] = h.title; });
+        heroesData.forEach(function(h) { heroesMap[h.id] = h.localized_name; });
 
         const radWin = data.radiant_win;
         const duration = Math.floor((data.duration || 0) / 60);
 
-        let html = `
-          <div style="text-align:center; font-weight:bold; margin-bottom:8px; font-size:11px; color:${radWin ? 'var(--radiant-green)' : 'var(--dire-red)'};">
-            ${radWin ? '🟢 Победа Radiant' : '🔴 Победа Dire'} (${duration} мин) | Счет: ${data.radiant_score} : ${data.dire_score}
-          </div>
-          <div style="color:var(--radiant-green); font-weight:bold; font-size:10px; margin-bottom:4px;">🟢 Radiant (Свет):</div>
-        `;
+        let html = '<div style="text-align:center; font-weight:bold; margin-bottom:8px; font-size:11px; color:' + (radWin ? 'var(--radiant-green)' : 'var(--dire-red)') + ';">' + (radWin ? '🟢 Победа Radiant' : '🔴 Победа Dire') + ' (' + duration + ' мин) | Счет: ' + data.radiant_score + ' : ' + data.dire_score + '</div><div style="color:var(--radiant-green); font-weight:bold; font-size:10px; margin-bottom:4px;">🟢 Radiant (Свет):</div>';
 
-        data.players.slice(0, 5).forEach(p => {
-          const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
-          const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
-          html += `
-            <div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
-              <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
-              <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
-              <span style="color:var(--text-muted);">${heroName}</span>
-              <span style="font-weight:bold; color:var(--accent-glow);">[${p.kills}/${p.deaths}/${p.assists}]</span>
-            </div>
-          `;
+        data.players.slice(0, 5).forEach(function(p) {
+          const heroName = heroesMap[p.hero_id] || ("Hero_" + p.hero_id);
+          const hObj = ALL_HEROES.find(function(h) { return h.id === p.hero_id; });
+          const heroSlug = hObj ? hObj.name : 'antimage';
+          
+          html += '<div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;"><img src="' + getHeroImg(heroSlug) + '" style="width:24px; height:14px; border-radius:2px; object-fit:cover;"><span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (p.personaname || 'Аноним') + '</span><span style="color:var(--text-muted);">' + heroName + '</span><span style="font-weight:bold; color:var(--accent-glow);">[' + p.kills + '/' + p.deaths + '/' + p.assists + ']</span></div>';
         });
 
-        html += `<div style="color:var(--dire-red); font-weight:bold; font-size:10px; margin-top:8px; margin-bottom:4px;">🔴 Dire (Тьма):</div>`;
+        html += '<div style="color:var(--dire-red); font-weight:bold; font-size:10px; margin-top:8px; margin-bottom:4px;">🔴 Dire (Тьма):</div>';
 
-        data.players.slice(5, 10).forEach(p => {
-          const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
-          const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
-          html += `
-            <div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
-              <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
-              <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
-              <span style="color:var(--text-muted);">${heroName}</span>
-              <span style="font-weight:bold; color:var(--accent-glow);">[${p.kills}/${p.deaths}/${p.assists}]</span>
-            </div>
-          `;
+        data.players.slice(5, 10).forEach(function(p) {
+          const heroName = heroesMap[p.hero_id] || ("Hero_" + p.hero_id);
+          const hObj = ALL_HEROES.find(function(h) { return h.id === p.hero_id; });
+          const heroSlug = hObj ? hObj.name : 'antimage';
+          
+          html += '<div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;"><img src="' + getHeroImg(heroSlug) + '" style="width:24px; height:14px; border-radius:2px; object-fit:cover;"><span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (p.personaname || 'Аноним') + '</span><span style="color:var(--text-muted);">' + heroName + '</span><span style="font-weight:bold; color:var(--accent-glow);">[' + p.kills + '/' + p.deaths + '/' + p.assists + ']</span></div>';
         });
 
         bodyEl.innerHTML = html;
