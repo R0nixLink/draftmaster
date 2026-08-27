@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>DraftMMaster</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <!-- ПОДКЛЮЧЕНИЕ FIREBASE -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
   <style>
     :root {
       --bg-dark: #030704;
@@ -471,7 +474,6 @@
   <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ -->
   <div id="section-profile" class="section">
     <div class="profile-card">
-      <!-- Красивый заголовок "ЧЕК ПРОФИЛЬ" -->
       <div style="text-align: center; line-height: 1.1; margin-bottom: 15px;">
         <div style="font-size: 13px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Чек</div>
         <div style="font-size: 18px; color: var(--accent-glow); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Профиль</div>
@@ -527,7 +529,7 @@
       <div class="chat-messages" id="chatMessages">
         <div class="chat-bubble">
           <div class="author">Система</div>
-          <div class="text">Глобальный чат подключен! Пишите сообщения — их видят все пользователи.</div>
+          <div class="text">Загрузка глобального чата...</div>
         </div>
       </div>
       <div class="chat-input-group">
@@ -592,6 +594,21 @@
       tg.ready();
       tg.expand();
     }
+
+    // --- ИНИЦИАЛИЗАЦИЯ FIREBASE ---
+    const firebaseConfig = {
+      apiKey: "AIzaSyA5znZK90JTExNeyemOmxL5FR1K-wLhxXk",
+      authDomain: "draftmaster-chat.firebaseapp.com",
+      databaseURL: "https://draftmaster-chat-default-rtdb.firebaseio.com",
+      projectId: "draftmaster-chat",
+      storageBucket: "draftmaster-chat.firebasestorage.app",
+      messagingSenderId: "786437450609",
+      appId: "1:786437450609:web:4881fd4d2483687e5ba4d0",
+      measurementId: "G-MKD3DH88ZR"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+    const chatRef = db.ref('global_chat');
 
     const ALL_HEROES = [
       { id: 1, name: "antimage", tag: "anti-mage", title: "Anti-Mage", roles: [1] },
@@ -791,7 +808,6 @@
     }
 
     function loginWithTelegram() {
-      // Проверяем, отдал ли нам Телеграм данные
       if (tg && tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0 && tg.initDataUnsafe.user) {
         const tgUser = tg.initDataUnsafe.user;
         const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
@@ -819,8 +835,6 @@
         alert("Успешно авторизовано как " + userNickname + "!");
         document.getElementById('profileModal').classList.remove('active');
       } else {
-        // ЕСЛИ ТЕЛЕГРАМ СКРЫЛ ДАННЫЕ (на ПК):
-        // Никаких страшных ошибок с пустыми скобками. 
         alert("Телеграм на ПК скрыл твои данные для приватности 🕵️‍♂️\n\nНичего страшного! Просто введи свой ник в поле ниже и нажми «Сохранить ник».");
         document.getElementById("nicknameInput").focus();
       }
@@ -847,43 +861,49 @@
       document.getElementById("profileModal").classList.remove("active");
     }
 
-    function loadLocalChat() {
-      const chatContainer = document.getElementById("chatMessages");
-      const saved = JSON.parse(localStorage.getItem("global_dota_chat") || "[]");
-      if (saved.length === 0) {
-        saved.push({ author: "Система", text: "Добро пожаловать в глобальный чат! Пишите сообщения — их увидят все." });
-      }
-      chatContainer.innerHTML = saved.map(m => `
-        <div class="chat-bubble">
-          <div class="author">${escapeHtml(m.author)}</div>
-          <div class="text">${escapeHtml(m.text)}</div>
-        </div>
-      `).join('');
-      chatContainer.scrollTop = chatContainer.scrollHeight;
+    // НОВАЯ ФУНКЦИЯ ДЛЯ ГЛОБАЛЬНОГО ЧАТА FIREBASE
+    function initGlobalChat() {
+      chatRef.limitToLast(50).on('value', (snapshot) => {
+        const chatContainer = document.getElementById("chatMessages");
+        const messages = [];
+        
+        snapshot.forEach((childSnapshot) => {
+          messages.push(childSnapshot.val());
+        });
+
+        if (messages.length === 0) {
+          messages.push({ author: "Система", text: "Добро пожаловать в глобальный чат! Пишите сообщения — их увидят все." });
+        }
+
+        chatContainer.innerHTML = messages.map(m => `
+          <div class="chat-bubble">
+            <div class="author">${escapeHtml(m.author)}</div>
+            <div class="text">${escapeHtml(m.text)}</div>
+          </div>
+        `).join('');
+        
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      });
     }
 
+    // ОТПРАВКА СООБЩЕНИЯ В БАЗУ ДАННЫХ
     function sendChatMessage() {
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
       if (!text) return;
 
-      let saved = JSON.parse(localStorage.getItem("global_dota_chat") || "[]");
-      saved.push({ author: userNickname, text: text });
-      if (saved.length > 50) saved.shift();
-      localStorage.setItem("global_dota_chat", JSON.stringify(saved));
+      chatRef.push({
+        author: userNickname,
+        text: text,
+        timestamp: firebase.database.ServerValue.TIMESTAMP
+      });
 
-      loadLocalChat();
       input.value = "";
     }
 
     function escapeHtml(str) {
       return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
-
-    const draftState = {
-      rad: { 1: null, 2: null, 3: null, 4: null, 5: null },
-      dir: { 1: null, 2: null, 3: null, 4: null, 5: null }
-    };
 
     function getHeroImg(name) {
       return `https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${name}.png`;
@@ -1216,7 +1236,7 @@
 
     setInitialName();
     renderMeta('immortal');
-    loadLocalChat();
+    initGlobalChat(); // Запуск настоящего глобального чата
   </script>
 </body>
 </html>
