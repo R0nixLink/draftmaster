@@ -23,64 +23,323 @@
       --gold: #f1c40f;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--bg-dark); color: var(--text-main); padding: 10px; padding-bottom: 45px; min-height: 100vh; overflow-x: hidden; }
-    .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: var(--card-bg); border: 1px solid var(--card-border); padding: 8px 12px; border-radius: 10px; }
-    .header h1 { font-size: 15px; font-weight: 800; color: var(--accent-glow); text-transform: uppercase; letter-spacing: 1px; }
-    
-    .user-profile-badge { display: flex; align-items: center; gap: 6px; background: #020503; border: 1px solid var(--card-border); padding: 4px 8px; border-radius: 20px; cursor: pointer; }
-    .user-avatar-small { width: 20px; height: 20px; border-radius: 50%; background: var(--accent-green); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: bold; color: #000; object-fit: cover; }
-    .user-nickname-small { font-size: 10px; font-weight: bold; color: #fff; max-width: 80px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
 
-    .menu-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 4px; margin-bottom: 12px; }
-    .menu-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; padding: 6px 2px; text-align: center; cursor: pointer; }
-    .menu-card.active { border-color: var(--accent-glow); background: var(--card-active); }
-    .menu-card .icon { font-size: 14px; margin-bottom: 2px; }
-    .menu-card .title { font-size: 8px; font-weight: bold; color: var(--text-muted); }
-    .menu-card.active .title { color: var(--accent-glow); }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      padding: 10px;
+      padding-bottom: 45px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-    .section { display: none; }
-    .section.active { display: block; }
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      padding: 8px 12px;
+      border-radius: 10px;
+    }
 
-    .teams-container { display: flex; flex-direction: column; gap: 10px; }
-    .team-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 8px; }
+    .header h1 {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--accent-glow);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .user-profile-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: #020503;
+      border: 1px solid var(--card-border);
+      padding: 4px 8px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .user-avatar-small {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: bold;
+      color: #000;
+      object-fit: cover;
+    }
+
+    .user-nickname-small {
+      font-size: 10px;
+      font-weight: bold;
+      color: #fff;
+      max-width: 80px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* 5 ВКЛАДОК */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      margin-bottom: 12px;
+    }
+
+    .menu-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 6px 2px;
+      text-align: center;
+      cursor: pointer;
+    }
+
+    .menu-card.active {
+      border-color: var(--accent-glow);
+      background: var(--card-active);
+    }
+
+    .menu-card .icon {
+      font-size: 14px;
+      margin-bottom: 2px;
+    }
+
+    .menu-card .title {
+      font-size: 8px;
+      font-weight: bold;
+      color: var(--text-muted);
+    }
+
+    .menu-card.active .title {
+      color: var(--accent-glow);
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    .teams-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .team-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 8px;
+    }
+
     .team-box.radiant { border-left: 4px solid var(--radiant-green); }
     .team-box.dire { border-left: 4px solid var(--dire-red); }
-    .team-title { font-size: 11px; font-weight: 800; margin-bottom: 6px; text-transform: uppercase; }
+
+    .team-title {
+      font-size: 11px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+
     .radiant-text { color: var(--radiant-green); }
     .dire-text { color: var(--dire-red); }
 
-    .slot-row { display: flex; align-items: center; margin-bottom: 5px; gap: 6px; background: #020503; border: 1px solid var(--card-border); padding: 5px 8px; border-radius: 6px; cursor: pointer; }
-    .slot-label { font-size: 10px; color: var(--text-muted); width: 75px; font-weight: bold; flex-shrink: 0; }
-    .slot-hero-img { width: 32px; height: 18px; border-radius: 3px; object-fit: cover; background: #050d07; flex-shrink: 0; }
-    .slot-hero-name { flex: 1; font-size: 11px; font-weight: bold; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .slot-row {
+      display: flex;
+      align-items: center;
+      margin-bottom: 5px;
+      gap: 6px;
+      background: #020503;
+      border: 1px solid var(--card-border);
+      padding: 5px 8px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    .slot-label {
+      font-size: 10px;
+      color: var(--text-muted);
+      width: 75px;
+      font-weight: bold;
+      flex-shrink: 0;
+    }
+
+    .slot-hero-img {
+      width: 32px;
+      height: 18px;
+      border-radius: 3px;
+      object-fit: cover;
+      background: #050d07;
+      flex-shrink: 0;
+    }
+
+    .slot-hero-name {
+      flex: 1;
+      font-size: 11px;
+      font-weight: bold;
+      color: #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .slot-hero-name.empty { color: #3b5444; font-weight: normal; }
 
-    .btn-row { display: flex; gap: 8px; margin-top: 10px; }
-    .btn-analyze { flex: 3; background: linear-gradient(135deg, #0d3815, #2ecc71); color: #fff; border: none; border-radius: 8px; padding: 10px; font-weight: bold; font-size: 12px; cursor: pointer; }
-    .btn-reset { flex: 1; background: #08140c; color: var(--text-muted); border: 1px solid var(--card-border); border-radius: 8px; padding: 10px; font-size: 11px; cursor: pointer; }
+    .btn-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 10px;
+    }
 
-    .analysis-card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin-top: 10px; display: none; }
-    .winrate-bar-container { background: #0d0d0d; border-radius: 6px; height: 22px; overflow: hidden; display: flex; margin: 8px 0; }
+    .btn-analyze {
+      flex: 3;
+      background: linear-gradient(135deg, #0d3815, #2ecc71);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      font-weight: bold;
+      font-size: 12px;
+      cursor: pointer;
+    }
+
+    .btn-reset {
+      flex: 1;
+      background: #08140c;
+      color: var(--text-muted);
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 11px;
+      cursor: pointer;
+    }
+
+    .analysis-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+      margin-top: 10px;
+      display: none;
+    }
+
+    .winrate-bar-container {
+      background: #0d0d0d;
+      border-radius: 6px;
+      height: 22px;
+      overflow: hidden;
+      display: flex;
+      margin: 8px 0;
+    }
+
     .winrate-radiant { background: var(--radiant-green); height: 100%; text-align: center; font-size: 10px; line-height: 22px; font-weight: bold; color: #fff; }
     .winrate-dire { background: var(--dire-red); height: 100%; text-align: center; font-size: 10px; line-height: 22px; font-weight: bold; color: #fff; }
-    .factors-box { background: #020503; border: 1px solid #0f2416; border-radius: 6px; padding: 8px; margin: 8px 0; font-size: 10px; line-height: 1.4; }
-    .build-group { margin-top: 8px; padding: 8px; background: #020503; border: 1px solid #0f2416; border-radius: 6px; font-size: 10px; }
+
+    .factors-box {
+      background: #020503;
+      border: 1px solid #0f2416;
+      border-radius: 6px;
+      padding: 8px;
+      margin: 8px 0;
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    .build-group {
+      margin-top: 8px;
+      padding: 8px;
+      background: #020503;
+      border: 1px solid #0f2416;
+      border-radius: 6px;
+      font-size: 10px;
+    }
+
     .build-group h4 { color: var(--accent-glow); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; font-size: 11px; }
     .build-group img { width: 24px; height: 14px; border-radius: 2px; object-fit: cover; }
     .item-tag { display: inline-block; background: #0c1f13; color: var(--gold); border: 1px solid #1f472b; padding: 2px 5px; border-radius: 4px; font-weight: bold; margin-right: 4px; margin-top: 3px; font-size: 9px; }
 
-    .chat-container { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; height: 68vh; }
-    .chat-messages { flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 6px; padding-bottom: 8px; }
-    .chat-bubble { background: #020503; border: 1px solid var(--card-border); padding: 6px 8px; border-radius: 6px; font-size: 11px; max-width: 85%; }
+    /* ГЛОБАЛЬНЫЙ ЧАТ */
+    .chat-container {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      height: 68vh;
+    }
+
+    .chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding-bottom: 8px;
+    }
+
+    .chat-bubble {
+      background: #020503;
+      border: 1px solid var(--card-border);
+      padding: 6px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      max-width: 85%;
+    }
+
     .chat-bubble .author { font-size: 9px; color: var(--accent-glow); font-weight: bold; margin-bottom: 2px; }
     .chat-bubble .text { color: #fff; word-break: break-word; }
-    .chat-input-group { display: flex; gap: 6px; margin-top: 8px; flex-shrink: 0; }
 
-    .meta-container, .profile-card, .search-box { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; }
-    .meta-header-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #020503; padding: 6px 10px; border: 1px solid var(--card-border); border-radius: 6px; }
+    .chat-input-group {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      flex-shrink: 0;
+    }
+
+    /* МЕТА И ПРОФИЛЬ */
+    .meta-container, .profile-card, .search-box {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 10px;
+      padding: 12px;
+    }
+
+    .meta-header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+      background: #020503;
+      padding: 6px 10px;
+      border: 1px solid var(--card-border);
+      border-radius: 6px;
+    }
+
     .meta-rank-title-wrap { display: flex; align-items: center; gap: 6px; }
     .meta-title-text { font-size: 12px; font-weight: bold; color: var(--accent-glow); }
+
     .rank-select-wrapper { position: relative; }
     .rank-dropdown-btn { background: #0d2215; border: 1px solid var(--accent-green); color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
     .rank-dropdown-content { position: absolute; right: 0; top: 110%; background: #060e08; border: 1px solid var(--card-border); border-radius: 6px; width: 150px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
@@ -100,9 +359,13 @@
     .match-history-item { background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 8px; margin-top: 6px; font-size: 10px; display: flex; justify-content: space-between; align-items: center; }
     .btn-details { background: #0d2215; border: 1px solid var(--accent-green); color: var(--accent-glow); padding: 3px 6px; border-radius: 4px; font-size: 9px; font-weight: bold; cursor: pointer; }
 
-    .profile-modal, .match-modal, .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3,7,4,0.96); z-index: 99999; display: none; flex-direction: column; padding: 10px; }
+    /* МОДАЛЬНЫЕ ОКНА */
+    .profile-modal, .match-modal, .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(3,7,4,0.96); z-index: 99999; display: none; flex-direction: column; padding: 10px;
+    }
     .profile-modal.active, .match-modal.active, .modal-overlay.active { display: flex; }
     .profile-box-modal { background: var(--card-bg); border: 1px solid var(--accent-green); border-radius: 10px; padding: 14px; width: 100%; max-width: 280px; text-align: center; margin: auto; }
+
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; flex-shrink: 0; }
     .modal-role-title { font-size: 12px; font-weight: bold; color: var(--accent-glow); }
     .modal-close { background: #200808; border: 1px solid #451515; color: #ff7675; padding: 4px 10px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 11px; }
@@ -110,17 +373,21 @@
     .role-filters { display: flex; gap: 4px; overflow-x: auto; margin-bottom: 6px; padding-bottom: 4px; flex-shrink: 0; scrollbar-width: none; }
     .role-btn { background: #07120a; border: 1px solid var(--card-border); color: var(--text-muted); font-size: 9px; padding: 4px 6px; border-radius: 4px; white-space: nowrap; cursor: pointer; }
     .role-btn.active { background: var(--accent-green); color: #000; font-weight: bold; }
+
     .modal-search { background: #040905; border: 1px solid var(--card-border); border-radius: 6px; padding: 7px; color: #fff; outline: none; font-size: 11px; margin-bottom: 6px; flex-shrink: 0; }
     .heroes-grid-container { flex: 1; overflow-y: scroll; display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; align-content: start; padding-bottom: 20px; }
     .hero-pick-card { background: #061008; border: 1px solid var(--card-border); border-radius: 5px; overflow: hidden; text-align: center; cursor: pointer; }
     .hero-pick-card.disabled { opacity: 0.15; pointer-events: none; }
     .hero-pick-card img { width: 100%; height: 32px; object-fit: cover; display: block; }
     .hero-pick-card .name { font-size: 8px; padding: 2px; color: #eee; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .counter-item { background: #020503; border: 1px solid var(--card-border); padding: 6px; border-radius: 6px; margin-top: 6px; display: flex; align-items: center; gap: 8px; font-size: 11px; }
+    .counter-item img { width: 30px; height: 16px; border-radius: 3px; object-fit: cover; }
   </style>
 </head>
 <body>
 
-  <!-- ШАПКА -->
+  <!-- ШАПКА С ПРОФИЛЕМ СПРАВА -->
   <div class="header">
     <h1>⚔️ DraftMMaster</h1>
     <div class="user-profile-badge" onclick="openProfileModal()">
@@ -130,13 +397,28 @@
     </div>
   </div>
 
-  <!-- ВКЛАДКИ -->
+  <!-- 5 ВКЛАДОК -->
   <div class="menu-grid">
-    <div class="menu-card active" id="tab-draft" onclick="switchTab('draft')"><div class="icon">🛡️</div><div class="title">Драфт</div></div>
-    <div class="menu-card" id="tab-counter" onclick="switchTab('counter')"><div class="icon">⚔️</div><div class="title">Контрпики</div></div>
-    <div class="menu-card" id="tab-profile" onclick="switchTab('profile')"><div class="icon">👤</div><div class="title">Профиль</div></div>
-    <div class="menu-card" id="tab-meta" onclick="switchTab('meta')"><div class="icon">📊</div><div class="title">Мета</div></div>
-    <div class="menu-card" id="tab-chat" onclick="switchTab('chat')"><div class="icon">💬</div><div class="title">Чат</div></div>
+    <div class="menu-card active" id="tab-draft" onclick="switchTab('draft')">
+      <div class="icon">🛡️</div>
+      <div class="title">Драфт</div>
+    </div>
+    <div class="menu-card" id="tab-counter" onclick="switchTab('counter')">
+      <div class="icon">⚔️</div>
+      <div class="title">Контрпики</div>
+    </div>
+    <div class="menu-card" id="tab-profile" onclick="switchTab('profile')">
+      <div class="icon">👤</div>
+      <div class="title">Профиль</div>
+    </div>
+    <div class="menu-card" id="tab-meta" onclick="switchTab('meta')">
+      <div class="icon">📊</div>
+      <div class="title">Мета</div>
+    </div>
+    <div class="menu-card" id="tab-chat" onclick="switchTab('chat')">
+      <div class="icon">💬</div>
+      <div class="title">Чат</div>
+    </div>
   </div>
 
   <!-- 1. ДРАФТ -->
@@ -150,6 +432,7 @@
         <div class="slot-row" onclick="openHeroModal('rad', 4)"><span class="slot-label">Поз 4 (Семи)</span><img id="img-rad-4" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-4" class="slot-hero-name empty">Выбрать семи-сапа</span></div>
         <div class="slot-row" onclick="openHeroModal('rad', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-rad-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-5" class="slot-hero-name empty">Выбрать фулл-сапа</span></div>
       </div>
+
       <div class="team-box dire">
         <div class="team-title dire-text">🔴 Вражеская команда (Dire)</div>
         <div class="slot-row" onclick="openHeroModal('dir', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-dir-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-1" class="slot-hero-name empty">Выбрать керри</span></div>
@@ -159,10 +442,12 @@
         <div class="slot-row" onclick="openHeroModal('dir', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-dir-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-5" class="slot-hero-name empty">Выбрать фулл-сапа</span></div>
       </div>
     </div>
+
     <div class="btn-row">
       <button class="btn-analyze" onclick="analyzeDraft()">🧠 Рассчитать шанс победы и сборки</button>
       <button class="btn-reset" onclick="resetDraft()">Сброс</button>
     </div>
+
     <div class="analysis-card" id="analysis-result">
       <h3 style="font-size:12px;">📊 Анализ матча</h3>
       <div class="winrate-bar-container">
@@ -186,13 +471,14 @@
     </div>
   </div>
 
-  <!-- 3. ПРОФИЛЬ -->
+  <!-- 3. ПРОФИЛЬ И ИСТОРИЯ МАТЧЕЙ -->
   <div id="section-profile" class="section">
     <div class="profile-card">
       <div style="text-align: center; line-height: 1.1; margin-bottom: 15px;">
         <div style="font-size: 13px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;">Чек</div>
         <div style="font-size: 18px; color: var(--accent-glow); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Профиль</div>
       </div>
+
       <div id="tg-profile-card" style="display: flex; align-items: center; gap: 12px; background: #020503; padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 15px;">
         <img id="tg-card-img" src="" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; display: none;">
         <div id="tg-card-fallback" style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-green); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 18px;">U</div>
@@ -201,6 +487,7 @@
           <div id="tg-card-status" style="font-size: 10px; color: var(--text-muted); margin-top: 3px;">Ожидание...</div>
         </div>
       </div>
+
       <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: bold;">Поиск аккаунта Dota 2 (по SteamID32):</p>
       <div class="profile-input-group">
         <input type="text" id="steamIdInput" placeholder="Например: 105248644...">
@@ -221,14 +508,30 @@
         <div class="rank-select-wrapper">
           <div class="rank-dropdown-btn" onclick="toggleRankDropdown()">Выбрать ранг ▾</div>
           <div class="rank-dropdown-content" id="rankDropdown">
-            <div class="rank-option" onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Рекрут</div>
-            <div class="rank-option" onclick="changeRank('guardian', 'Страж', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Страж</div>
-            <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Рыцарь</div>
-            <div class="rank-option" onclick="changeRank('archon', 'Герой', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Герой</div>
-            <div class="rank-option" onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Легенда</div>
-            <div class="rank-option" onclick="changeRank('ancient', 'Властелин', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Властелин</div>
-            <div class="rank-option" onclick="changeRank('divine', 'Божество', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Божество</div>
-            <div class="rank-option" onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Титан</div>
+            <div class="rank-option" onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Рекрут
+            </div>
+            <div class="rank-option" onclick="changeRank('guardian', 'Страж', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Страж
+            </div>
+            <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Рыцарь
+            </div>
+            <div class="rank-option" onclick="changeRank('archon', 'Герой', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Герой
+            </div>
+            <div class="rank-option" onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Легенда
+            </div>
+            <div class="rank-option" onclick="changeRank('ancient', 'Властелин', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Властелин
+            </div>
+            <div class="rank-option" onclick="changeRank('divine', 'Божество', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Божество
+            </div>
+            <div class="rank-option" onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Титан
+            </div>
           </div>
         </div>
       </div>
@@ -240,7 +543,10 @@
   <div id="section-chat" class="section">
     <div class="chat-container">
       <div class="chat-messages" id="chatMessages">
-        <div class="chat-bubble"><div class="author">Система</div><div class="text">Загрузка чата... (Если это висит долго, проверьте интернет)</div></div>
+        <div class="chat-bubble">
+          <div class="author">Система</div>
+          <div class="text">Ожидание подключения к чату...</div>
+        </div>
       </div>
       <div class="chat-input-group">
         <input type="text" id="chatInput" placeholder="Написать сообщение в чат...">
@@ -249,15 +555,18 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА АВТОРИЗАЦИИ -->
+  <!-- МОДАЛКА АВТОРИЗАЦИИ (ВЕРХНИЙ ПРАВЫЙ УГОЛ) -->
   <div class="profile-modal" id="profileModal">
     <div class="profile-box-modal">
       <h3 style="color:var(--accent-glow); margin-bottom:8px; font-size:13px;">👤 Вход в аккаунт</h3>
       <p style="font-size:10px; color:var(--text-muted); margin-bottom:12px;">Авторизуйся через Telegram, чтобы общаться в глобальном чате от своего имени.</p>
+      
+      <!-- Кнопка Telegram авторизации -->
       <button class="btn-action" style="width:100%; padding:10px; margin-bottom:12px; background:#2481cc; color:#fff; display:flex; align-items:center; justify-content:center; gap:8px;" onclick="loginWithTelegram()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.93 4.23L1.58 12.06C.39 12.52.39 13.19 1.36 13.48L6.6 15.11L18.73 7.45C19.3 7.07 19.82 7.28 19.39 7.66L9.58 16.51H9.57L9.58 16.52L9.26 21.28C9.73 21.28 9.94 21.06 10.22 20.8L12.53 18.55L17.34 22.1C18.23 22.59 18.86 22.33 19.08 21.28L22.25 6.36C22.56 5.14 21.84 4.56 21.93 4.23Z" fill="white"/></svg>
         Зайти через Telegram
       </button>
+
       <p style="font-size:10px; color:var(--text-muted); margin-bottom:8px;">Или просто придумай никнейм вручную:</p>
       <input type="text" id="nicknameInput" placeholder="Твой ник..." style="width:100%; margin-bottom:8px; text-align:center; padding: 6px; border-radius: 4px; background: #040905; color: #fff; border: 1px solid var(--card-border);">
       <div style="display:flex; gap:6px;">
@@ -267,88 +576,244 @@
     </div>
   </div>
 
-  <!-- МОДАЛКА МАТЧА -->
+  <!-- МОДАЛКА ДЕТАЛЕЙ МАТЧА -->
   <div class="match-modal" id="matchDetailsModal">
     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
       <div style="font-weight:bold; color:var(--accent-glow); font-size:13px;" id="modalMatchTitle">Детали матча</div>
-      <button onclick="closeMatchModal()" style="background:#200808; border:1px solid #451515; color:#ff7675; padding:3px 8px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:10px;">✕</button>
+      <button onclick="closeMatchModal()" style="background:#200808; border:1px solid #451515; color:#ff7675; padding:3px 8px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:10px;">✕ Закрыть</button>
     </div>
     <div id="modalMatchBody" style="overflow-y:auto; flex:1;"></div>
   </div>
 
-  <!-- МОДАЛКА ГЕРОЕВ -->
+  <!-- МОДАЛКА ВЫБОРА ГЕРОЕВ -->
   <div class="modal-overlay" id="heroModal">
     <div class="modal-top">
       <div class="modal-role-title" id="modalRoleTitle">Выбор роли</div>
       <button class="modal-close" onclick="closeHeroModal()">✕</button>
     </div>
     <div class="role-filters">
-      <button class="role-btn" id="rbtn-1" onclick="setModalRole(1)">Поз 1</button>
-      <button class="role-btn" id="rbtn-2" onclick="setModalRole(2)">Поз 2</button>
-      <button class="role-btn" id="rbtn-3" onclick="setModalRole(3)">Поз 3</button>
-      <button class="role-btn" id="rbtn-4" onclick="setModalRole(4)">Поз 4</button>
-      <button class="role-btn" id="rbtn-5" onclick="setModalRole(5)">Поз 5</button>
-      <button class="role-btn" id="rbtn-all" onclick="setModalRole(0)">Все</button>
+      <button class="role-btn" id="rbtn-1" onclick="setModalRole(1)">Поз 1 (Керри)</button>
+      <button class="role-btn" id="rbtn-2" onclick="setModalRole(2)">Поз 2 (Мид)</button>
+      <button class="role-btn" id="rbtn-3" onclick="setModalRole(3)">Поз 3 (Хард)</button>
+      <button class="role-btn" id="rbtn-4" onclick="setModalRole(4)">Поз 4 (Семи)</button>
+      <button class="role-btn" id="rbtn-5" onclick="setModalRole(5)">Поз 5 (Саппорт)</button>
+      <button class="role-btn" id="rbtn-all" onclick="setModalRole(0)">Все герои</button>
     </div>
     <input type="text" class="modal-search" id="modalSearch" placeholder="🔍 Поиск по имени..." oninput="filterModalHeroes()">
     <div class="heroes-grid-container" id="heroesGrid"></div>
   </div>
 
-  <!-- ГЛАВНЫЙ СКРИПТ -->
   <script>
-    // --- 1. ЗАЩИТА ТЕЛЕГРАМА ---
-    let tg = null;
-    try {
-      if (window.Telegram && window.Telegram.WebApp) {
-        tg = window.Telegram.WebApp;
-        tg.ready();
-        tg.expand();
-      }
-    } catch(e) { console.error("TG init failed", e); }
+    // --- ЗАЩИТА ТЕЛЕГРАМА (ЧТОБЫ НЕ ПАДАЛ КОД НА ПК) ---
+    var tg = null;
+    if (window.Telegram && window.Telegram.WebApp) {
+      tg = window.Telegram.WebApp;
+      tg.ready();
+      tg.expand();
+    }
 
-    // --- 2. ЗАЩИТА FIREBASE ---
-    let db = null;
-    let chatRef = null;
+    // --- ЗАЩИТА FIREBASE ---
+    var db = null;
+    var chatRef = null;
     try {
-      const firebaseConfig = {
+      var firebaseConfig = {
         apiKey: "AIzaSyA5znZK90JTExNeyemOmxL5FR1K-wLhxXk",
         authDomain: "draftmaster-chat.firebaseapp.com",
         databaseURL: "https://draftmaster-chat-default-rtdb.firebaseio.com",
         projectId: "draftmaster-chat",
         storageBucket: "draftmaster-chat.firebasestorage.app",
         messagingSenderId: "786437450609",
-        appId: "1:786437450609:web:4881fd4d2483687e5ba4d0"
+        appId: "1:786437450609:web:4881fd4d2483687e5ba4d0",
+        measurementId: "G-MKD3DH88ZR"
       };
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
+      firebase.initializeApp(firebaseConfig);
       db = firebase.database();
       chatRef = db.ref('global_chat');
     } catch (e) {
-      console.error("Firebase init block:", e);
+      console.log("Firebase block:", e);
     }
 
-    // --- 3. БАЗА ДАННЫХ ГЕРОЕВ ---
     const ALL_HEROES = [
-      { id: 1, name: "antimage", tag: "anti-mage", title: "Anti-Mage", roles: [1] }, { id: 2, name: "axe", tag: "axe", title: "Axe", roles: [3] }, { id: 3, name: "bane", tag: "bane", title: "Bane", roles: [5] }, { id: 4, name: "bloodseeker", tag: "bloodseeker", title: "Bloodseeker", roles: [1, 2] }, { id: 5, name: "crystal_maiden", tag: "crystal-maiden", title: "Crystal Maiden", roles: [5] }, { id: 6, name: "drow_ranger", tag: "drow-ranger", title: "Drow Ranger", roles: [1] }, { id: 7, name: "earthshaker", tag: "earthshaker", title: "Earthshaker", roles: [4, 3] }, { id: 8, name: "juggernaut", tag: "juggernaut", title: "Juggernaut", roles: [1] }, { id: 9, name: "mirana", tag: "mirana", title: "Mirana", roles: [4, 2] }, { id: 10, name: "morphling", tag: "morphling", title: "Morphling", roles: [1, 2] }, { id: 11, name: "nevermore", tag: "shadow-fiend", title: "Shadow Fiend", roles: [2, 1] }, { id: 12, name: "phantom_lancer", tag: "phantom-lancer", title: "Phantom Lancer", roles: [1] }, { id: 13, name: "puck", tag: "puck", title: "Puck", roles: [2] }, { id: 14, name: "pudge", tag: "pudge", title: "Pudge", roles: [4, 1, 3] }, { id: 15, name: "razor", tag: "razor", title: "Razor", roles: [2, 3] }, { id: 16, name: "sand_king", tag: "sand-king", title: "Sand King", roles: [3, 4] }, { id: 17, name: "storm_spirit", tag: "storm-spirit", title: "Storm Spirit", roles: [2] }, { id: 18, name: "sven", tag: "sven", title: "Sven", roles: [1, 3] }, { id: 19, name: "tiny", tag: "tiny", title: "Tiny", roles: [4, 2, 1] }, { id: 20, name: "vengefulspirit", tag: "vengeful-spirit", title: "Vengeful Spirit", roles: [5, 4] }, { id: 21, name: "windrunner", tag: "windranger", title: "Windranger", roles: [2, 4] }, { id: 22, name: "zuus", tag: "zeus", title: "Zeus", roles: [2, 4] }, { id: 23, name: "kunkka", tag: "kunkka", title: "Kunkka", roles: [2, 3] }, { id: 25, name: "lina", tag: "lina", title: "Lina", roles: [2, 1] }, { id: 26, name: "lion", tag: "lion", title: "Lion", roles: [4, 5] }, { id: 27, name: "shadow_shaman", tag: "shadow-shaman", title: "Shadow Shaman", roles: [5, 4] }, { id: 28, name: "slardar", tag: "slardar", title: "Slardar", roles: [3] }, { id: 29, name: "tidehunter", tag: "tidehunter", title: "Tidehunter", roles: [3] }, { id: 30, name: "witch_doctor", tag: "witch-doctor", title: "Witch Doctor", roles: [5] }, { id: 31, name: "lich", tag: "lich", title: "Lich", roles: [5] }, { id: 32, name: "riki", tag: "riki", title: "Riki", roles: [1, 4] }, { id: 33, name: "enigma", tag: "enigma", title: "Enigma", roles: [3] }, { id: 34, name: "tinker", tag: "tinker", title: "Tinker", roles: [2, 4] }, { id: 35, name: "sniper", tag: "sniper", title: "Sniper", roles: [2, 1] }, { id: 36, name: "necrolyte", tag: "necrophos", title: "Necrophos", roles: [2, 3] }, { id: 37, name: "warlock", tag: "warlock", title: "Warlock", roles: [5] }, { id: 38, name: "beastmaster", tag: "beastmaster", title: "Beastmaster", roles: [3] }, { id: 39, name: "queenofpain", tag: "queen-of-pain", title: "Queen of Pain", roles: [2] }, { id: 40, name: "venomancer", tag: "venomancer", title: "Venomancer", roles: [4, 5] }, { id: 41, name: "faceless_void", tag: "faceless-void", title: "Faceless Void", roles: [1] }, { id: 42, name: "skeleton_king", tag: "wraith-king", title: "Wraith King", roles: [1, 3] }, { id: 44, name: "phantom_assassin", tag: "phantom-assassin", title: "Phantom Assassin", roles: [1] }, { id: 45, name: "pugna", tag: "pugna", title: "Pugna", roles: [4, 5, 2] }, { id: 46, name: "templar_assassin", tag: "templar-assassin", title: "Templar Assassin", roles: [2, 1] }, { id: 47, name: "viper", tag: "viper", title: "Viper", roles: [2, 3] }, { id: 48, name: "luna", tag: "luna", title: "Luna", roles: [1] }, { id: 49, name: "dragon_knight", tag: "dragon-knight", title: "Dragon Knight", roles: [2, 3] }, { id: 50, name: "dazzle", tag: "dazzle", title: "Dazzle", roles: [5] }, { id: 51, name: "rattletrap", tag: "clockwerk", title: "Clockwerk", roles: [4, 5] }, { id: 52, name: "leshrac", tag: "leshrac", title: "Leshrac", roles: [2] }, { id: 53, name: "furion", tag: "natures-prophet", title: "Nature's Prophet", roles: [4, 3, 1] }, { id: 54, name: "life_stealer", tag: "lifestealer", title: "Lifestealer", roles: [1] }, { id: 55, name: "dark_seer", tag: "dark-seer", title: "Dark Seer", roles: [3] }, { id: 56, name: "clinkz", tag: "clinkz", title: "Clinkz", roles: [1, 4] }, { id: 57, name: "omniknight", tag: "omniknight", title: "Omniknight", roles: [3, 5] }, { id: 58, name: "enchantress", tag: "enchantress", title: "Enchantress", roles: [5] }, { id: 59, name: "huskar", tag: "huskar", title: "Huskar", roles: [2] }, { id: 60, name: "night_stalker", tag: "night-stalker", title: "Night Stalker", roles: [3] }, { id: 61, name: "broodmother", tag: "broodmother", title: "Broodmother", roles: [3, 2] }, { id: 62, name: "bounty_hunter", tag: "bounty-hunter", title: "Bounty Hunter", roles: [4] }, { id: 63, name: "weaver", tag: "weaver", title: "Weaver", roles: [1, 4] }, { id: 64, name: "jakiro", tag: "jakiro", title: "Jakiro", roles: [5] }, { id: 65, name: "batrider", tag: "batrider", title: "Batrider", roles: [2, 3] }, { id: 67, name: "spectre", tag: "spectre", title: "Spectre", roles: [1] }, { id: 68, name: "ancient_apparition", tag: "ancient-apparition", title: "Ancient Apparition", roles: [5] }, { id: 69, name: "doom_bringer", tag: "doom", title: "Doom", roles: [3] }, { id: 70, name: "ursa", tag: "ursa", title: "Ursa", roles: [1] }, { id: 71, name: "spirit_breaker", tag: "spirit-breaker", title: "Spirit Breaker", roles: [4, 3] }, { id: 72, name: "gyrocopter", tag: "gyrocopter", title: "Gyrocopter", roles: [1, 4] }, { id: 73, name: "alchemist", tag: "alchemist", title: "Alchemist", roles: [1, 2] }, { id: 74, name: "invoker", tag: "invoker", title: "Invoker", roles: [2] }, { id: 75, name: "silencer", tag: "silencer", title: "Silencer", roles: [5, 4] }, { id: 76, name: "obsidian_destroyer", tag: "outworld-destroyer", title: "Outworld Destroyer", roles: [2] }, { id: 77, name: "lycan", tag: "lycan", title: "Lycan", roles: [3, 1] }, { id: 78, name: "brewmaster", tag: "brewmaster", title: "Brewmaster", roles: [3] }, { id: 79, name: "shadow_demon", tag: "shadow-demon", title: "Shadow Demon", roles: [5, 4] }, { id: 81, name: "chaos_knight", tag: "chaos-knight", title: "Chaos Knight", roles: [1, 3] }, { id: 82, name: "meepo", tag: "meepo", title: "Meepo", roles: [2] }, { id: 83, name: "treant", tag: "treant-protector", title: "Treant Protector", roles: [5] }, { id: 84, name: "ogre_magi", tag: "ogre-magi", title: "Ogre Magi", roles: [5, 3] }, { id: 85, name: "undying", tag: "undying", title: "Undying", roles: [5] }, { id: 86, name: "rubick", tag: "rubick", title: "Rubick", roles: [4] }, { id: 87, name: "disruptor", tag: "disruptor", title: "Disruptor", roles: [5] }, { id: 88, name: "nyx_assassin", tag: "nyx-assassin", title: "Nyx Assassin", roles: [4] }, { id: 89, name: "naga_siren", tag: "naga-siren", title: "Naga Siren", roles: [1, 5] }, { id: 90, name: "keeper_of_the_light", tag: "keeper-of-the-light", title: "Keeper of the Light", roles: [5, 4] }, { id: 93, name: "slark", tag: "slark", title: "Slark", roles: [1] }, { id: 94, name: "medusa", tag: "medusa", title: "Medusa", roles: [1] }, { id: 95, name: "troll_warlord", tag: "troll-warlord", title: "Troll Warlord", roles: [1] }, { id: 96, name: "centaur", tag: "centaur-warrunner", title: "Centaur Warrunner", roles: [3] }, { id: 97, name: "magnataur", tag: "magnus", title: "Magnus", roles: [3, 2] }, { id: 98, name: "shredder", tag: "timbersaw", title: "Timbersaw", roles: [3, 2] }, { id: 99, name: "bristleback", tag: "bristleback", title: "Bristleback", roles: [3, 1] }, { id: 100, name: "tusk", tag: "tusk", title: "Tusk", roles: [4] }, { id: 101, name: "skywrath_mage", tag: "skywrath-mage", title: "Skywrath Mage", roles: [4, 5] }, { id: 102, name: "abaddon", tag: "abaddon", title: "Abaddon", roles: [5, 1] }, { id: 104, name: "legion_commander", tag: "legion-commander", title: "Legion Commander", roles: [3] }, { id: 106, name: "ember_spirit", tag: "ember-spirit", title: "Ember Spirit", roles: [2, 1] }, { id: 107, name: "earth_spirit", tag: "earth-spirit", title: "Earth Spirit", roles: [4, 2] }, { id: 108, name: "abyssal_underlord", tag: "underlord", title: "Underlord", roles: [3] }, { id: 109, name: "terrorblade", tag: "terrorblade", title: "Terrorblade", roles: [1] }, { id: 110, name: "phoenix", tag: "phoenix", title: "Phoenix", roles: [4, 5] }, { id: 111, name: "oracle", tag: "oracle", title: "Oracle", roles: [5] }, { id: 112, name: "winter_wyvern", tag: "winter-wyvern", title: "Winter Wyvern", roles: [5] }, { id: 113, name: "arc_warden", tag: "arc-warden", title: "Arc Warden", roles: [2, 1] }, { id: 114, name: "monkey_king", tag: "monkey-king", title: "Monkey King", roles: [1, 2] }, { id: 119, name: "dark_willow", tag: "dark-willow", title: "Dark Willow", roles: [4, 5] }, { id: 120, name: "pangolier", tag: "pangolier", title: "Pangolier", roles: [2, 3] }, { id: 121, name: "grimstroke", tag: "grimstroke", title: "Grimstroke", roles: [5, 4] }, { id: 123, name: "hoodwink", tag: "hoodwink", title: "Hoodwink", roles: [4] }, { id: 126, name: "void_spirit", tag: "void-spirit", title: "Void Spirit", roles: [2] }, { id: 128, name: "snapfire", tag: "snapfire", title: "Snapfire", roles: [4, 5] }, { id: 129, name: "mars", tag: "mars", title: "Mars", roles: [3] }, { id: 135, name: "dawnbreaker", tag: "dawnbreaker", title: "Dawnbreaker", roles: [3, 1] }, { id: 136, name: "marci", tag: "marci", title: "Marci", roles: [4, 1] }, { id: 137, name: "primal_beast", tag: "primal-beast", title: "Primal Beast", roles: [3, 2] }, { id: 138, name: "muerta", tag: "muerta", title: "Muerta", roles: [1, 4] }, { id: 140, name: "ringmaster", tag: "ringmaster", title: "Ringmaster", roles: [4, 5] }, { id: 145, name: "kez", tag: "kez", title: "Kez", roles: [1] }
+      { id: 1, name: "antimage", tag: "anti-mage", title: "Anti-Mage", roles: [1] },
+      { id: 2, name: "axe", tag: "axe", title: "Axe", roles: [3] },
+      { id: 3, name: "bane", tag: "bane", title: "Bane", roles: [5] },
+      { id: 4, name: "bloodseeker", tag: "bloodseeker", title: "Bloodseeker", roles: [1, 2] },
+      { id: 5, name: "crystal_maiden", tag: "crystal-maiden", title: "Crystal Maiden", roles: [5] },
+      { id: 6, name: "drow_ranger", tag: "drow-ranger", title: "Drow Ranger", roles: [1] },
+      { id: 7, name: "earthshaker", tag: "earthshaker", title: "Earthshaker", roles: [4, 3] },
+      { id: 8, name: "juggernaut", tag: "juggernaut", title: "Juggernaut", roles: [1] },
+      { id: 9, name: "mirana", tag: "mirana", title: "Mirana", roles: [4, 2] },
+      { id: 10, name: "morphling", tag: "morphling", title: "Morphling", roles: [1, 2] },
+      { id: 11, name: "nevermore", tag: "shadow-fiend", title: "Shadow Fiend", roles: [2, 1] },
+      { id: 12, name: "phantom_lancer", tag: "phantom-lancer", title: "Phantom Lancer", roles: [1] },
+      { id: 13, name: "puck", tag: "puck", title: "Puck", roles: [2] },
+      { id: 14, name: "pudge", tag: "pudge", title: "Pudge", roles: [4, 1, 3] },
+      { id: 15, name: "razor", tag: "razor", title: "Razor", roles: [2, 3] },
+      { id: 16, name: "sand_king", tag: "sand-king", title: "Sand King", roles: [3, 4] },
+      { id: 17, name: "storm_spirit", tag: "storm-spirit", title: "Storm Spirit", roles: [2] },
+      { id: 18, name: "sven", tag: "sven", title: "Sven", roles: [1, 3] },
+      { id: 19, name: "tiny", tag: "tiny", title: "Tiny", roles: [4, 2, 1] },
+      { id: 20, name: "vengefulspirit", tag: "vengeful-spirit", title: "Vengeful Spirit", roles: [5, 4] },
+      { id: 21, name: "windrunner", tag: "windranger", title: "Windranger", roles: [2, 4] },
+      { id: 22, name: "zuus", tag: "zeus", title: "Zeus", roles: [2, 4] },
+      { id: 23, name: "kunkka", tag: "kunkka", title: "Kunkka", roles: [2, 3] },
+      { id: 25, name: "lina", tag: "lina", title: "Lina", roles: [2, 1] },
+      { id: 26, name: "lion", tag: "lion", title: "Lion", roles: [4, 5] },
+      { id: 27, name: "shadow_shaman", tag: "shadow-shaman", title: "Shadow Shaman", roles: [5, 4] },
+      { id: 28, name: "slardar", tag: "slardar", title: "Slardar", roles: [3] },
+      { id: 29, name: "tidehunter", tag: "tidehunter", title: "Tidehunter", roles: [3] },
+      { id: 30, name: "witch_doctor", tag: "witch-doctor", title: "Witch Doctor", roles: [5] },
+      { id: 31, name: "lich", tag: "lich", title: "Lich", roles: [5] },
+      { id: 32, name: "riki", tag: "riki", title: "Riki", roles: [1, 4] },
+      { id: 33, name: "enigma", tag: "enigma", title: "Enigma", roles: [3] },
+      { id: 34, name: "tinker", tag: "tinker", title: "Tinker", roles: [2, 4] },
+      { id: 35, name: "sniper", tag: "sniper", title: "Sniper", roles: [2, 1] },
+      { id: 36, name: "necrolyte", tag: "necrophos", title: "Necrophos", roles: [2, 3] },
+      { id: 37, name: "warlock", tag: "warlock", title: "Warlock", roles: [5] },
+      { id: 38, name: "beastmaster", tag: "beastmaster", title: "Beastmaster", roles: [3] },
+      { id: 39, name: "queenofpain", tag: "queen-of-pain", title: "Queen of Pain", roles: [2] },
+      { id: 40, name: "venomancer", tag: "venomancer", title: "Venomancer", roles: [4, 5] },
+      { id: 41, name: "faceless_void", tag: "faceless-void", title: "Faceless Void", roles: [1] },
+      { id: 42, name: "skeleton_king", tag: "wraith-king", title: "Wraith King", roles: [1, 3] },
+      { id: 44, name: "phantom_assassin", tag: "phantom-assassin", title: "Phantom Assassin", roles: [1] },
+      { id: 45, name: "pugna", tag: "pugna", title: "Pugna", roles: [4, 5, 2] },
+      { id: 46, name: "templar_assassin", tag: "templar-assassin", title: "Templar Assassin", roles: [2, 1] },
+      { id: 47, name: "viper", tag: "viper", title: "Viper", roles: [2, 3] },
+      { id: 48, name: "luna", tag: "luna", title: "Luna", roles: [1] },
+      { id: 49, name: "dragon_knight", tag: "dragon-knight", title: "Dragon Knight", roles: [2, 3] },
+      { id: 50, name: "dazzle", tag: "dazzle", title: "Dazzle", roles: [5] },
+      { id: 51, name: "rattletrap", tag: "clockwerk", title: "Clockwerk", roles: [4, 5] },
+      { id: 52, name: "leshrac", tag: "leshrac", title: "Leshrac", roles: [2] },
+      { id: 53, name: "furion", tag: "natures-prophet", title: "Nature's Prophet", roles: [4, 3, 1] },
+      { id: 54, name: "life_stealer", tag: "lifestealer", title: "Lifestealer", roles: [1] },
+      { id: 55, name: "dark_seer", tag: "dark-seer", title: "Dark Seer", roles: [3] },
+      { id: 56, name: "clinkz", tag: "clinkz", title: "Clinkz", roles: [1, 4] },
+      { id: 57, name: "omniknight", tag: "omniknight", title: "Omniknight", roles: [3, 5] },
+      { id: 58, name: "enchantress", tag: "enchantress", title: "Enchantress", roles: [5] },
+      { id: 59, name: "huskar", tag: "huskar", title: "Huskar", roles: [2] },
+      { id: 60, name: "night_stalker", tag: "night-stalker", title: "Night Stalker", roles: [3] },
+      { id: 61, name: "broodmother", tag: "broodmother", title: "Broodmother", roles: [3, 2] },
+      { id: 62, name: "bounty_hunter", tag: "bounty-hunter", title: "Bounty Hunter", roles: [4] },
+      { id: 63, name: "weaver", tag: "weaver", title: "Weaver", roles: [1, 4] },
+      { id: 64, name: "jakiro", tag: "jakiro", title: "Jakiro", roles: [5] },
+      { id: 65, name: "batrider", tag: "batrider", title: "Batrider", roles: [2, 3] },
+      { id: 67, name: "spectre", tag: "spectre", title: "Spectre", roles: [1] },
+      { id: 68, name: "ancient_apparition", tag: "ancient-apparition", title: "Ancient Apparition", roles: [5] },
+      { id: 69, name: "doom_bringer", tag: "doom", title: "Doom", roles: [3] },
+      { id: 70, name: "ursa", tag: "ursa", title: "Ursa", roles: [1] },
+      { id: 71, name: "spirit_breaker", tag: "spirit-breaker", title: "Spirit Breaker", roles: [4, 3] },
+      { id: 72, name: "gyrocopter", tag: "gyrocopter", title: "Gyrocopter", roles: [1, 4] },
+      { id: 73, name: "alchemist", tag: "alchemist", title: "Alchemist", roles: [1, 2] },
+      { id: 74, name: "invoker", tag: "invoker", title: "Invoker", roles: [2] },
+      { id: 75, name: "silencer", tag: "silencer", title: "Silencer", roles: [5, 4] },
+      { id: 76, name: "obsidian_destroyer", tag: "outworld-destroyer", title: "Outworld Destroyer", roles: [2] },
+      { id: 77, name: "lycan", tag: "lycan", title: "Lycan", roles: [3, 1] },
+      { id: 78, name: "brewmaster", tag: "brewmaster", title: "Brewmaster", roles: [3] },
+      { id: 79, name: "shadow_demon", tag: "shadow-demon", title: "Shadow Demon", roles: [5, 4] },
+      { id: 81, name: "chaos_knight", tag: "chaos-knight", title: "Chaos Knight", roles: [1, 3] },
+      { id: 82, name: "meepo", tag: "meepo", title: "Meepo", roles: [2] },
+      { id: 83, name: "treant", tag: "treant-protector", title: "Treant Protector", roles: [5] },
+      { id: 84, name: "ogre_magi", tag: "ogre-magi", title: "Ogre Magi", roles: [5, 3] },
+      { id: 85, name: "undying", tag: "undying", title: "Undying", roles: [5] },
+      { id: 86, name: "rubick", tag: "rubick", title: "Rubick", roles: [4] },
+      { id: 87, name: "disruptor", tag: "disruptor", title: "Disruptor", roles: [5] },
+      { id: 88, name: "nyx_assassin", tag: "nyx-assassin", title: "Nyx Assassin", roles: [4] },
+      { id: 89, name: "naga_siren", tag: "naga-siren", title: "Naga Siren", roles: [1, 5] },
+      { id: 90, name: "keeper_of_the_light", tag: "keeper-of-the-light", title: "Keeper of the Light", roles: [5, 4] },
+      { id: 93, name: "slark", tag: "slark", title: "Slark", roles: [1] },
+      { id: 94, name: "medusa", tag: "medusa", title: "Medusa", roles: [1] },
+      { id: 95, name: "troll_warlord", tag: "troll-warlord", title: "Troll Warlord", roles: [1] },
+      { id: 96, name: "centaur", tag: "centaur-warrunner", title: "Centaur Warrunner", roles: [3] },
+      { id: 97, name: "magnataur", tag: "magnus", title: "Magnus", roles: [3, 2] },
+      { id: 98, name: "shredder", tag: "timbersaw", title: "Timbersaw", roles: [3, 2] },
+      { id: 99, name: "bristleback", tag: "bristleback", title: "Bristleback", roles: [3, 1] },
+      { id: 100, name: "tusk", tag: "tusk", title: "Tusk", roles: [4] },
+      { id: 101, name: "skywrath_mage", tag: "skywrath-mage", title: "Skywrath Mage", roles: [4, 5] },
+      { id: 102, name: "abaddon", tag: "abaddon", title: "Abaddon", roles: [5, 1] },
+      { id: 104, name: "legion_commander", tag: "legion-commander", title: "Legion Commander", roles: [3] },
+      { id: 106, name: "ember_spirit", tag: "ember-spirit", title: "Ember Spirit", roles: [2, 1] },
+      { id: 107, name: "earth_spirit", tag: "earth-spirit", title: "Earth Spirit", roles: [4, 2] },
+      { id: 108, name: "abyssal_underlord", tag: "underlord", title: "Underlord", roles: [3] },
+      { id: 109, name: "terrorblade", tag: "terrorblade", title: "Terrorblade", roles: [1] },
+      { id: 110, name: "phoenix", tag: "phoenix", title: "Phoenix", roles: [4, 5] },
+      { id: 111, name: "oracle", tag: "oracle", title: "Oracle", roles: [5] },
+      { id: 112, name: "winter_wyvern", tag: "winter-wyvern", title: "Winter Wyvern", roles: [5] },
+      { id: 113, name: "arc_warden", tag: "arc-warden", title: "Arc Warden", roles: [2, 1] },
+      { id: 114, name: "monkey_king", tag: "monkey-king", title: "Monkey King", roles: [1, 2] },
+      { id: 119, name: "dark_willow", tag: "dark-willow", title: "Dark Willow", roles: [4, 5] },
+      { id: 120, name: "pangolier", tag: "pangolier", title: "Pangolier", roles: [2, 3] },
+      { id: 121, name: "grimstroke", tag: "grimstroke", title: "Grimstroke", roles: [5, 4] },
+      { id: 123, name: "hoodwink", tag: "hoodwink", title: "Hoodwink", roles: [4] },
+      { id: 126, name: "void_spirit", tag: "void-spirit", title: "Void Spirit", roles: [2] },
+      { id: 128, name: "snapfire", tag: "snapfire", title: "Snapfire", roles: [4, 5] },
+      { id: 129, name: "mars", tag: "mars", title: "Mars", roles: [3] },
+      { id: 135, name: "dawnbreaker", tag: "dawnbreaker", title: "Dawnbreaker", roles: [3, 1] },
+      { id: 136, name: "marci", tag: "marci", title: "Marci", roles: [4, 1] },
+      { id: 137, name: "primal_beast", tag: "primal-beast", title: "Primal Beast", roles: [3, 2] },
+      { id: 138, name: "muerta", tag: "muerta", title: "Muerta", roles: [1, 4] },
+      { id: 140, name: "ringmaster", tag: "ringmaster", title: "Ringmaster", roles: [4, 5] },
+      { id: 145, name: "kez", tag: "kez", title: "Kez", roles: [1] }
     ];
 
     const META_BY_RANK = {
-      immortal: [{ name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид / Керри" }, { name: "np", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард / Сап 4" }, { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард / Мид" }, { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри / Мид" }, { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Саппорт 4" }],
-      divine: [{ name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" }, { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хардлейн" }, { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" }, { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Саппорт 4" }, { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }],
-      ancient: [{ name: "wraith_king", title: "Wraith King", wr: "54.2%", pick: "24.0%", best: "Керри" }, { name: "axe", title: "Axe", wr: "53.4%", pick: "19.2%", best: "Хардлейн" }, { name: "zeus", title: "Zeus", wr: "52.8%", pick: "28.5%", best: "Мид / Сап 4" }, { name: "witch_doctor", title: "Witch Doctor", wr: "52.5%", pick: "30.1%", best: "Саппорт 5" }, { name: "sniper", title: "Sniper", wr: "51.9%", pick: "27.3%", best: "Керри / Мид" }],
-      legend: [{ name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" }, { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" }, { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид / Хард" }, { name: "lion", title: "Lion", wr: "52.9%", pick: "38.6%", best: "Саппорт 4/5" }, { name: "ogre_magi", title: "Ogre Magi", wr: "52.4%", pick: "18.5%", best: "Саппорт 5" }],
-      archon: [{ name: "sniper", title: "Sniper", wr: "56.0%", pick: "35.4%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.4%", pick: "29.1%", best: "Керри" }, { name: "viper", title: "Viper", wr: "54.1%", pick: "25.0%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.6%", pick: "42.0%", best: "Саппорт" }, { name: "bounty_hunter", title: "Bounty Hunter", wr: "52.8%", pick: "16.4%", best: "Саппорт 4" }],
-      crusader: [{ name: "sniper", title: "Sniper", wr: "56.8%", pick: "38.1%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.9%", pick: "31.0%", best: "Керри" }, { name: "zeus", title: "Zeus", wr: "54.5%", pick: "34.2%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.9%", pick: "45.1%", best: "Саппорт" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "53.1%", pick: "28.0%", best: "Керри" }],
-      guardian: [{ name: "sniper", title: "Sniper", wr: "57.5%", pick: "40.2%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "56.4%", pick: "33.5%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "54.8%", pick: "30.2%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.2%", pick: "48.0%", best: "Саппорт" }, { name: "zuus", title: "Zeus", wr: "53.9%", pick: "36.1%", best: "Мид" }],
-      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.5%", pick: "32.1%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.8%", pick: "50.2%", best: "Саппорт" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
+      immortal: [
+        { name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид / Керри" },
+        { name: "np", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард / Сап 4" },
+        { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард / Мид" },
+        { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри / Мид" },
+        { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Саппорт 4" }
+      ],
+      divine: [
+        { name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" },
+        { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хардлейн" },
+        { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" },
+        { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Саппорт 4" },
+        { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }
+      ],
+      ancient: [
+        { name: "wraith_king", title: "Wraith King", wr: "54.2%", pick: "24.0%", best: "Керри" },
+        { name: "axe", title: "Axe", wr: "53.4%", pick: "19.2%", best: "Хардлейн" },
+        { name: "zeus", title: "Zeus", wr: "52.8%", pick: "28.5%", best: "Мид / Сап 4" },
+        { name: "witch_doctor", title: "Witch Doctor", wr: "52.5%", pick: "30.1%", best: "Саппорт 5" },
+        { name: "sniper", title: "Sniper", wr: "51.9%", pick: "27.3%", best: "Керри / Мид" }
+      ],
+      legend: [
+        { name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" },
+        { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" },
+        { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид / Хард" },
+        { name: "lion", title: "Lion", wr: "52.9%", pick: "38.6%", best: "Саппорт 4/5" },
+        { name: "ogre_magi", title: "Ogre Magi", wr: "52.4%", pick: "18.5%", best: "Саппорт 5" }
+      ],
+      archon: [
+        { name: "sniper", title: "Sniper", wr: "56.0%", pick: "35.4%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "55.4%", pick: "29.1%", best: "Керри" },
+        { name: "viper", title: "Viper", wr: "54.1%", pick: "25.0%", best: "Мид" },
+        { name: "lion", title: "Lion", wr: "53.6%", pick: "42.0%", best: "Саппорт" },
+        { name: "bounty_hunter", title: "Bounty Hunter", wr: "52.8%", pick: "16.4%", best: "Саппорт 4" }
+      ],
+      crusader: [
+        { name: "sniper", title: "Sniper", wr: "56.8%", pick: "38.1%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "55.9%", pick: "31.0%", best: "Керри" },
+        { name: "zeus", title: "Zeus", wr: "54.5%", pick: "34.2%", best: "Мид" },
+        { name: "lion", title: "Lion", wr: "53.9%", pick: "45.1%", best: "Саппорт" },
+        { name: "phantom_assassin", title: "Phantom Assassin", wr: "53.1%", pick: "28.0%", best: "Керри" }
+      ],
+      guardian: [
+        { name: "sniper", title: "Sniper", wr: "57.5%", pick: "40.2%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "56.4%", pick: "33.5%", best: "Керри" },
+        { name: "phantom_assassin", title: "Phantom Assassin", wr: "54.8%", pick: "30.2%", best: "Керри" },
+        { name: "lion", title: "Lion", wr: "54.2%", pick: "48.0%", best: "Саппорт" },
+        { name: "zuus", title: "Zeus", wr: "53.9%", pick: "36.1%", best: "Мид" }
+      ],
+      herald: [
+        { name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" },
+        { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" },
+        { name: "wraith_king", title: "Wraith King", wr: "55.5%", pick: "32.1%", best: "Керри" },
+        { name: "lion", title: "Lion", wr: "54.8%", pick: "50.2%", best: "Саппорт" },
+        { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }
+      ]
     };
 
-    window.draftState = {
-      rad: { 1: null, 2: null, 3: null, 4: null, 5: null },
-      dir: { 1: null, 2: null, 3: null, 4: null, 5: null }
-    };
-    
     let currentSlot = { team: null, pos: null };
     let currentActiveRoleFilter = 0;
     let userNickname = "Игрок";
@@ -368,9 +833,9 @@
     function loginWithTelegram() {
       if (tg && tg.initDataUnsafe && Object.keys(tg.initDataUnsafe).length > 0 && tg.initDataUnsafe.user) {
         const tgUser = tg.initDataUnsafe.user;
-        const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
+        const fullName = (tgUser.first_name || "") + " " + (tgUser.last_name || "");
         
-        userNickname = fullName || "Игрок";
+        userNickname = fullName.trim() || "Игрок";
         localStorage.setItem("dota_nickname", userNickname);
         
         document.getElementById('userNickname').innerText = userNickname;
@@ -421,16 +886,14 @@
 
     function initGlobalChat() {
       if (!chatRef) {
-        const chatContainer = document.getElementById("chatMessages");
-        if(chatContainer) chatContainer.innerHTML = '<div class="chat-bubble"><div class="author">Система</div><div class="text">Чат недоступен (ошибка сети/базы).</div></div>';
+        document.getElementById("chatMessages").innerHTML = '<div class="chat-bubble"><div class="author">Система</div><div class="text">Ошибка подключения к базе чата. Вероятно, блокировка браузера.</div></div>';
         return;
       }
-      chatRef.limitToLast(50).on('value', (snapshot) => {
+      chatRef.limitToLast(50).on('value', function(snapshot) {
         const chatContainer = document.getElementById("chatMessages");
-        if (!chatContainer) return;
         const messages = [];
         
-        snapshot.forEach((childSnapshot) => {
+        snapshot.forEach(function(childSnapshot) {
           messages.push(childSnapshot.val());
         });
 
@@ -438,12 +901,9 @@
           messages.push({ author: "Система", text: "Добро пожаловать в глобальный чат! Пишите сообщения — их увидят все." });
         }
 
-        chatContainer.innerHTML = messages.map(m => `
-          <div class="chat-bubble">
-            <div class="author">${escapeHtml(m.author || "Аноним")}</div>
-            <div class="text">${escapeHtml(m.text || "")}</div>
-          </div>
-        `).join('');
+        chatContainer.innerHTML = messages.map(function(m) {
+          return '<div class="chat-bubble"><div class="author">' + escapeHtml(m.author) + '</div><div class="text">' + escapeHtml(m.text) + '</div></div>';
+        }).join('');
         
         chatContainer.scrollTop = chatContainer.scrollHeight;
       });
@@ -463,6 +923,7 @@
         text: text,
         timestamp: firebase.database.ServerValue.TIMESTAMP
       });
+
       input.value = "";
     }
 
@@ -471,29 +932,28 @@
     }
 
     function getHeroImg(name) {
-      return `https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/${name}.png`;
+      return "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/" + name + ".png";
     }
 
-    // Обернул в try/catch, чтобы точно видеть, если что-то мешает окну открыться
     function openHeroModal(team, pos) {
-      try {
-        currentSlot = { team, pos };
-        const roleNames = ["", "Поз 1 (Керри)", "Поз 2 (Мид)", "Поз 3 (Хард)", "Поз 4 (Семи)", "Поз 5 (Саппорт)"];
-        document.getElementById('modalRoleTitle').innerText = `${team === 'rad' ? 'Radiant' : 'Dire'} • ${roleNames[pos]}`;
-        document.getElementById('modalSearch').value = '';
-        setModalRole(pos);
-        document.getElementById('heroModal').classList.add('active');
-      } catch (err) {
-        alert("Ошибка открытия окна выбора героя: " + err.message);
-      }
+      currentSlot = { team: team, pos: pos };
+      const roleNames = ["", "Поз 1 (Керри)", "Поз 2 (Мид)", "Поз 3 (Хард)", "Поз 4 (Семи)", "Поз 5 (Саппорт)"];
+      document.getElementById('modalRoleTitle').innerText = (team === 'rad' ? 'Radiant' : 'Dire') + ' • ' + roleNames[pos];
+      document.getElementById('modalSearch').value = '';
+      setModalRole(pos);
+      document.getElementById('heroModal').classList.add('active');
     }
 
     function setModalRole(roleNum) {
       currentActiveRoleFilter = roleNum;
-      [1, 2, 3, 4, 5, 'all'].forEach(r => {
-        const el = document.getElementById(`rbtn-${r}`);
+      [1,2,3,4,5,'all'].forEach(function(r) {
+        const el = document.getElementById("rbtn-" + r);
         if (el) {
-          el.classList.toggle('active', r === roleNum || (r === 'all' && roleNum === 0));
+            if (r === roleNum || (r === 'all' && roleNum === 0)) {
+                el.classList.add('active');
+            } else {
+                el.classList.remove('active');
+            }
         }
       });
       renderModalHeroes(document.getElementById('modalSearch').value);
@@ -503,36 +963,34 @@
       document.getElementById('heroModal').classList.remove('active');
     }
 
-    function renderModalHeroes(filter = '') {
+    function renderModalHeroes(filter) {
+      if (!filter) filter = '';
       const grid = document.getElementById('heroesGrid');
       grid.innerHTML = '';
 
       const selectedIds = [];
-      ['rad', 'dir'].forEach(t => {
+      ['rad', 'dir'].forEach(function(t) {
         for (let p = 1; p <= 5; p++) {
-          if (window.draftState[t][p]) selectedIds.push(window.draftState[t][p].id);
+          if (draftState[t][p]) selectedIds.push(draftState[t][p].id);
         }
       });
 
       let list = ALL_HEROES;
       if (currentActiveRoleFilter > 0) {
-        list = list.filter(h => h.roles.includes(currentActiveRoleFilter));
+        list = list.filter(function(h) { return h.roles.includes(currentActiveRoleFilter); });
       }
 
       if (filter) {
-        list = list.filter(h => h.title.toLowerCase().includes(filter.toLowerCase()));
+        list = list.filter(function(h) { return h.title.toLowerCase().includes(filter.toLowerCase()); });
       }
 
-      list.forEach(h => {
+      list.forEach(function(h) {
         const isPicked = selectedIds.includes(h.id);
         const card = document.createElement('div');
-        card.className = `hero-pick-card ${isPicked ? 'disabled' : ''}`;
-        card.innerHTML = `
-          <img src="${getHeroImg(h.name)}" loading="lazy">
-          <div class="name">${h.title}</div>
-        `;
+        card.className = "hero-pick-card " + (isPicked ? "disabled" : "");
+        card.innerHTML = '<img src="' + getHeroImg(h.name) + '" loading="lazy"><div class="name">' + h.title + '</div>';
         if (!isPicked) {
-          card.onclick = () => selectHero(h);
+          card.onclick = function() { selectHero(h); };
         }
         grid.appendChild(card);
       });
@@ -543,11 +1001,12 @@
     }
 
     function selectHero(hero) {
-      const { team, pos } = currentSlot;
-      window.draftState[team][pos] = hero;
+      const team = currentSlot.team;
+      const pos = currentSlot.pos;
+      draftState[team][pos] = hero;
 
-      document.getElementById(`img-${team}-${pos}`).src = getHeroImg(hero.name);
-      const nameEl = document.getElementById(`name-${team}-${pos}`);
+      document.getElementById("img-" + team + "-" + pos).src = getHeroImg(hero.name);
+      const nameEl = document.getElementById("name-" + team + "-" + pos);
       nameEl.innerText = hero.title;
       nameEl.classList.remove('empty');
 
@@ -555,11 +1014,11 @@
     }
 
     function resetDraft() {
-      ['rad', 'dir'].forEach(t => {
+      ['rad', 'dir'].forEach(function(t) {
         for (let p = 1; p <= 5; p++) {
-          window.draftState[t][p] = null;
-          document.getElementById(`img-${t}-${p}`).src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>";
-          const nameEl = document.getElementById(`name-${t}-${p}`);
+          draftState[t][p] = null;
+          document.getElementById("img-" + t + "-" + p).src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>";
+          const nameEl = document.getElementById("name-" + t + "-" + p);
           nameEl.innerText = p === 1 ? "Выбрать керри" : p === 2 ? "Выбрать мидера" : p === 3 ? "Выбрать хардлайнера" : p === 4 ? "Выбрать семи-сапа" : "Выбрать фулл-сапа";
           nameEl.classList.add('empty');
         }
@@ -568,8 +1027,8 @@
     }
 
     function analyzeDraft() {
-      const radHeroes = [1,2,3,4,5].map(p => window.draftState.rad[p]).filter(Boolean);
-      const dirHeroes = [1,2,3,4,5].map(p => window.draftState.dir[p]).filter(Boolean);
+      const radHeroes = [1,2,3,4,5].map(function(p) { return draftState.rad[p]; }).filter(Boolean);
+      const dirHeroes = [1,2,3,4,5].map(function(p) { return draftState.dir[p]; }).filter(Boolean);
 
       if (radHeroes.length < 2 || dirHeroes.length < 2) {
         alert("Выбери минимум по 2 героя в каждую команду!");
@@ -582,19 +1041,16 @@
 
       document.getElementById('analysis-result').style.display = 'block';
       document.getElementById('bar-rad').style.width = radScore + '%';
-      document.getElementById('bar-rad').innerText = `Radiant: ${radScore}%`;
+      document.getElementById('bar-rad').innerText = "Radiant: " + radScore + "%";
       document.getElementById('bar-dir').style.width = dirScore + '%';
-      document.getElementById('bar-dir').innerText = `Dire: ${dirScore}%`;
+      document.getElementById('bar-dir').innerText = "Dire: " + dirScore + "%";
 
       document.getElementById('analysis-factors').innerHTML = "⚖️ Баланс пиков в норме. Контролируйте тайминги и Рошана.";
 
       const buildsContainer = document.getElementById('item-builds-list');
-      buildsContainer.innerHTML = dirHeroes.map(h => `
-        <div class="build-group">
-          <h4><img src="${getHeroImg(h.name)}"> Против ${h.title}:</h4>
-          <div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span><span class="item-tag">Silver Edge</span></div>
-        </div>
-      `).join('');
+      buildsContainer.innerHTML = dirHeroes.map(function(h) {
+        return '<div class="build-group"><h4><img src="' + getHeroImg(h.name) + '"> Против ' + h.title + ':</h4><div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span><span class="item-tag">Silver Edge</span></div></div>';
+      }).join('');
     }
 
     function toggleRankDropdown() {
@@ -612,19 +1068,9 @@
       const listContainer = document.getElementById('metaHeroesList');
       const data = META_BY_RANK[rank] || META_BY_RANK['immortal'];
 
-      listContainer.innerHTML = data.map(item => `
-        <div class="meta-hero-row">
-          <img class="meta-hero-img" src="${getHeroImg(item.name)}" loading="lazy">
-          <div style="flex:1;">
-            <div class="meta-hero-name">${item.title}</div>
-            <div class="meta-hero-stats">
-              <span>Винрейт: <b class="meta-winrate">${item.wr}</b></span>
-              <span>Пик: <b>${item.pick}</b></span>
-              <span>Позиция: <b style="color:var(--gold);">${item.best}</b></span>
-            </div>
-          </div>
-        </div>
-      `).join('');
+      listContainer.innerHTML = data.map(function(item) {
+        return '<div class="meta-hero-row"><img class="meta-hero-img" src="' + getHeroImg(item.name) + '" loading="lazy"><div style="flex:1;"><div class="meta-hero-name">' + item.title + '</div><div class="meta-hero-stats"><span>Винрейт: <b class="meta-winrate">' + item.wr + '</b></span><span>Пик: <b>' + item.pick + '</b></span><span>Позиция: <b style="color:var(--gold);">' + item.best + '</b></span></div></div></div>';
+      }).join('');
     }
 
     window.onclick = function(event) {
@@ -637,11 +1083,17 @@
     }
 
     function switchTab(tab) {
-      ['draft', 'counter', 'profile', 'meta', 'chat'].forEach(t => {
-        const card = document.getElementById(`tab-${t}`);
-        const sec = document.getElementById(`section-${t}`);
-        if (card) card.classList.toggle('active', t === tab);
-        if (sec) sec.classList.toggle('active', t === tab);
+      ['draft', 'counter', 'profile', 'meta', 'chat'].forEach(function(t) {
+        const card = document.getElementById("tab-" + t);
+        const sec = document.getElementById("section-" + t);
+        if (card) {
+            if (t === tab) card.classList.add('active');
+            else card.classList.remove('active');
+        }
+        if (sec) {
+            if (t === tab) sec.classList.add('active');
+            else sec.classList.remove('active');
+        }
       });
     }
 
@@ -651,33 +1103,30 @@
       if (!input) return;
 
       resultsDiv.innerHTML = "Загрузка...";
-      const target = ALL_HEROES.find(h => h.title.toLowerCase().includes(input) || h.name.includes(input));
+      const target = ALL_HEROES.find(function(h) { return h.title.toLowerCase().includes(input) || h.name.includes(input); });
       if (!target) {
         resultsDiv.innerHTML = "Герой не найден.";
         return;
       }
 
       try {
-        const res = `https://api.opendota.com/api/heroes/${target.id}/matchups`;
-        const matchups = await (await fetch(res)).json();
+        const res = "https://api.opendota.com/api/heroes/" + target.id + "/matchups";
+        const fetchRes = await fetch(res);
+        const matchups = await fetchRes.json();
         const top5 = matchups
-          .filter(m => m.games_played > 30)
-          .map(m => {
-            const h = ALL_HEROES.find(x => x.id === m.hero_id);
+          .filter(function(m) { return m.games_played > 30; })
+          .map(function(m) {
+            const h = ALL_HEROES.find(function(x) { return x.id === m.hero_id; });
             const wr = ((m.wins / m.games_played) * 100).toFixed(1);
             return { hero: h, winrate: wr };
           })
-          .filter(c => c.hero)
-          .sort((a, b) => b.winrate - a.winrate)
+          .filter(function(c) { return c.hero; })
+          .sort(function(a, b) { return b.winrate - a.winrate; })
           .slice(0, 5);
 
-        resultsDiv.innerHTML = top5.map(c => `
-          <div class="counter-item">
-            <img src="${getHeroImg(c.hero.name)}">
-            <span style="flex:1; font-weight:bold;">${c.hero.title}</span>
-            <span style="color:var(--accent-green)">Винрейт: <b>${c.winrate}%</b></span>
-          </div>
-        `).join('');
+        resultsDiv.innerHTML = top5.map(function(c) {
+          return '<div class="counter-item"><img src="' + getHeroImg(c.hero.name) + '"><span style="flex:1; font-weight:bold;">' + c.hero.title + '</span><span style="color:var(--accent-green)">Винрейт: <b>' + c.winrate + '%</b></span></div>';
+        }).join('');
       } catch (e) {
         resultsDiv.innerHTML = "Ошибка загрузки.";
       }
@@ -690,47 +1139,26 @@
 
       resultsDiv.innerHTML = "Загрузка профиля и матчей...";
       try {
-        const [playerRes, matchesRes] = await Promise.all([
-          fetch(`https://api.opendota.com/api/players/${steamId}`),
-          fetch(`https://api.opendota.com/api/players/${steamId}/recentMatches`)
-        ]);
-
-        const playerData = await playerRes.json();
-        const matchesData = await matchesRes.json();
+        const playerResPromise = fetch("https://api.opendota.com/api/players/" + steamId);
+        const matchesResPromise = fetch("https://api.opendota.com/api/players/" + steamId + "/recentMatches");
+        
+        const responses = await Promise.all([playerResPromise, matchesResPromise]);
+        const playerData = await responses[0].json();
+        const matchesData = await responses[1].json();
 
         if (!playerData.profile) {
           resultsDiv.innerHTML = "❌ Игрок не найден или профиль скрыт.";
           return;
         }
 
-        let html = `
-          <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-            <img src="${playerData.profile.avatarfull}" style="width:36px; height:36px; border-radius:50%;">
-            <div>
-              <div style="font-weight:bold; color:#fff; font-size:12px;">${playerData.profile.personaname}</div>
-              <div style="font-size:10px; color:var(--text-muted);">Ранг (оценка): ${playerData.competitive_rank || 'Калибровка'}</div>
-            </div>
-          </div>
-          <div style="font-size:11px; font-weight:bold; margin-bottom:4px; color:var(--accent-glow);">Последние матчи:</div>
-        `;
+        let html = '<div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;"><img src="' + playerData.profile.avatarfull + '" style="width:36px; height:36px; border-radius:50%;"><div><div style="font-weight:bold; color:#fff; font-size:12px;">' + playerData.profile.personaname + '</div><div style="font-size:10px; color:var(--text-muted);">Ранг (оценка): ' + (playerData.competitive_rank || 'Калибровка') + '</div></div></div><div style="font-size:11px; font-weight:bold; margin-bottom:4px; color:var(--accent-glow);">Последние матчи:</div>';
 
-        matchesData.slice(0, 5).forEach(m => {
+        matchesData.slice(0, 5).forEach(function(m) {
           const isWin = (m.player_slot < 128 && m.radiant_win) || (m.player_slot >= 128 && !m.radiant_win);
-          const hero = ALL_HEROES.find(h => h.id === m.hero_id) || { title: `Hero ${m.hero_id}` };
-          html += `
-            <div class="match-history-item" style="border-left: 3px solid ${isWin ? 'var(--radiant-green)' : 'var(--dire-red)'};">
-              <div>
-                <b>${hero.title}</b> (${Math.round(m.duration / 60)} мин)<br>
-                <span style="font-size:9px; color:var(--text-muted);">KDA: ${m.kills}/${m.deaths}/${m.assists}</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span style="color: ${isWin ? 'var(--radiant-green)' : 'var(--dire-red)'}; font-weight:bold;">
-                  ${isWin ? 'Победа' : 'Поражение'}
-                </span>
-                <button class="btn-details" onclick="loadMatchDetails(${m.match_id})">Детали</button>
-              </div>
-            </div>
-          `;
+          let hero = ALL_HEROES.find(function(h) { return h.id === m.hero_id; });
+          if (!hero) hero = { title: "Hero " + m.hero_id };
+          
+          html += '<div class="match-history-item" style="border-left: 3px solid ' + (isWin ? 'var(--radiant-green)' : 'var(--dire-red)') + ';"><div><b>' + hero.title + '</b> (' + Math.round(m.duration / 60) + ' мин)<br><span style="font-size:9px; color:var(--text-muted);">KDA: ' + m.kills + '/' + m.deaths + '/' + m.assists + '</span></div><div style="display:flex; align-items:center; gap:6px;"><span style="color: ' + (isWin ? 'var(--radiant-green)' : 'var(--dire-red)') + '; font-weight:bold;">' + (isWin ? 'Победа' : 'Поражение') + '</span><button class="btn-details" onclick="loadMatchDetails(' + m.match_id + ')">Детали</button></div></div>';
         });
 
         resultsDiv.innerHTML = html;
@@ -745,55 +1173,42 @@
       const bodyEl = document.getElementById('modalMatchBody');
 
       modal.classList.add('active');
-      titleEl.innerText = `Матч #${matchId}`;
+      titleEl.innerText = "Матч #" + matchId;
       bodyEl.innerHTML = "🔄 Загружаю состав и детали матча...";
 
       try {
-        const [matchRes, heroesRes] = await Promise.all([
-          fetch(`https://api.opendota.com/api/matches/${matchId}`),
-          fetch(`https://api.opendota.com/api/heroes`)
-        ]);
-
-        const data = await matchRes.json();
-        const heroesData = await heroesRes.json();
-        const heroesMap = { ...ALL_HEROES.reduce((acc, h) => { acc[h.id] = h.title; return acc; }, {}), ...Object.fromEntries(heroesData.map(h => [h.id, h.localized_name])) };
+        const matchResPromise = fetch("https://api.opendota.com/api/matches/" + matchId);
+        const heroesResPromise = fetch("https://api.opendota.com/api/heroes");
+        
+        const responses = await Promise.all([matchResPromise, heroesResPromise]);
+        const data = await responses[0].json();
+        const heroesData = await responses[1].json();
+        
+        const heroesMap = {};
+        ALL_HEROES.forEach(function(h) { heroesMap[h.id] = h.title; });
+        heroesData.forEach(function(h) { heroesMap[h.id] = h.localized_name; });
 
         const radWin = data.radiant_win;
         const duration = Math.floor((data.duration || 0) / 60);
 
-        let html = `
-          <div style="text-align:center; font-weight:bold; margin-bottom:8px; font-size:11px; color:${radWin ? 'var(--radiant-green)' : 'var(--dire-red)'};">
-            ${radWin ? '🟢 Победа Radiant' : '🔴 Победа Dire'} (${duration} мин) | Счет: ${data.radiant_score} : ${data.dire_score}
-          </div>
-          <div style="color:var(--radiant-green); font-weight:bold; font-size:10px; margin-bottom:4px;">🟢 Radiant (Свет):</div>
-        `;
+        let html = '<div style="text-align:center; font-weight:bold; margin-bottom:8px; font-size:11px; color:' + (radWin ? 'var(--radiant-green)' : 'var(--dire-red)') + ';">' + (radWin ? '🟢 Победа Radiant' : '🔴 Победа Dire') + ' (' + duration + ' мин) | Счет: ' + data.radiant_score + ' : ' + data.dire_score + '</div><div style="color:var(--radiant-green); font-weight:bold; font-size:10px; margin-bottom:4px;">🟢 Radiant (Свет):</div>';
 
-        data.players.slice(0, 5).forEach(p => {
-          const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
-          const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
-          html += `
-            <div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
-              <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
-              <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
-              <span style="color:var(--text-muted);">${heroName}</span>
-              <span style="font-weight:bold; color:var(--accent-glow);">[${p.kills}/${p.deaths}/${p.assists}]</span>
-            </div>
-          `;
+        data.players.slice(0, 5).forEach(function(p) {
+          const heroName = heroesMap[p.hero_id] || ("Hero_" + p.hero_id);
+          const hObj = ALL_HEROES.find(function(h) { return h.id === p.hero_id; });
+          const heroSlug = hObj ? hObj.name : 'antimage';
+          
+          html += '<div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;"><img src="' + getHeroImg(heroSlug) + '" style="width:24px; height:14px; border-radius:2px; object-fit:cover;"><span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (p.personaname || 'Аноним') + '</span><span style="color:var(--text-muted);">' + heroName + '</span><span style="font-weight:bold; color:var(--accent-glow);">[' + p.kills + '/' + p.deaths + '/' + p.assists + ']</span></div>';
         });
 
-        html += `<div style="color:var(--dire-red); font-weight:bold; font-size:10px; margin-top:8px; margin-bottom:4px;">🔴 Dire (Тьма):</div>`;
+        html += '<div style="color:var(--dire-red); font-weight:bold; font-size:10px; margin-top:8px; margin-bottom:4px;">🔴 Dire (Тьма):</div>';
 
-        data.players.slice(5, 10).forEach(p => {
-          const heroName = heroesMap[p.hero_id] || `Hero_${p.hero_id}`;
-          const heroSlug = ALL_HEROES.find(h => h.id === p.hero_id)?.name || 'antimage';
-          html += `
-            <div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;">
-              <img src="${getHeroImg(heroSlug)}" style="width:24px; height:14px; border-radius:2px; object-fit:cover;">
-              <span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${p.personaname || 'Аноним'}</span>
-              <span style="color:var(--text-muted);">${heroName}</span>
-              <span style="font-weight:bold; color:var(--accent-glow);">[${p.kills}/${p.deaths}/${p.assists}]</span>
-            </div>
-          `;
+        data.players.slice(5, 10).forEach(function(p) {
+          const heroName = heroesMap[p.hero_id] || ("Hero_" + p.hero_id);
+          const hObj = ALL_HEROES.find(function(h) { return h.id === p.hero_id; });
+          const heroSlug = hObj ? hObj.name : 'antimage';
+          
+          html += '<div style="display:flex; align-items:center; gap:6px; font-size:10px; padding:3px 0; border-bottom:1px solid #0a180e;"><img src="' + getHeroImg(heroSlug) + '" style="width:24px; height:14px; border-radius:2px; object-fit:cover;"><span style="flex:1; font-weight:bold; color:#fff; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">' + (p.personaname || 'Аноним') + '</span><span style="color:var(--text-muted);">' + heroName + '</span><span style="font-weight:bold; color:var(--accent-glow);">[' + p.kills + '/' + p.deaths + '/' + p.assists + ']</span></div>';
         });
 
         bodyEl.innerHTML = html;
@@ -806,11 +1221,9 @@
       document.getElementById('matchDetailsModal').classList.remove('active');
     }
 
-    // БЕЗОПАСНЫЙ ЗАПУСК
-    try { setInitialName(); } catch(e) { console.error(e); }
-    try { renderMeta('immortal'); } catch(e) { console.error(e); }
-    try { initGlobalChat(); } catch(e) { console.error(e); }
-
+    setInitialName();
+    renderMeta('immortal');
+    initGlobalChat(); 
   </script>
 </body>
 </html>
