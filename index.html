@@ -344,7 +344,7 @@
     .rank-dropdown-btn { background: #0d2215; border: 1px solid var(--accent-green); color: #fff; padding: 5px 10px; border-radius: 6px; font-size: 10px; font-weight: bold; cursor: pointer; }
     .rank-dropdown-content { position: absolute; right: 0; top: 110%; background: #060e08; border: 1px solid var(--card-border); border-radius: 6px; width: 150px; display: none; flex-direction: column; z-index: 100; box-shadow: 0 4px 12px rgba(0,0,0,0.6); }
     .rank-dropdown-content.show { display: flex; }
-    .rank-option { padding: 7px 10px; font-size: 10px; color: var(--text-main); cursor: pointer; border-bottom: 1px solid #0a180e; }
+    .rank-option { padding: 7px 10px; font-size: 10px; color: var(--text-main); cursor: pointer; border-bottom: 1px solid #0a180e; display: flex; align-items: center; }
     .rank-option:hover { background: #0d2215; color: var(--accent-glow); }
 
     .meta-hero-row { background: #020503; border: 1px solid var(--card-border); border-radius: 6px; padding: 6px 8px; display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
@@ -502,20 +502,36 @@
     <div class="meta-container">
       <div class="meta-header-bar">
         <div class="meta-rank-title-wrap">
-          <span id="current-rank-icon" style="font-size: 16px;">🏆</span>
+          <img id="current-rank-icon" src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 24px; height: 24px; object-fit: contain;">
           <div class="meta-title-text" id="current-rank-label">Ранг: Титан</div>
         </div>
         <div class="rank-select-wrapper">
           <div class="rank-dropdown-btn" onclick="toggleRankDropdown()">Выбрать ранг ▾</div>
           <div class="rank-dropdown-content" id="rankDropdown">
-            <div class="rank-option" onclick="changeRank('herald', 'Рекрут', '🥉')">🥉 Рекрут</div>
-            <div class="rank-option" onclick="changeRank('guardian', 'Страж', '🥈')">🥈 Страж</div>
-            <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', '🥇')">🥇 Рыцарь</div>
-            <div class="rank-option" onclick="changeRank('archon', 'Герой', '🎖️')">🎖️ Герой</div>
-            <div class="rank-option" onclick="changeRank('legend', 'Легенда', '⭐')">⭐ Легенда</div>
-            <div class="rank-option" onclick="changeRank('ancient', 'Властелин', '🔮')">🔮 Властелин</div>
-            <div class="rank-option" onclick="changeRank('divine', 'Божество', '💎')">💎 Божество</div>
-            <div class="rank-option" onclick="changeRank('immortal', 'Титан', '🏆')">🏆 Титан</div>
+            <div class="rank-option" onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Рекрут
+            </div>
+            <div class="rank-option" onclick="changeRank('guardian', 'Страж', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Страж
+            </div>
+            <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Рыцарь
+            </div>
+            <div class="rank-option" onclick="changeRank('archon', 'Герой', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Герой
+            </div>
+            <div class="rank-option" onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Легенда
+            </div>
+            <div class="rank-option" onclick="changeRank('ancient', 'Властелин', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Властелин
+            </div>
+            <div class="rank-option" onclick="changeRank('divine', 'Божество', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Божество
+            </div>
+            <div class="rank-option" onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')">
+              <img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 18px; vertical-align: middle; margin-right: 5px;"> Титан
+            </div>
           </div>
         </div>
       </div>
@@ -861,7 +877,6 @@
       document.getElementById("profileModal").classList.remove("active");
     }
 
-    // НОВАЯ ФУНКЦИЯ ДЛЯ ГЛОБАЛЬНОГО ЧАТА FIREBASE
     function initGlobalChat() {
       chatRef.limitToLast(50).on('value', (snapshot) => {
         const chatContainer = document.getElementById("chatMessages");
@@ -886,7 +901,6 @@
       });
     }
 
-    // ОТПРАВКА СООБЩЕНИЯ В БАЗУ ДАННЫХ
     function sendChatMessage() {
       const input = document.getElementById("chatInput");
       const text = input.value.trim();
@@ -1029,9 +1043,9 @@
       document.getElementById('rankDropdown').classList.toggle('show');
     }
 
-    function changeRank(rankKey, rankTitle, rankEmoji) {
+    function changeRank(rankKey, rankTitle, rankImgSrc) {
       document.getElementById('current-rank-label').innerText = "Ранг: " + rankTitle;
-      document.getElementById('current-rank-icon').innerText = rankEmoji;
+      document.getElementById('current-rank-icon').src = rankImgSrc;
       document.getElementById('rankDropdown').classList.remove('show');
       renderMeta(rankKey);
     }
@@ -1236,7 +1250,7 @@
 
     setInitialName();
     renderMeta('immortal');
-    initGlobalChat(); // Запуск настоящего глобального чата
+    initGlobalChat(); 
   </script>
 </body>
 </html>
