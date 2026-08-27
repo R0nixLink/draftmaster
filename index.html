@@ -478,6 +478,15 @@
         <div style="font-size: 18px; color: var(--accent-glow); font-weight: 900; text-transform: uppercase; letter-spacing: 1px;">Профиль</div>
       </div>
 
+      <div id="tg-profile-card" style="display: flex; align-items: center; gap: 12px; background: #020503; padding: 12px; border-radius: 8px; border: 1px solid var(--card-border); margin-bottom: 15px;">
+        <img id="tg-card-img" src="" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover; display: none;">
+        <div id="tg-card-fallback" style="width: 45px; height: 45px; border-radius: 50%; background: var(--accent-green); display: flex; align-items: center; justify-content: center; color: #000; font-weight: bold; font-size: 18px;">U</div>
+        <div style="flex: 1;">
+          <div id="tg-card-name" style="font-weight: bold; color: #fff; font-size: 14px;">Загрузка...</div>
+          <div id="tg-card-status" style="font-size: 10px; color: var(--text-muted); margin-top: 3px;">Ожидание...</div>
+        </div>
+      </div>
+
       <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 6px; font-weight: bold;">Поиск аккаунта Dota 2 (по SteamID32):</p>
       <div class="profile-input-group">
         <input type="text" id="steamIdInput" placeholder="Например: 105248644...">
@@ -578,6 +587,14 @@
   </div>
 
   <script>
+    // --- ИНИЦИАЛИЗАЦИЯ TELEGRAM ---
+    // Это исправляет проблему с отсутствием данных в Desktop!
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      tg.ready();
+      tg.expand();
+    }
+
     const ALL_HEROES = [
       { id: 1, name: "antimage", tag: "anti-mage", title: "Anti-Mage", roles: [1] },
       { id: 2, name: "axe", tag: "axe", title: "Axe", roles: [3] },
@@ -763,11 +780,11 @@
     let currentActiveRoleFilter = 0;
     let userNickname = "Игрок";
 
-    // Устанавливаем базовое имя или имя из локального хранилища при загрузке
     function setInitialName() {
       userNickname = localStorage.getItem("dota_nickname") || "Игрок";
       document.getElementById('userNickname').innerText = userNickname;
       document.getElementById('userInitial').innerText = userNickname.charAt(0).toUpperCase();
+      document.getElementById('tg-card-name').innerText = userNickname;
     }
 
     function openProfileModal() {
@@ -775,9 +792,7 @@
       document.getElementById("profileModal").classList.add("active");
     }
 
-    // НОВАЯ ФУНКЦИЯ ДЛЯ КНОПКИ "ЗАЙТИ ЧЕРЕЗ TELEGRAM"
     function loginWithTelegram() {
-      const tg = window.Telegram?.WebApp;
       if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
         const tgUser = tg.initDataUnsafe.user;
         const fullName = `${tgUser.first_name || ''} ${tgUser.last_name || ''}`.trim();
@@ -786,35 +801,48 @@
         localStorage.setItem("dota_nickname", userNickname);
         
         document.getElementById('userNickname').innerText = userNickname;
+        document.getElementById('tg-card-name').innerText = userNickname;
+        document.getElementById('tg-card-status').innerText = "✅ Авторизовано через Telegram";
+        document.getElementById('tg-card-status').style.color = "var(--accent-green)";
         
-        // Подтягиваем аватарку
         if (tgUser.photo_url) {
           document.getElementById('nav-user-img').src = tgUser.photo_url;
           document.getElementById('nav-user-img').style.display = 'flex';
+          document.getElementById('tg-card-img').src = tgUser.photo_url;
+          document.getElementById('tg-card-img').style.display = 'block';
           document.getElementById('userInitial').style.display = 'none';
+          document.getElementById('tg-card-fallback').style.display = 'none';
         } else {
           document.getElementById('userInitial').innerText = userNickname.charAt(0).toUpperCase();
-          document.getElementById('nav-user-img').style.display = 'none';
-          document.getElementById('userInitial').style.display = 'flex';
+          document.getElementById('tg-card-fallback').innerText = userNickname.charAt(0).toUpperCase();
         }
         
         alert("Успешно авторизовано как " + userNickname + "! Теперь вы можете общаться в глобальном чате от своего имени.");
         document.getElementById('profileModal').classList.remove('active');
       } else {
-        alert("Не удалось получить данные Telegram. Убедитесь, что вы открыли сайт внутри Telegram-бота (через кнопку Menu).");
+        // Если ошибка опять повторится, мы увидим JSON с тем, что именно вернул Телеграм
+        let debugInfo = tg ? JSON.stringify(tg.initDataUnsafe) : "tg undefined";
+        alert("Телеграм не передал данные.\nОтвет от ТГ: " + debugInfo + "\n\nПопробуйте запустить бота с телефона или изменить кнопку меню!");
       }
     }
 
-    // Ручное сохранение ника
     function saveNickname() {
       const val = document.getElementById("nicknameInput").value.trim();
       if (val) {
         userNickname = val;
         localStorage.setItem("dota_nickname", userNickname);
         document.getElementById("userNickname").innerText = userNickname;
+        document.getElementById("tg-card-name").innerText = userNickname;
         document.getElementById("userInitial").innerText = userNickname.charAt(0).toUpperCase();
+        document.getElementById("tg-card-fallback").innerText = userNickname.charAt(0).toUpperCase();
+        
         document.getElementById("nav-user-img").style.display = 'none';
         document.getElementById("userInitial").style.display = 'flex';
+        document.getElementById("tg-card-img").style.display = 'none';
+        document.getElementById("tg-card-fallback").style.display = 'flex';
+        
+        document.getElementById('tg-card-status').innerText = "⚠️ Авторизован как гость";
+        document.getElementById('tg-card-status').style.color = "var(--text-muted)";
       }
       document.getElementById("profileModal").classList.remove("active");
     }
