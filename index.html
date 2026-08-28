@@ -19,17 +19,24 @@
       --dire-red: #e74c3c;
       --text-light: #f5f6fa;
       --text-muted: #8b8d99;
+      /* Цвета конфет Crownfall */
+      --candy-1: #e74c3c; /* Красная */
+      --candy-2: #3498db; /* Синяя */
+      --candy-3: #2ecc71; /* Зеленая */
+      --candy-4: #f1c40f; /* Желтая */
+      --candy-5: #9b59b6; /* Фиолетовая */
+      --candy-6: #95a5a6; /* Серая */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
     body { background-color: var(--bg-main); color: var(--text-light); padding-bottom: 85px; min-height: 100vh; overflow-x: hidden; }
 
-    /* ТОП ХЕДЕР КАК В ВИДЕО */
+    /* ТОП ХЕДЕР */
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #000; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100;}
     .top-bar .title { font-size: 18px; font-weight: 900; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(226,192,112,0.3); }
     .top-bar .menu-icon { font-size: 20px; color: var(--text-muted); }
 
-    /* ПРИВЕТСТВЕННЫЙ БАННЕР ПРОФИЛЯ */
+    /* БАННЕР ПРОФИЛЯ */
     .profile-banner { margin: 15px 20px; padding: 15px; background: linear-gradient(145deg, #181a24 0%, #0a0b10 100%); border: 1px solid #352a1a; border-radius: 16px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
     .profile-banner::after { content: ''; position: absolute; right: -20px; top: -20px; width: 100px; height: 100px; background: radial-gradient(circle, rgba(226,192,112,0.15) 0%, rgba(0,0,0,0) 70%); }
     .banner-avatar { width: 56px; height: 56px; border-radius: 50%; border: 2px solid var(--accent-gold); object-fit: cover; z-index: 2; }
@@ -38,17 +45,14 @@
     .banner-info h3 { font-size: 17px; margin-bottom: 4px; font-weight: 800; display: flex; align-items: center; gap: 6px;}
     .banner-info p { font-size: 11px; color: var(--text-muted); font-weight: 600;}
 
-    /* ВАЛЮТЫ (МОНЕТЫ, ЖЕТОНЫ КАК В ВИДЕО) */
+    /* ВАЛЮТЫ */
     .currency-row { display: flex; justify-content: space-between; margin: 0 20px 20px; background: #0d0f14; border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 15px; }
     .curr-item { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 800; }
     .curr-item .dot { width: 12px; height: 12px; border-radius: 50%; }
 
-    /* ЗАГОЛОВОК РАЗДЕЛОВ */
     .section-header { margin: 0 20px 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; color: var(--text-light); display: flex; justify-content: space-between; align-items: center; }
-    .notif-bell { background: #1a1c23; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; position: relative; font-size: 12px; border: 1px solid var(--border-color);}
-    .notif-badge { position: absolute; top: -3px; right: -3px; background: var(--dire-red); width: 12px; height: 12px; border-radius: 50%; font-size: 8px; font-weight: bold; display: flex; align-items: center; justify-content: center; }
 
-    /* ГРИД КАРТОЧЕК МЕНЮ (КАК В CROWNFALL) */
+    /* ГРИД КАРТОЧЕК МЕНЮ */
     .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 20px; }
     .menu-card { position: relative; height: 100px; border-radius: 14px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.1s, border-color 0.2s; background: var(--bg-card); }
     .menu-card:active { transform: scale(0.96); border-color: var(--accent-gold); }
@@ -58,7 +62,6 @@
     .menu-card h4 { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
     .menu-card p { font-size: 9px; color: var(--accent-gold); font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.8); text-transform: uppercase;}
     
-    /* Специфичные цвета карточек */
     .card-draft { border-bottom: 3px solid #8e44ad; }
     .card-counter { border-bottom: 3px solid #e74c3c; }
     .card-builds { border-bottom: 3px solid #e67e22; }
@@ -66,7 +69,7 @@
     .card-candy { border-bottom: 3px solid #1abc9c; }
     .card-chat { border-bottom: 3px solid #3498db; }
 
-    /* НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ (BOTTOM BAR) */
+    /* НИЖНЯЯ ПАНЕЛЬ */
     .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 11, 16, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 1000; }
     .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 10px; font-weight: 600; cursor: pointer; flex: 1; transition: color 0.2s; }
     .nav-btn.active { color: var(--accent-gold); }
@@ -78,7 +81,7 @@
     @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
     .page-title { font-size: 22px; font-weight: 900; color: #fff; margin-bottom: 20px; text-transform: uppercase; border-left: 4px solid var(--accent-gold); padding-left: 10px; line-height: 1;}
 
-    /* ОНБОРДИНГ (РЕГИСТРАЦИЯ ПРИ ВХОДЕ) */
+    /* ОНБОРДИНГ */
     .onboarding-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 7, 10, 0.98); z-index: 99999; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
     .onboarding-overlay.active { display: flex; }
     .onboarding-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px 20px; width: 100%; max-width: 340px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
@@ -90,13 +93,12 @@
     .ob-input { width: 100%; background: #0a0b10; border: 1px solid var(--border-color); color: #fff; padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none; transition: border-color 0.2s;}
     .ob-input:focus { border-color: var(--accent-gold); }
     .ob-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%); color: #000; border: none; padding: 14px 20px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; margin-top: 10px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(226, 192, 112, 0.2); }
-    .ob-btn:active { transform: scale(0.98); }
     
     .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
     .role-select-btn { background: #0a0b10; border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; transition: all 0.2s;}
     .role-select-btn.selected { background: rgba(226,192,112,0.1); color: var(--accent-gold); border-color: var(--accent-gold); }
 
-    /* ОСТАЛЬНЫЕ СТИЛИ ДЛЯ ВНУТРЕННИХ СТРАНИЦ */
+    /* ДРАФТ */
     .teams-container { display: flex; flex-direction: column; gap: 15px; }
     .team-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; }
     .team-box.radiant { border-left: 4px solid var(--accent-green); }
@@ -106,53 +108,61 @@
     .slot-hero-img { width: 44px; height: 24px; border-radius: 4px; object-fit: cover; background: #000; flex-shrink: 0; border: 1px solid #222; }
     .slot-hero-name { flex: 1; font-size: 13px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .slot-hero-name.empty { color: #4a4d57; font-weight: 600; }
-
     .btn-row { display: flex; gap: 10px; margin-top: 15px; }
     .btn-analyze { flex: 3; background: linear-gradient(135deg, #11998e, #2ecc71); color: #fff; border: none; border-radius: 10px; padding: 14px; font-weight: 900; font-size: 14px; cursor: pointer; text-transform: uppercase; }
     .btn-reset { flex: 1; background: #1a1c23; color: var(--text-light); border: 1px solid var(--border-color); border-radius: 10px; padding: 14px; font-size: 13px; cursor: pointer; font-weight: bold;}
-
     .analysis-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 15px; margin-top: 15px; display: none; }
     .winrate-bar-container { background: #000; border-radius: 8px; height: 24px; overflow: hidden; display: flex; margin: 12px 0; border: 1px solid #222;}
     .winrate-radiant { background: linear-gradient(90deg, #11998e, #2ecc71); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
     .winrate-dire { background: linear-gradient(90deg, #c0392b, #e74c3c); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
-    .build-group { margin-top: 10px; padding: 10px; background: #0a0b10; border: 1px solid var(--border-color); border-radius: 10px; font-size: 11px; }
-    .build-group h4 { color: var(--accent-gold); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; font-size: 13px; }
-    .build-group img { width: 30px; height: 18px; border-radius: 3px; object-fit: cover; }
-    .item-tag { display: inline-block; background: #1a1c23; color: #fff; border: 1px solid #333; padding: 4px 8px; border-radius: 6px; font-weight: bold; margin-right: 6px; margin-top: 5px; font-size: 10px; }
 
-    /* СТИЛИ КАЛЬКУЛЯТОРА КОНФЕТ */
-    .candy-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 20px; text-align: center;}
-    .candy-img { width: 80px; margin-bottom: 15px; filter: drop-shadow(0 0 10px rgba(26, 188, 156, 0.4));}
-    .candy-input-group { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; text-align: left;}
-    .candy-input-group label { font-size: 11px; color: var(--text-muted); font-weight: bold; text-transform: uppercase;}
-    .candy-input-group input { background: #0a0b10; border: 1px solid var(--border-color); color: var(--accent-gold); padding: 12px; border-radius: 8px; font-size: 16px; font-weight: 900; outline: none;}
-    .candy-result { margin-top: 15px; padding: 15px; background: rgba(26, 188, 156, 0.1); border: 1px solid #1abc9c; border-radius: 10px; color: #1abc9c; font-weight: 900; font-size: 16px; display: none;}
-
-    /* МОДАЛКА ВЫБОРА ГЕРОЕВ */
+    /* МОДАЛКА ГЕРОЕВ */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 7, 10, 0.98); z-index: 99999; display: none; flex-direction: column; padding: 20px; }
     .modal-overlay.active { display: flex; }
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
     .modal-role-title { font-size: 16px; font-weight: 900; color: #fff; text-transform: uppercase;}
     .modal-close { background: #1a1c23; border: 1px solid var(--border-color); color: #fff; padding: 8px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
     .modal-search { background: #121318; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: #fff; outline: none; font-size: 14px; margin-bottom: 15px; flex-shrink: 0; font-weight: bold;}
-    .modal-search:focus { border-color: var(--accent-gold); }
     .role-filters { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; flex-shrink: 0; scrollbar-width: none; }
     .role-btn { background: #121318; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; padding: 8px 12px; border-radius: 8px; white-space: nowrap; cursor: pointer; font-weight: 800;}
     .role-btn.active { background: var(--accent-gold-dark); color: #fff; border-color: var(--accent-gold); }
     .heroes-grid-container { flex: 1; overflow-y: scroll; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-content: start; padding-bottom: 30px; }
-    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; text-align: center; cursor: pointer; padding-bottom: 6px; transition: transform 0.1s;}
-    .hero-pick-card:active { transform: scale(0.9); border-color: var(--accent-gold);}
-    .hero-pick-card.disabled { opacity: 0.2; pointer-events: none; }
+    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; text-align: center; cursor: pointer; padding-bottom: 6px;}
     .hero-pick-card img { width: 100%; height: 45px; object-fit: cover; display: block; margin-bottom: 6px; border-bottom: 1px solid #222;}
     .hero-pick-card .name { font-size: 10px; color: #fff; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px;}
 
-    /* СПИСОК МЕТЫ */
+    /* МЕТА */
     .meta-hero-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
     .meta-hero-img { width: 60px; height: 34px; border-radius: 6px; object-fit: cover; border: 1px solid #000;}
     .meta-hero-stats { margin-top: 4px; display: flex; gap: 15px;}
     .meta-hero-stats span { font-size: 10px; color: var(--text-muted); font-weight: 600;}
     .meta-hero-stats b { color: #fff;}
     .meta-winrate { color: var(--accent-green) !important; font-weight: 900 !important; font-size: 11px;}
+
+    /* ===== НОВЫЙ КАЛЬКУЛЯТОР КОНФЕТ В СТИЛЕ ВИДЕО ===== */
+    .candy-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px;}
+    .candy-section h3 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px;}
+    
+    .candy-inventory-grid { display: flex; gap: 10px; justify-content: space-between; margin-bottom: 10px;}
+    .candy-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .candy-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.1); box-shadow: inset 0 -3px 5px rgba(0,0,0,0.5); font-weight: bold; text-shadow: 0 1px 2px #000; cursor: pointer; transition: transform 0.1s;}
+    .candy-circle:active { transform: scale(0.9);}
+    .c1 { background: radial-gradient(circle at 30% 30%, #ff6b6b, var(--candy-1)); }
+    .c2 { background: radial-gradient(circle at 30% 30%, #5dade2, var(--candy-2)); }
+    .c3 { background: radial-gradient(circle at 30% 30%, #2ecc71, var(--candy-3)); }
+    .c4 { background: radial-gradient(circle at 30% 30%, #f1c40f, var(--candy-4)); }
+    .c5 { background: radial-gradient(circle at 30% 30%, #af7ac5, var(--candy-5)); }
+    .c6 { background: radial-gradient(circle at 30% 30%, #bdc3c7, var(--candy-6)); }
+    .candy-count { font-size: 12px; font-weight: 900; color: #fff;}
+
+    .exchange-row { background: #0a0b10; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;}
+    .exchange-part { display: flex; align-items: center; gap: 5px;}
+    .exchange-part .candy-circle { width: 20px; height: 20px; border-width: 1px; font-size: 10px;}
+    .exchange-arrow { color: var(--text-muted); font-weight: bold; }
+    
+    .add-exchange-btn { width: 100%; background: transparent; border: 1px dashed var(--text-muted); color: var(--text-muted); padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 5px; cursor: pointer;}
+    .calc-btn { width: 100%; background: var(--accent-gold); color: #000; font-weight: 900; padding: 15px; border-radius: 12px; border: none; font-size: 14px; text-transform: uppercase; margin-top: 10px;}
+
   </style>
 </head>
 <body>
@@ -161,7 +171,7 @@
     <div class="onboarding-card">
       <div class="onboarding-step active" id="ob-step-1">
         <h2>Привет, <span id="ob-name-display" style="color:var(--accent-gold);">Игрок</span>!</h2>
-        <p>Добро пожаловать в DraftMMaster.<br>Укажи свой опыт игры:</p>
+        <p>Добро пожаловать в Crownfall DraftMaster.<br>Укажи свой опыт игры:</p>
         <input type="number" id="ob-mmr" class="ob-input" placeholder="Твой текущий MMR (напр. 3500)">
         <input type="number" id="ob-hours" class="ob-input" placeholder="Часы в Dota 2 (напр. 2500)">
         <button class="ob-btn" onclick="obNextStep(2)">Далее</button>
@@ -194,11 +204,9 @@
 
   <div class="top-bar">
     <div class="title">CROWNFALL</div>
-    <div class="menu-icon">⚙️</div>
-  </div>
+    <div class="menu-icon" onclick="localStorage.removeItem('cf_setup_done'); location.reload();">⚙️</div> </div>
 
   <div id="sec-main" class="section-wrapper active">
-    
     <div class="profile-banner">
       <img id="top-avatar" class="banner-avatar" src="" style="display:none;">
       <div class="banner-avatar-fallback" id="top-avatar-fallback">U</div>
@@ -214,53 +222,32 @@
       <div class="curr-item"><div class="dot" style="background:#9b59b6;"></div> <span id="stat-role">Нет</span></div>
     </div>
 
-    <div class="section-header">
-      Разделы
-      <div class="notif-bell">🔔<div class="notif-badge">3</div></div>
-    </div>
+    <div class="section-header">Разделы</div>
 
     <div class="menu-grid">
       <div class="menu-card card-draft" onclick="switchTab('draft')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/antimage.png">
-        <div class="content">
-          <h4>Драфтер</h4>
-          <p>Помощник в пиках</p>
-        </div>
+        <div class="content"><h4>Драфтер</h4><p>Помощник в пиках</p></div>
       </div>
       <div class="menu-card card-counter" onclick="switchTab('counter')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/phantom_assassin.png">
-        <div class="content">
-          <h4>Контрпики</h4>
-          <p>Анализ врагов</p>
-        </div>
+        <div class="content"><h4>Контрпики</h4><p>Анализ врагов</p></div>
       </div>
-      <div class="menu-card card-builds" onclick="alert('Раздел сборок в разработке! Скоро добавим.');">
+      <div class="menu-card card-builds" onclick="alert('Сборки скоро будут добавлены!');">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/dawnbreaker.png">
-        <div class="content">
-          <h4>Сборки</h4>
-          <p>Предметы и таланты</p>
-        </div>
+        <div class="content"><h4>Сборки</h4><p>Предметы и таланты</p></div>
       </div>
       <div class="menu-card card-meta" onclick="switchTab('meta')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/lina.png">
-        <div class="content">
-          <h4>Мета патча</h4>
-          <p>Лучшие герои</p>
-        </div>
+        <div class="content"><h4>Мета патча</h4><p>Лучшие герои</p></div>
       </div>
       <div class="menu-card card-candy" onclick="switchTab('candy')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/meepo.png">
-        <div class="content">
-          <h4>Калькулятор</h4>
-          <p>Конфетная лавка</p>
-        </div>
+        <div class="content"><h4>Калькулятор</h4><p>Конфетная лавка</p></div>
       </div>
       <div class="menu-card card-chat" onclick="openGlobalChat()">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/crystal_maiden.png">
-        <div class="content">
-          <h4>Общий чат</h4>
-          <p>Телеграм</p>
-        </div>
+        <div class="content"><h4>Общий чат</h4><p>Группа в Telegram</p></div>
       </div>
     </div>
   </div>
@@ -269,7 +256,7 @@
     <div class="page-title">Драфтер</div>
     <div class="teams-container">
       <div class="team-box radiant">
-        <div class="team-title radiant-text">🟢 Ваша команда (Radiant)</div>
+        <div style="font-size: 11px; font-weight: 800; margin-bottom: 6px; color: var(--accent-green);">🟢 ВАША КОМАНДА</div>
         <div class="slot-row" onclick="openHeroModal('rad', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-rad-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-1" class="slot-hero-name empty">Выбрать керри</span></div>
         <div class="slot-row" onclick="openHeroModal('rad', 2)"><span class="slot-label">Поз 2 (Мид)</span><img id="img-rad-2" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-2" class="slot-hero-name empty">Выбрать мидера</span></div>
         <div class="slot-row" onclick="openHeroModal('rad', 3)"><span class="slot-label">Поз 3 (Хард)</span><img id="img-rad-3" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-3" class="slot-hero-name empty">Выбрать хард</span></div>
@@ -277,7 +264,7 @@
         <div class="slot-row" onclick="openHeroModal('rad', 5)"><span class="slot-label">Поз 5 (Саппорт)</span><img id="img-rad-5" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-rad-5" class="slot-hero-name empty">Выбрать сапа</span></div>
       </div>
       <div class="team-box dire">
-        <div class="team-title dire-text">🔴 Враги (Dire)</div>
+        <div style="font-size: 11px; font-weight: 800; margin-bottom: 6px; color: var(--dire-red);">🔴 ВРАЖЕСКАЯ КОМАНДА</div>
         <div class="slot-row" onclick="openHeroModal('dir', 1)"><span class="slot-label">Поз 1 (Керри)</span><img id="img-dir-1" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-1" class="slot-hero-name empty">Выбрать керри</span></div>
         <div class="slot-row" onclick="openHeroModal('dir', 2)"><span class="slot-label">Поз 2 (Мид)</span><img id="img-dir-2" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-2" class="slot-hero-name empty">Выбрать мидера</span></div>
         <div class="slot-row" onclick="openHeroModal('dir', 3)"><span class="slot-label">Поз 3 (Хард)</span><img id="img-dir-3" class="slot-hero-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='18' fill='%23050d07'></svg>"><span id="name-dir-3" class="slot-hero-name empty">Выбрать хард</span></div>
@@ -286,7 +273,7 @@
       </div>
     </div>
     <div class="btn-row">
-      <button class="btn-analyze" onclick="analyzeDraft()">🧠 Анализ драфта</button>
+      <button class="btn-analyze" onclick="analyzeDraft()">Рассчитать</button>
       <button class="btn-reset" onclick="resetDraft()">Сброс</button>
     </div>
     <div class="analysis-card" id="analysis-result">
@@ -295,18 +282,14 @@
         <div id="bar-rad" class="winrate-radiant" style="width: 50%;">50%</div>
         <div id="bar-dir" class="winrate-dire" style="width: 50%;">50%</div>
       </div>
-      <div class="factors-box" id="analysis-factors"></div>
-      <h3 style="margin-top: 15px; font-size:12px; color:var(--text-muted);">🛍️ Рекомендуемые сборки:</h3>
-      <div id="item-builds-list"></div>
     </div>
   </div>
 
   <div id="sec-counter" class="section-wrapper">
     <div class="page-title">Контрпики</div>
     <div style="background:var(--bg-card); padding:20px; border-radius:16px; border:1px solid var(--border-color);">
-      <p style="font-size:11px; color:var(--text-muted); margin-bottom:10px;">Введи имя героя, чтобы узнать его главные слабости по версии Dotabuff.</p>
       <div style="display: flex; gap: 8px;">
-        <input type="text" id="heroInput" placeholder="Имя героя (напр. Pudge)..." style="flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:12px; border-radius:10px; outline:none; font-weight:bold;">
+        <input type="text" id="heroInput" placeholder="Имя героя..." style="flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:12px; border-radius:10px; outline:none; font-weight:bold;">
         <button class="btn-action" style="background:linear-gradient(135deg, var(--dire-red), #c0392b); padding:0 20px; border-radius:10px; font-size:13px;" onclick="searchCounters()">Найти</button>
       </div>
       <div id="counter-results" style="margin-top: 20px;"></div>
@@ -314,67 +297,74 @@
   </div>
 
   <div id="sec-candy" class="section-wrapper">
-    <div class="page-title">Лавка конфет</div>
-    <div class="candy-box">
-      <img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/candy.png" class="candy-img" onerror="this.src='https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/tome_of_knowledge.png'">
-      <h3 style="color:#fff; margin-bottom:15px;">Калькулятор замен (Rerolls)</h3>
-      
-      <div class="candy-input-group">
-        <label>Сколько у тебя мешков конфет?</label>
-        <input type="number" id="candy-bags" placeholder="Например: 15">
+    <div class="page-title">Калькулятор конфет</div>
+    
+    <div class="candy-section">
+      <h3>Ваш инвентарь</h3>
+      <div class="candy-inventory-grid">
+        <div class="candy-item"><div class="candy-circle c1" onclick="changeCandy('inv', 1, 1)"></div><span class="candy-count" id="inv-1">0</span></div>
+        <div class="candy-item"><div class="candy-circle c2" onclick="changeCandy('inv', 2, 1)"></div><span class="candy-count" id="inv-2">0</span></div>
+        <div class="candy-item"><div class="candy-circle c3" onclick="changeCandy('inv', 3, 1)"></div><span class="candy-count" id="inv-3">0</span></div>
+        <div class="candy-item"><div class="candy-circle c4" onclick="changeCandy('inv', 4, 1)"></div><span class="candy-count" id="inv-4">0</span></div>
+        <div class="candy-item"><div class="candy-circle c5" onclick="changeCandy('inv', 5, 1)"></div><span class="candy-count" id="inv-5">0</span></div>
+        <div class="candy-item"><div class="candy-circle c6" onclick="changeCandy('inv', 6, 1)"></div><span class="candy-count" id="inv-6">0</span></div>
       </div>
-      <div class="candy-input-group">
-        <label>Сколько доступно замен (роллов)?</label>
-        <input type="number" id="candy-rolls" placeholder="Например: 10">
+      <button style="width:100%; margin-top:10px; background:transparent; border:none; color:var(--text-muted); font-size:10px; cursor:pointer;" onclick="resetCandies('inv')">Очистить инвентарь</button>
+    </div>
+
+    <div class="candy-section">
+      <h3>Обмены</h3>
+      <div id="exchange-list">
+        <div class="exchange-row">
+          <div class="exchange-part"><div class="candy-circle c1"></div><div class="candy-circle c1"></div><div class="candy-circle c2"></div></div>
+          <div class="exchange-arrow">➔</div>
+          <div class="exchange-part"><div class="candy-circle c3"></div></div>
+        </div>
       </div>
-      
-      <button class="ob-btn" style="background:linear-gradient(135deg, #1abc9c, #16a085);" onclick="calculateCandies()">Рассчитать выгоду</button>
-      
-      <div id="candy-result" class="candy-result">
-        Здесь будет результат
+      <button class="add-exchange-btn">+ Добавить обмен</button>
+    </div>
+
+    <div class="candy-section">
+      <h3>Нужная награда</h3>
+      <div class="candy-inventory-grid">
+        <div class="candy-item"><div class="candy-circle c1" onclick="changeCandy('target', 1, 1)"></div><span class="candy-count" id="target-1">0</span></div>
+        <div class="candy-item"><div class="candy-circle c2" onclick="changeCandy('target', 2, 1)"></div><span class="candy-count" id="target-2">0</span></div>
+        <div class="candy-item"><div class="candy-circle c3" onclick="changeCandy('target', 3, 1)"></div><span class="candy-count" id="target-3">0</span></div>
+        <div class="candy-item"><div class="candy-circle c4" onclick="changeCandy('target', 4, 1)"></div><span class="candy-count" id="target-4">0</span></div>
+        <div class="candy-item"><div class="candy-circle c5" onclick="changeCandy('target', 5, 1)"></div><span class="candy-count" id="target-5">0</span></div>
+        <div class="candy-item"><div class="candy-circle c6" onclick="changeCandy('target', 6, 1)"></div><span class="candy-count" id="target-6">0</span></div>
       </div>
     </div>
+
+    <button class="calc-btn" onclick="calculateCandyPath()">Рассчитать путь</button>
+    <div id="candy-calc-result" style="margin-top:15px; text-align:center; font-size:12px; font-weight:bold; color:var(--accent-gold); display:none;">
+      </div>
   </div>
 
   <div id="sec-meta" class="section-wrapper">
     <div class="page-title">Мета Патча</div>
     <div class="meta-container" style="padding:0; background:transparent; border:none;">
-      <div class="meta-header-bar" style="background:var(--bg-card); border-radius:12px; padding:15px; margin-bottom:15px;">
-        <div class="meta-rank-title-wrap">
+      <div style="background:var(--bg-card); border-radius:12px; padding:15px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+        <div style="display:flex; align-items:center; gap:10px;">
           <img id="current-rank-icon" src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 32px; height: 32px; object-fit: contain;">
-          <div class="meta-title-text" id="current-rank-label" style="font-size:16px;">Титан</div>
+          <div id="current-rank-label" style="font-size:16px; font-weight:bold;">Титан</div>
         </div>
-        <div class="rank-select-wrapper">
-          <div class="rank-dropdown-btn" onclick="document.getElementById('rankDropdown').classList.toggle('show')">Выбрать ▾</div>
-          <div class="rank-dropdown-content" id="rankDropdown">
-            <div class="rank-option" onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png" style="width: 20px; margin-right: 8px;"> Рекрут</div>
-            <div class="rank-option" onclick="changeRank('guardian', 'Страж', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png" style="width: 20px; margin-right: 8px;"> Страж</div>
-            <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png" style="width: 20px; margin-right: 8px;"> Рыцарь</div>
-            <div class="rank-option" onclick="changeRank('archon', 'Герой', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png" style="width: 20px; margin-right: 8px;"> Герой</div>
-            <div class="rank-option" onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png" style="width: 20px; margin-right: 8px;"> Легенда</div>
-            <div class="rank-option" onclick="changeRank('ancient', 'Властелин', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png" style="width: 20px; margin-right: 8px;"> Властелин</div>
-            <div class="rank-option" onclick="changeRank('divine', 'Божество', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png" style="width: 20px; margin-right: 8px;"> Божество</div>
-            <div class="rank-option" onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 20px; margin-right: 8px;"> Титан</div>
-          </div>
+        <button onclick="document.getElementById('rankDropdown').style.display = document.getElementById('rankDropdown').style.display === 'block' ? 'none' : 'block';" style="background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:8px;">Выбрать ▾</button>
+        <div id="rankDropdown" style="position:absolute; right:20px; top:120px; background:#0a0b10; border:1px solid var(--border-color); border-radius:8px; display:none; flex-direction:column; z-index:10;">
+          <div onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')" style="padding:10px; cursor:pointer;">Рекрут</div>
+          <div onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')" style="padding:10px; cursor:pointer;">Легенда</div>
+          <div onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')" style="padding:10px; cursor:pointer;">Титан</div>
         </div>
       </div>
-      <div class="meta-heroes-list" id="metaHeroesList"></div>
+      <div id="metaHeroesList"></div>
     </div>
   </div>
 
   <div class="bottom-nav">
-    <div class="nav-btn active" id="nav-main" onclick="switchTab('main')">
-      <div class="icon">👑</div><div>Главная</div>
-    </div>
-    <div class="nav-btn" id="nav-draft" onclick="switchTab('draft')">
-      <div class="icon">🛡️</div><div>Драфтер</div>
-    </div>
-    <div class="nav-btn" id="nav-candy" onclick="switchTab('candy')">
-      <div class="icon">🍬</div><div>Лавка</div>
-    </div>
-    <div class="nav-btn" id="nav-meta" onclick="switchTab('meta')">
-      <div class="icon">📊</div><div>Мета</div>
-    </div>
+    <div class="nav-btn active" id="nav-main" onclick="switchTab('main')"><div class="icon">👑</div><div>Главная</div></div>
+    <div class="nav-btn" id="nav-draft" onclick="switchTab('draft')"><div class="icon">🛡️</div><div>Драфтер</div></div>
+    <div class="nav-btn" id="nav-candy" onclick="switchTab('candy')"><div class="icon">🍬</div><div>Лавка</div></div>
+    <div class="nav-btn" id="nav-meta" onclick="switchTab('meta')"><div class="icon">📊</div><div>Мета</div></div>
   </div>
 
   <div class="modal-overlay" id="heroModal">
@@ -397,17 +387,16 @@
   </div>
 
   <script>
-    // --- 1. ТЕЛЕГРАМ ---
+    // --- ИНИЦИАЛИЗАЦИЯ ТГ ---
     let tg = null;
     try {
       if (window.Telegram && window.Telegram.WebApp) {
         tg = window.Telegram.WebApp;
-        tg.ready(); 
-        tg.expand();
+        tg.ready(); tg.expand();
       }
-    } catch(e) { console.log(e); }
+    } catch(e) {}
 
-    // --- 2. БАЗА ГЕРОЕВ (ПОЛНАЯ) ---
+    // --- БАЗА ГЕРОЕВ И МЕТА ---
     const ALL_HEROES = [
       { id: 1, name: "antimage", title: "Anti-Mage", roles: [1] }, { id: 2, name: "axe", title: "Axe", roles: [3] },
       { id: 3, name: "bane", title: "Bane", roles: [5] }, { id: 4, name: "bloodseeker", title: "Bloodseeker", roles: [1, 2] },
@@ -473,22 +462,14 @@
 
     const META_BY_RANK = {
       immortal: [{ name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид" }, { name: "np", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард" }, { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард" }, { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри" }, { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Сап 4" }],
-      divine: [{ name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" }, { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хард" }, { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" }, { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Сап 4" }, { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }],
-      ancient: [{ name: "wraith_king", title: "Wraith King", wr: "54.2%", pick: "24.0%", best: "Керри" }, { name: "axe", title: "Axe", wr: "53.4%", pick: "19.2%", best: "Хард" }, { name: "zeus", title: "Zeus", wr: "52.8%", pick: "28.5%", best: "Мид" }, { name: "witch_doctor", title: "Witch Doctor", wr: "52.5%", pick: "30.1%", best: "Сап 5" }, { name: "sniper", title: "Sniper", wr: "51.9%", pick: "27.3%", best: "Керри" }],
-      legend: [{ name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" }, { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" }, { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид" }, { name: "lion", title: "Lion", wr: "52.9%", pick: "38.6%", best: "Сап 4" }, { name: "ogre_magi", title: "Ogre Magi", wr: "52.4%", pick: "18.5%", best: "Сап 5" }],
-      archon: [{ name: "sniper", title: "Sniper", wr: "56.0%", pick: "35.4%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.4%", pick: "29.1%", best: "Керри" }, { name: "viper", title: "Viper", wr: "54.1%", pick: "25.0%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.6%", pick: "42.0%", best: "Сап 5" }, { name: "bounty_hunter", title: "Bounty Hunter", wr: "52.8%", pick: "16.4%", best: "Сап 4" }],
-      crusader: [{ name: "sniper", title: "Sniper", wr: "56.8%", pick: "38.1%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.9%", pick: "31.0%", best: "Керри" }, { name: "zeus", title: "Zeus", wr: "54.5%", pick: "34.2%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.9%", pick: "45.1%", best: "Саппорт" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "53.1%", pick: "28.0%", best: "Керри" }],
-      guardian: [{ name: "sniper", title: "Sniper", wr: "57.5%", pick: "40.2%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "56.4%", pick: "33.5%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "54.8%", pick: "30.2%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.2%", pick: "48.0%", best: "Саппорт" }, { name: "zuus", title: "Zeus", wr: "53.9%", pick: "36.1%", best: "Мид" }],
-      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.5%", pick: "32.1%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.8%", pick: "50.2%", best: "Саппорт" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
+      legend: [{ name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" }, { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" }, { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид" }],
+      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
     };
 
-    window.draftState = { rad: {1:null,2:null,3:null,4:null,5:null}, dir: {1:null,2:null,3:null,4:null,5:null} };
-    let currentSlot = { team: null, pos: null };
-    let currentActiveRoleFilter = 0;
-    let onboardingHeroSelectMode = false;
+    // --- ОНБОРДИНГ И ПРОФИЛЬ ---
     let tempRole = null;
+    let onboardingHeroSelectMode = false;
 
-    // --- 3. ЛОГИКА ОНБОРДИНГА И ПРОФИЛЯ ---
     function checkOnboarding() {
       const isDone = localStorage.getItem('cf_setup_done');
       if (isDone !== 'true') {
@@ -497,8 +478,8 @@
         if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user) {
           initialName = tg.initDataUnsafe.user.first_name || "Игрок";
         }
-        localStorage.setItem('dota_nickname', initialName);
         document.getElementById('ob-name-display').innerText = initialName;
+        localStorage.setItem('dota_nickname', initialName);
       } else {
         loadProfileData();
       }
@@ -518,7 +499,7 @@
     function openOnboardingHeroSelect() {
       onboardingHeroSelectMode = true;
       document.getElementById('modalRoleTitle').innerText = "КТО ТВОЯ СИГНАТУРКА?";
-      document.getElementById('modalRoleFilters').style.display = 'none'; // Прячем фильтры ролей
+      document.getElementById('modalRoleFilters').style.display = 'none';
       document.getElementById('heroModal').classList.add('active');
       renderModalHeroes();
     }
@@ -526,26 +507,20 @@
     function obFinish() {
       const mmr = document.getElementById('ob-mmr').value || "1000";
       const hours = document.getElementById('ob-hours').value || "500";
-      
       localStorage.setItem('dota_mmr', mmr);
       localStorage.setItem('dota_hours', hours);
       localStorage.setItem('dota_role', tempRole || "Универсал");
       localStorage.setItem('cf_setup_done', 'true');
-      
       document.getElementById('onboardingWizard').classList.remove('active');
       loadProfileData();
     }
 
     function loadProfileData() {
       const nick = localStorage.getItem('dota_nickname') || "Игрок";
-      const mmr = localStorage.getItem('dota_mmr') || "1000";
-      const hours = localStorage.getItem('dota_hours') || "500";
-      const role = localStorage.getItem('dota_role') || "Универсал";
-
       document.getElementById('top-name').innerText = nick;
-      document.getElementById('stat-mmr').innerText = mmr;
-      document.getElementById('stat-hours').innerText = hours;
-      document.getElementById('stat-role').innerText = role;
+      document.getElementById('stat-mmr').innerText = localStorage.getItem('dota_mmr') || "1000";
+      document.getElementById('stat-hours').innerText = localStorage.getItem('dota_hours') || "500";
+      document.getElementById('stat-role').innerText = localStorage.getItem('dota_role') || "Универсал";
 
       if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url) {
         document.getElementById('top-avatar').src = tg.initDataUnsafe.user.photo_url;
@@ -556,19 +531,18 @@
       }
     }
 
-    // --- 4. НАВИГАЦИЯ ---
+    // --- НАВИГАЦИЯ ---
     function switchTab(tabId) {
       document.querySelectorAll('.section-wrapper').forEach(function(el) { el.classList.remove('active'); });
       document.querySelectorAll('.nav-btn').forEach(function(el) { el.classList.remove('active'); });
-      
       document.getElementById('sec-' + tabId).classList.add('active');
       document.getElementById('nav-' + tabId).classList.add('active');
       window.scrollTo(0,0);
     }
 
     function openGlobalChat() {
-      // Открывает чат прямо в Telegram. Замени ссылку на свою группу!
-      const chatUrl = "https://t.me/durov"; 
+      // Ссылка на вашу группу ТГ
+      const chatUrl = "https://t.me/+ts9Lih-6DKc4YzEy"; 
       if (tg && tg.openTelegramLink) {
         tg.openTelegramLink(chatUrl);
       } else {
@@ -576,8 +550,12 @@
       }
     }
 
-    // --- 5. ВЫБОР ГЕРОЕВ ---
+    // --- ГЕРОИ И ДРАФТ ---
     function getHeroImg(name) { return "https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/" + name + ".png"; }
+
+    window.draftState = { rad: {1:null,2:null,3:null,4:null,5:null}, dir: {1:null,2:null,3:null,4:null,5:null} };
+    let currentSlot = { team: null, pos: null };
+    let currentActiveRoleFilter = 0;
 
     function openHeroModal(team, pos) {
       onboardingHeroSelectMode = false;
@@ -610,7 +588,6 @@
       if (!onboardingHeroSelectMode && currentActiveRoleFilter > 0) {
         list = list.filter(function(h) { return h.roles.includes(currentActiveRoleFilter); });
       }
-
       if (filter) {
         list = list.filter(function(h) { return h.title.toLowerCase().includes(filter.toLowerCase()); });
       }
@@ -656,7 +633,6 @@
       renderModalHeroes(document.getElementById('modalSearch').value);
     }
 
-    // --- 6. ЛОГИКА ДРАФТА И КОНТРПИКОВ ---
     function resetDraft() {
       ['rad', 'dir'].forEach(function(t) {
         for (let p = 1; p <= 5; p++) {
@@ -678,29 +654,22 @@
         alert("Выбери минимум по 2 героя в каждую команду!");
         return;
       }
-
       let radScore = 50 + (Math.random() * 20 - 10);
       radScore = Math.max(25, Math.min(75, Math.round(radScore)));
       let dirScore = 100 - radScore;
 
       document.getElementById('analysis-result').style.display = 'block';
       document.getElementById('bar-rad').style.width = radScore + '%';
-      document.getElementById('bar-rad').innerText = "Radiant: " + radScore + "%";
+      document.getElementById('bar-rad').innerText = radScore + "%";
       document.getElementById('bar-dir').style.width = dirScore + '%';
-      document.getElementById('bar-dir').innerText = "Dire: " + dirScore + "%";
-
-      const buildsContainer = document.getElementById('item-builds-list');
-      buildsContainer.innerHTML = dirHeroes.slice(0,3).map(function(h) {
-        return '<div class="build-group"><h4><img src="' + getHeroImg(h.name) + '"> Против ' + h.title + ':</h4><div><span class="item-tag">Black King Bar</span><span class="item-tag">Blink Dagger</span></div></div>';
-      }).join('');
+      document.getElementById('bar-dir').innerText = dirScore + "%";
     }
 
     async function searchCounters() {
       const input = document.getElementById('heroInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('counter-results');
       if (!input) return;
-
-      resultsDiv.innerHTML = "<p style='color:var(--accent-gold);'>Анализируем базу Dotabuff...</p>";
+      resultsDiv.innerHTML = "<p style='color:var(--accent-gold);'>Поиск...</p>";
       const target = ALL_HEROES.find(function(h) { return h.title.toLowerCase().includes(input) || h.name.includes(input); });
       if (!target) { resultsDiv.innerHTML = "Герой не найден."; return; }
 
@@ -723,14 +692,13 @@
       } catch (e) { resultsDiv.innerHTML = "Ошибка загрузки."; }
     }
 
-    // --- 7. МЕТА И РАНГИ ---
-    function toggleRankDropdown() { document.getElementById('rankDropdown').classList.toggle('show'); }
     function changeRank(rankKey, rankTitle, rankImgSrc) {
       document.getElementById('current-rank-label').innerText = rankTitle;
       document.getElementById('current-rank-icon').src = rankImgSrc;
-      document.getElementById('rankDropdown').classList.remove('show');
+      document.getElementById('rankDropdown').style.display = 'none';
       renderMeta(rankKey);
     }
+
     function renderMeta(rank) {
       const listContainer = document.getElementById('metaHeroesList');
       const data = META_BY_RANK[rank] || META_BY_RANK['immortal'];
@@ -739,41 +707,48 @@
       }).join('');
     }
 
-    // --- 8. КАЛЬКУЛЯТОР КОНФЕТ ---
-    function calculateCandies() {
-      const bags = parseInt(document.getElementById('candy-bags').value) || 0;
-      const rolls = parseInt(document.getElementById('candy-rolls').value) || 0;
-      const resultDiv = document.getElementById('candy-result');
-      
-      if (bags === 0 && rolls === 0) {
-        resultDiv.innerHTML = "Введите количество мешков или замен!";
-        resultDiv.style.color = "var(--dire-red)";
-        resultDiv.style.borderColor = "var(--dire-red)";
-        resultDiv.style.background = "rgba(231, 76, 60, 0.1)";
-        resultDiv.style.display = "block";
-        return;
-      }
+    // --- КАЛЬКУЛЯТОР КОНФЕТ ---
+    let candies = {
+      inv: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0},
+      target: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}
+    };
 
-      const totalCandies = bags * 30; // Допустим в мешке 30 конфет
-      const totalPotentialRolls = rolls + Math.floor(totalCandies / 15); // Допустим обмен стоит 15
-      
-      resultDiv.innerHTML = `У тебя примерно ${totalCandies} конфет.<br>Этого хватит на ${totalPotentialRolls} обменов витрины! 🎲`;
-      resultDiv.style.color = "#1abc9c";
-      resultDiv.style.borderColor = "#1abc9c";
-      resultDiv.style.background = "rgba(26, 188, 156, 0.1)";
-      resultDiv.style.display = "block";
+    function changeCandy(type, id, amount) {
+      candies[type][id] = Math.max(0, candies[type][id] + amount);
+      document.getElementById(type + '-' + id).innerText = candies[type][id];
+      document.getElementById('candy-calc-result').style.display = 'none';
     }
 
-    // ЗАПУСК СТАНДАРТНЫХ ФУНКЦИЙ
+    function resetCandies(type) {
+      for(let i=1; i<=6; i++) {
+        candies[type][i] = 0;
+        document.getElementById(type + '-' + i).innerText = '0';
+      }
+      document.getElementById('candy-calc-result').style.display = 'none';
+    }
+
+    function calculateCandyPath() {
+      const res = document.getElementById('candy-calc-result');
+      // Упрощенная логика: проверяем, хватает ли общего количества конфет
+      let invSum = 0; let targetSum = 0;
+      for(let i=1; i<=6; i++) { invSum += candies.inv[i]; targetSum += candies.target[i]; }
+
+      if (targetSum === 0) {
+        res.innerHTML = "❌ Выберите конфеты для награды!";
+        res.style.color = "var(--dire-red)";
+      } else if (invSum >= targetSum) {
+        res.innerHTML = "✅ Конфет достаточно! (Можно получить через обмены)";
+        res.style.color = "var(--accent-green)";
+      } else {
+        res.innerHTML = "❌ Не хватает конфет! (Нужно еще " + (targetSum - invSum) + " шт.)";
+        res.style.color = "var(--dire-red)";
+      }
+      res.style.display = 'block';
+    }
+
+    // Запуск
     checkOnboarding();
     renderMeta('immortal');
-
-    window.onclick = function(event) {
-      if (!event.target.closest('.rank-select-wrapper')) {
-        const dropdown = document.getElementById('rankDropdown');
-        if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
-      }
-    }
   </script>
 </body>
 </html>
