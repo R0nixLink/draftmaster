@@ -19,13 +19,6 @@
       --dire-red: #e74c3c;
       --text-light: #f5f6fa;
       --text-muted: #8b8d99;
-      /* Цвета конфет Crownfall */
-      --candy-1: #e74c3c; /* Красная */
-      --candy-2: #3498db; /* Синяя */
-      --candy-3: #2ecc71; /* Зеленая */
-      --candy-4: #f1c40f; /* Желтая */
-      --candy-5: #9b59b6; /* Фиолетовая */
-      --candy-6: #95a5a6; /* Серая */
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Montserrat', sans-serif; -webkit-tap-highlight-color: transparent; }
@@ -34,7 +27,7 @@
     /* ТОП ХЕДЕР */
     .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 12px 20px; background: #000; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; z-index: 100;}
     .top-bar .title { font-size: 18px; font-weight: 900; color: var(--accent-gold); text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px rgba(226,192,112,0.3); }
-    .top-bar .menu-icon { font-size: 20px; color: var(--text-muted); }
+    .top-bar .menu-icon { font-size: 20px; color: var(--text-muted); cursor: pointer; }
 
     /* БАННЕР ПРОФИЛЯ */
     .profile-banner { margin: 15px 20px; padding: 15px; background: linear-gradient(145deg, #181a24 0%, #0a0b10 100%); border: 1px solid #352a1a; border-radius: 16px; display: flex; align-items: center; gap: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
@@ -117,17 +110,18 @@
     .winrate-dire { background: linear-gradient(90deg, #c0392b, #e74c3c); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
 
     /* МОДАЛКА ГЕРОЕВ */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 7, 10, 0.98); z-index: 99999; display: none; flex-direction: column; padding: 20px; }
-    .modal-overlay.active { display: flex; }
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
     .modal-role-title { font-size: 16px; font-weight: 900; color: #fff; text-transform: uppercase;}
     .modal-close { background: #1a1c23; border: 1px solid var(--border-color); color: #fff; padding: 8px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
-    .modal-search { background: #121318; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: #fff; outline: none; font-size: 14px; margin-bottom: 15px; flex-shrink: 0; font-weight: bold;}
+    .modal-search { background: #121318; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: #fff; outline: none; font-size: 14px; margin-bottom: 15px; flex-shrink: 0; font-weight: bold; width: 100%;}
+    .modal-search:focus { border-color: var(--accent-gold); }
     .role-filters { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; flex-shrink: 0; scrollbar-width: none; }
     .role-btn { background: #121318; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; padding: 8px 12px; border-radius: 8px; white-space: nowrap; cursor: pointer; font-weight: 800;}
     .role-btn.active { background: var(--accent-gold-dark); color: #fff; border-color: var(--accent-gold); }
     .heroes-grid-container { flex: 1; overflow-y: scroll; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-content: start; padding-bottom: 30px; }
-    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; text-align: center; cursor: pointer; padding-bottom: 6px;}
+    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; text-align: center; cursor: pointer; padding-bottom: 6px; transition: transform 0.1s;}
+    .hero-pick-card:active { transform: scale(0.9); border-color: var(--accent-gold);}
+    .hero-pick-card.disabled { opacity: 0.2; pointer-events: none; }
     .hero-pick-card img { width: 100%; height: 45px; object-fit: cover; display: block; margin-bottom: 6px; border-bottom: 1px solid #222;}
     .hero-pick-card .name { font-size: 10px; color: #fff; font-weight: 800; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 0 4px;}
 
@@ -139,7 +133,7 @@
     .meta-hero-stats b { color: #fff;}
     .meta-winrate { color: var(--accent-green) !important; font-weight: 900 !important; font-size: 11px;}
 
-    /* ===== НОВЫЙ КАЛЬКУЛЯТОР КОНФЕТ В СТИЛЕ ВИДЕО ===== */
+    /* ===== КАЛЬКУЛЯТОР КОНФЕТ ===== */
     .candy-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px;}
     .candy-section h3 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px;}
     
@@ -147,12 +141,15 @@
     .candy-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
     .candy-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.1); box-shadow: inset 0 -3px 5px rgba(0,0,0,0.5); font-weight: bold; text-shadow: 0 1px 2px #000; cursor: pointer; transition: transform 0.1s;}
     .candy-circle:active { transform: scale(0.9);}
-    .c1 { background: radial-gradient(circle at 30% 30%, #ff6b6b, var(--candy-1)); }
-    .c2 { background: radial-gradient(circle at 30% 30%, #5dade2, var(--candy-2)); }
-    .c3 { background: radial-gradient(circle at 30% 30%, #2ecc71, var(--candy-3)); }
-    .c4 { background: radial-gradient(circle at 30% 30%, #f1c40f, var(--candy-4)); }
-    .c5 { background: radial-gradient(circle at 30% 30%, #af7ac5, var(--candy-5)); }
-    .c6 { background: radial-gradient(circle at 30% 30%, #bdc3c7, var(--candy-6)); }
+    
+    /* Обновленные цвета конфет Crownfall */
+    .c1 { background: radial-gradient(circle at 30% 30%, #58d68d, #27ae60); } /* Зеленая */
+    .c2 { background: repeating-linear-gradient(45deg, #e74c3c, #e74c3c 6px, #f5f6fa 6px, #f5f6fa 12px); } /* Полосатая */
+    .c3 { background: radial-gradient(circle at 30% 30%, #5dade2, #2980b9); } /* Синяя */
+    .c4 { background: radial-gradient(circle at 30% 30%, #5d6d7e, #212f3d); } /* Черная/темная */
+    .c5 { background: radial-gradient(circle at 30% 30%, #f1c40f, #f39c12); } /* Желтая */
+    .c6 { background: radial-gradient(circle at 30% 30%, #af7ac5, #8e44ad); } /* Фиолетовая */
+    
     .candy-count { font-size: 12px; font-weight: 900; color: #fff;}
 
     .exchange-row { background: #0a0b10; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;}
@@ -163,6 +160,12 @@
     .add-exchange-btn { width: 100%; background: transparent; border: 1px dashed var(--text-muted); color: var(--text-muted); padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 5px; cursor: pointer;}
     .calc-btn { width: 100%; background: var(--accent-gold); color: #000; font-weight: 900; padding: 15px; border-radius: 12px; border: none; font-size: 14px; text-transform: uppercase; margin-top: 10px;}
 
+    /* ВЫПАДАЮЩИЙ СПИСОК РАНГОВ */
+    .rank-dropdown-content { position: absolute; right: 20px; top: 70px; background: #0a0b10; border: 1px solid var(--border-color); border-radius: 12px; display: none; flex-direction: column; z-index: 10; overflow: hidden; width: 160px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
+    .rank-dropdown-content.show { display: flex; }
+    .rank-option { padding: 12px; font-size: 12px; color: var(--text-light); cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: bold;}
+    .rank-option:hover { background: #1a1c23; color: var(--accent-gold); }
+    .rank-option img { width: 20px; margin-right: 10px; }
   </style>
 </head>
 <body>
@@ -202,9 +205,46 @@
     </div>
   </div>
 
+  <div class="onboarding-overlay" id="profileSettingsModal">
+    <div style="background:var(--bg-card); width:100%; max-width: 340px; border-radius:20px; display:flex; flex-direction:column; padding:25px 20px; border:1px solid var(--accent-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+      <div class="modal-top">
+        <div class="modal-role-title">Твой Профиль</div>
+        <button class="modal-close" onclick="document.getElementById('profileSettingsModal').classList.remove('active')">✕</button>
+      </div>
+      
+      <div style="text-align: center; margin-bottom: 25px;">
+        <img id="ps-avatar" src="" style="width: 70px; height: 70px; border-radius: 50%; border: 2px solid var(--accent-gold); display: none; margin: 0 auto 10px; object-fit: cover;">
+        <div id="ps-avatar-fallback" style="width: 70px; height: 70px; border-radius: 50%; background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold-dark)); display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: 900; color: #000; margin: 0 auto 10px;">U</div>
+        <h3 id="ps-name" style="font-size: 18px; font-weight: 900;">Игрок</h3>
+      </div>
+      
+      <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Рейтинг (MMR):</span>
+          <span id="ps-mmr" style="font-weight: 800; color: var(--accent-green);">0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Часов в игре:</span>
+          <span id="ps-hours" style="font-weight: 800; color: var(--accent-blue);">0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Роль:</span>
+          <span id="ps-role" style="font-weight: 800; color: #9b59b6;">Нет</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
+          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Сигнатурка:</span>
+          <img id="ps-hero" src="" style="width: 44px; height: 24px; border-radius: 4px; object-fit: cover; border: 1px solid #000; display: none;">
+        </div>
+      </div>
+      
+      <button class="ob-btn" onclick="restartOnboarding()">Изменить данные</button>
+    </div>
+  </div>
+
   <div class="top-bar">
     <div class="title">CROWNFALL</div>
-    <div class="menu-icon" onclick="localStorage.removeItem('cf_setup_done'); location.reload();">⚙️</div> </div>
+    <div class="menu-icon" onclick="openProfileSettings()">⚙️</div>
+  </div>
 
   <div id="sec-main" class="section-wrapper active">
     <div class="profile-banner">
@@ -316,9 +356,9 @@
       <h3>Обмены</h3>
       <div id="exchange-list">
         <div class="exchange-row">
-          <div class="exchange-part"><div class="candy-circle c1"></div><div class="candy-circle c1"></div><div class="candy-circle c2"></div></div>
+          <div class="exchange-part"><div class="candy-circle c1"></div><div class="candy-circle c1"></div><div class="candy-circle c3"></div></div>
           <div class="exchange-arrow">➔</div>
-          <div class="exchange-part"><div class="candy-circle c3"></div></div>
+          <div class="exchange-part"><div class="candy-circle c2"></div></div>
         </div>
       </div>
       <button class="add-exchange-btn">+ Добавить обмен</button>
@@ -338,22 +378,28 @@
 
     <button class="calc-btn" onclick="calculateCandyPath()">Рассчитать путь</button>
     <div id="candy-calc-result" style="margin-top:15px; text-align:center; font-size:12px; font-weight:bold; color:var(--accent-gold); display:none;">
-      </div>
+    </div>
   </div>
 
   <div id="sec-meta" class="section-wrapper">
     <div class="page-title">Мета Патча</div>
     <div class="meta-container" style="padding:0; background:transparent; border:none;">
-      <div style="background:var(--bg-card); border-radius:12px; padding:15px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center;">
+      <div style="background:var(--bg-card); border-radius:12px; padding:15px; margin-bottom:15px; display:flex; justify-content:space-between; align-items:center; position:relative;">
         <div style="display:flex; align-items:center; gap:10px;">
           <img id="current-rank-icon" src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 32px; height: 32px; object-fit: contain;">
           <div id="current-rank-label" style="font-size:16px; font-weight:bold;">Титан</div>
         </div>
-        <button onclick="document.getElementById('rankDropdown').style.display = document.getElementById('rankDropdown').style.display === 'block' ? 'none' : 'block';" style="background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:8px;">Выбрать ▾</button>
-        <div id="rankDropdown" style="position:absolute; right:20px; top:120px; background:#0a0b10; border:1px solid var(--border-color); border-radius:8px; display:none; flex-direction:column; z-index:10;">
-          <div onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')" style="padding:10px; cursor:pointer;">Рекрут</div>
-          <div onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')" style="padding:10px; cursor:pointer;">Легенда</div>
-          <div onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')" style="padding:10px; cursor:pointer;">Титан</div>
+        <button onclick="document.getElementById('rankDropdown').classList.toggle('show');" style="background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:8px; font-weight:bold;">Выбрать ▾</button>
+        
+        <div class="rank-dropdown-content" id="rankDropdown">
+          <div class="rank-option" onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png"> Рекрут</div>
+          <div class="rank-option" onclick="changeRank('guardian', 'Страж', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_2.png"> Страж</div>
+          <div class="rank-option" onclick="changeRank('crusader', 'Рыцарь', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_3.png"> Рыцарь</div>
+          <div class="rank-option" onclick="changeRank('archon', 'Герой', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_4.png"> Герой</div>
+          <div class="rank-option" onclick="changeRank('legend', 'Легенда', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_5.png"> Легенда</div>
+          <div class="rank-option" onclick="changeRank('ancient', 'Властелин', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_6.png"> Властелин</div>
+          <div class="rank-option" onclick="changeRank('divine', 'Божество', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_7.png"> Божество</div>
+          <div class="rank-option" onclick="changeRank('immortal', 'Титан', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png"> Титан</div>
         </div>
       </div>
       <div id="metaHeroesList"></div>
@@ -387,16 +433,17 @@
   </div>
 
   <script>
-    // --- ИНИЦИАЛИЗАЦИЯ ТГ ---
+    // --- 1. ТЕЛЕГРАМ ---
     let tg = null;
     try {
       if (window.Telegram && window.Telegram.WebApp) {
         tg = window.Telegram.WebApp;
-        tg.ready(); tg.expand();
+        tg.ready(); 
+        tg.expand();
       }
-    } catch(e) {}
+    } catch(e) { console.log(e); }
 
-    // --- БАЗА ГЕРОЕВ И МЕТА ---
+    // --- 2. БАЗА ГЕРОЕВ ---
     const ALL_HEROES = [
       { id: 1, name: "antimage", title: "Anti-Mage", roles: [1] }, { id: 2, name: "axe", title: "Axe", roles: [3] },
       { id: 3, name: "bane", title: "Bane", roles: [5] }, { id: 4, name: "bloodseeker", title: "Bloodseeker", roles: [1, 2] },
@@ -461,9 +508,14 @@
     ];
 
     const META_BY_RANK = {
-      immortal: [{ name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид" }, { name: "np", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард" }, { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард" }, { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри" }, { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Сап 4" }],
-      legend: [{ name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" }, { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" }, { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид" }],
-      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
+      immortal: [{ name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид" }, { name: "furion", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард" }, { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард" }, { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри" }, { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Сап 4" }],
+      divine: [{ name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" }, { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хардлейн" }, { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" }, { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Сап 4" }, { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }],
+      ancient: [{ name: "wraith_king", title: "Wraith King", wr: "54.2%", pick: "24.0%", best: "Керри" }, { name: "axe", title: "Axe", wr: "53.4%", pick: "19.2%", best: "Хардлейн" }, { name: "zeus", title: "Zeus", wr: "52.8%", pick: "28.5%", best: "Мид" }, { name: "witch_doctor", title: "Witch Doctor", wr: "52.5%", pick: "30.1%", best: "Сап 5" }, { name: "sniper", title: "Sniper", wr: "51.9%", pick: "27.3%", best: "Керри" }],
+      legend: [{ name: "wraith_king", title: "Wraith King", wr: "55.1%", pick: "27.5%", best: "Керри" }, { name: "sniper", title: "Sniper", wr: "53.8%", pick: "31.2%", best: "Керри" }, { name: "viper", title: "Viper", wr: "53.2%", pick: "22.4%", best: "Мид" }, { name: "lion", title: "Lion", wr: "52.9%", pick: "38.6%", best: "Сап 4" }, { name: "ogre_magi", title: "Ogre Magi", wr: "52.4%", pick: "18.5%", best: "Сап 5" }],
+      archon: [{ name: "sniper", title: "Sniper", wr: "56.0%", pick: "35.4%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.4%", pick: "29.1%", best: "Керри" }, { name: "viper", title: "Viper", wr: "54.1%", pick: "25.0%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.6%", pick: "42.0%", best: "Сап 5" }, { name: "bounty_hunter", title: "Bounty Hunter", wr: "52.8%", pick: "16.4%", best: "Сап 4" }],
+      crusader: [{ name: "sniper", title: "Sniper", wr: "56.8%", pick: "38.1%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.9%", pick: "31.0%", best: "Керри" }, { name: "zeus", title: "Zeus", wr: "54.5%", pick: "34.2%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.9%", pick: "45.1%", best: "Саппорт" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "53.1%", pick: "28.0%", best: "Керри" }],
+      guardian: [{ name: "sniper", title: "Sniper", wr: "57.5%", pick: "40.2%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "56.4%", pick: "33.5%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "54.8%", pick: "30.2%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.2%", pick: "48.0%", best: "Саппорт" }, { name: "zuus", title: "Zeus", wr: "53.9%", pick: "36.1%", best: "Мид" }],
+      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.5%", pick: "32.1%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.8%", pick: "50.2%", best: "Саппорт" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
     };
 
     // --- ОНБОРДИНГ И ПРОФИЛЬ ---
@@ -521,14 +573,49 @@
       document.getElementById('stat-mmr').innerText = localStorage.getItem('dota_mmr') || "1000";
       document.getElementById('stat-hours').innerText = localStorage.getItem('dota_hours') || "500";
       document.getElementById('stat-role').innerText = localStorage.getItem('dota_role') || "Универсал";
+      
+      // Данные для модалки профиля
+      document.getElementById('ps-name').innerText = nick;
+      document.getElementById('ps-mmr').innerText = localStorage.getItem('dota_mmr') || "1000";
+      document.getElementById('ps-hours').innerText = localStorage.getItem('dota_hours') || "500";
+      document.getElementById('ps-role').innerText = localStorage.getItem('dota_role') || "Универсал";
+      
+      const favHeroName = localStorage.getItem('dota_fav_hero_name');
+      if (favHeroName) {
+        document.getElementById('ps-hero').src = getHeroImg(favHeroName);
+        document.getElementById('ps-hero').style.display = 'block';
+      }
 
       if (tg && tg.initDataUnsafe && tg.initDataUnsafe.user && tg.initDataUnsafe.user.photo_url) {
         document.getElementById('top-avatar').src = tg.initDataUnsafe.user.photo_url;
         document.getElementById('top-avatar').style.display = 'block';
         document.getElementById('top-avatar-fallback').style.display = 'none';
+        
+        document.getElementById('ps-avatar').src = tg.initDataUnsafe.user.photo_url;
+        document.getElementById('ps-avatar').style.display = 'block';
+        document.getElementById('ps-avatar-fallback').style.display = 'none';
       } else {
         document.getElementById('top-avatar-fallback').innerText = nick.charAt(0).toUpperCase();
+        document.getElementById('ps-avatar-fallback').innerText = nick.charAt(0).toUpperCase();
       }
+    }
+
+    function openProfileSettings() {
+      loadProfileData();
+      document.getElementById('profileSettingsModal').classList.add('active');
+    }
+
+    function restartOnboarding() {
+      document.getElementById('profileSettingsModal').classList.remove('active');
+      localStorage.removeItem('cf_setup_done');
+      document.getElementById('ob-mmr').value = '';
+      document.getElementById('ob-hours').value = '';
+      document.getElementById('ob-hero-text').style.display = 'block';
+      document.getElementById('ob-hero-img').style.display = 'none';
+      tempRole = null;
+      document.querySelectorAll('.role-select-btn').forEach(function(el) { el.classList.remove('selected'); });
+      checkOnboarding();
+      obNextStep(1);
     }
 
     // --- НАВИГАЦИЯ ---
@@ -541,7 +628,6 @@
     }
 
     function openGlobalChat() {
-      // Ссылка на вашу группу ТГ
       const chatUrl = "https://t.me/+ts9Lih-6DKc4YzEy"; 
       if (tg && tg.openTelegramLink) {
         tg.openTelegramLink(chatUrl);
@@ -695,7 +781,7 @@
     function changeRank(rankKey, rankTitle, rankImgSrc) {
       document.getElementById('current-rank-label').innerText = rankTitle;
       document.getElementById('current-rank-icon').src = rankImgSrc;
-      document.getElementById('rankDropdown').style.display = 'none';
+      document.getElementById('rankDropdown').classList.remove('show');
       renderMeta(rankKey);
     }
 
@@ -729,7 +815,6 @@
 
     function calculateCandyPath() {
       const res = document.getElementById('candy-calc-result');
-      // Упрощенная логика: проверяем, хватает ли общего количества конфет
       let invSum = 0; let targetSum = 0;
       for(let i=1; i<=6; i++) { invSum += candies.inv[i]; targetSum += candies.target[i]; }
 
@@ -749,6 +834,13 @@
     // Запуск
     checkOnboarding();
     renderMeta('immortal');
+
+    window.onclick = function(event) {
+      if (!event.target.closest('.rank-select-wrapper')) {
+        const dropdown = document.getElementById('rankDropdown');
+        if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
+      }
+    }
   </script>
 </body>
 </html>
