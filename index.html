@@ -60,11 +60,10 @@
     .card-builds { border-bottom: 3px solid #e67e22; }
     .card-meta { border-bottom: 3px solid #2ecc71; }
     .card-candy { border-bottom: 3px solid #1abc9c; }
-    .card-chat { border-bottom: 3px solid #3498db; }
-    .card-analyzer { border-bottom: 3px solid #f1c40f; } /* Новый цвет для Анализатора */
+    .card-analyzer { border-bottom: 3px solid #f1c40f; }
 
     /* НИЖНЯЯ ПАНЕЛЬ */
-    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 11, 16, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 1000; }
+    .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 11, 16, 0.98); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 1000; }
     .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 10px; font-weight: 600; cursor: pointer; flex: 1; transition: color 0.2s; }
     .nav-btn.active { color: var(--accent-gold); }
     .nav-btn .icon { font-size: 20px; margin-bottom: 2px;}
@@ -87,7 +86,6 @@
     .ob-input { width: 100%; background: #0a0b10; border: 1px solid var(--border-color); color: #fff; padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none; transition: border-color 0.2s;}
     .ob-input:focus { border-color: var(--accent-gold); }
     .ob-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%); color: #000; border: none; padding: 14px 20px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; margin-top: 10px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(226, 192, 112, 0.2); }
-    
     .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
     .role-select-btn { background: #0a0b10; border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; transition: all 0.2s;}
     .role-select-btn.selected { background: rgba(226,192,112,0.1); color: var(--accent-gold); border-color: var(--accent-gold); }
@@ -110,7 +108,7 @@
     .winrate-radiant { background: linear-gradient(90deg, #11998e, #2ecc71); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
     .winrate-dire { background: linear-gradient(90deg, #c0392b, #e74c3c); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
 
-    /* МОДАЛКА ГЕРОЕВ */
+    /* МОДАЛКА ГЕРОЕВ (БЕЗ ТЕКСТА) */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 7, 10, 0.98); z-index: 999999; display: none; flex-direction: column; padding: 20px; }
     .modal-overlay.active { display: flex; }
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
@@ -121,25 +119,29 @@
     .role-filters { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; flex-shrink: 0; scrollbar-width: none; }
     .role-btn { background: #121318; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; padding: 8px 12px; border-radius: 8px; white-space: nowrap; cursor: pointer; font-weight: 800;}
     .role-btn.active { background: var(--accent-gold-dark); color: #fff; border-color: var(--accent-gold); }
-    .heroes-grid-container { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-content: start; padding-bottom: 30px; }
-    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; text-align: center; cursor: pointer; padding-bottom: 0px; transition: transform 0.1s;}
+    .heroes-grid-container { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-content: start; padding-bottom: 40px; }
+    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.1s;}
     .hero-pick-card:active { transform: scale(0.9); border-color: var(--accent-gold);}
     .hero-pick-card.disabled { opacity: 0.2; pointer-events: none; }
-    .hero-pick-card img { width: 100%; height: 50px; object-fit: cover; display: block; border-bottom: none;}
+    /* Убрал отступы и сделал картинку на всю карточку */
+    .hero-pick-card img { width: 100%; height: 55px; object-fit: cover; display: block; border-radius: 8px;}
 
-    /* DOTABUFF КОНТРПИКИ (2 КОЛОНКИ) */
-    .counters-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
-    .counters-col h4 { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; border-bottom: 1px solid var(--border-color); padding-bottom: 5px;}
-    .counter-item-row { display: flex; justify-content: space-between; align-items: center; background: #0a0b10; border: 1px solid var(--border-color); padding: 8px; border-radius: 8px; margin-bottom: 6px;}
-    .counter-item-hero { display: flex; align-items: center; gap: 8px; overflow: hidden; }
-    .counter-item-hero img { width: 30px; height: 18px; border-radius: 3px; object-fit: cover; border: 1px solid #000; flex-shrink: 0; }
-    .counter-item-hero span { font-size: 10px; font-weight: 800; color: #fff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
-    .counter-item-stats { text-align: right; flex-shrink: 0;}
-    .counter-item-stats .adv { font-size: 10px; font-weight: bold; }
-    .counter-item-stats .bar-bg { width: 40px; height: 4px; background: #222; border-radius: 2px; margin-top: 2px; overflow: hidden; }
+    /* DOTABUFF КОНТРПИКИ (ТОЧЬ В ТОЧЬ КАК НА СКРИНЕ) */
+    .counters-grid { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;}
+    .counters-col { flex: 1; min-width: 300px;}
+    .counters-col-title { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; font-weight: bold; padding-bottom: 5px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between;}
+    .counter-item-row { display: flex; align-items: center; background: #0f1015; border-bottom: 1px solid var(--border-color); padding: 8px 5px; }
+    .counter-item-hero { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; }
+    .counter-item-hero img { width: 40px; height: 22px; border-radius: 3px; object-fit: cover; border: 1px solid #000; flex-shrink: 0; }
+    .counter-item-hero span { font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+    .counter-item-stats { display: flex; align-items: center; gap: 15px; }
+    .counter-item-stats .adv { font-size: 11px; font-weight: bold; width: 45px; text-align: right; }
+    .counter-item-stats .wr-container { display: flex; flex-direction: column; align-items: flex-end; width: 60px; }
+    .counter-item-stats .wr-text { font-size: 11px; font-weight: bold; margin-bottom: 2px;}
+    .counter-item-stats .bar-bg { width: 100%; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
     .counter-item-stats .bar-fill { height: 100%; }
 
-    /* МЕТА */
+    /* МЕТА И РАНГИ */
     .meta-hero-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
     .meta-hero-img { width: 60px; height: 34px; border-radius: 6px; object-fit: cover; border: 1px solid #000;}
     .meta-hero-stats { margin-top: 4px; display: flex; gap: 15px;}
@@ -147,35 +149,38 @@
     .meta-hero-stats b { color: #fff;}
     .meta-winrate { color: var(--accent-green) !important; font-weight: 900 !important; font-size: 11px;}
 
-    /* ВЫПАДАЮЩИЙ СПИСОК РАНГОВ */
     .rank-dropdown-content { position: absolute; right: 20px; top: 70px; background: #0a0b10; border: 1px solid var(--border-color); border-radius: 12px; display: none; flex-direction: column; z-index: 10; overflow: hidden; width: 160px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
     .rank-dropdown-content.show { display: flex; }
     .rank-option { padding: 12px; font-size: 12px; color: var(--text-light); cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: bold;}
     .rank-option:hover { background: #1a1c23; color: var(--accent-gold); }
     .rank-option img { width: 20px; margin-right: 10px; }
 
-    /* КАЛЬКУЛЯТОР КОНФЕТ */
+    /* КАЛЬКУЛЯТОР КОНФЕТ (ИСПРАВЛЕННЫЕ ЦВЕТА) */
     .candy-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px;}
     .candy-section h3 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px;}
-    .candy-inventory-grid { display: flex; gap: 10px; justify-content: space-between; margin-bottom: 10px;}
+    .candy-inventory-grid { display: flex; gap: 8px; justify-content: space-between; margin-bottom: 10px;}
     .candy-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    .candy-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: 2px solid rgba(255,255,255,0.2); box-shadow: inset 0 -4px 6px rgba(0,0,0,0.6), 0 2px 4px rgba(0,0,0,0.5); font-weight: bold; cursor: pointer; transition: transform 0.1s;}
+    
+    .candy-circle { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: inset -3px -3px 6px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.3), 0 3px 5px rgba(0,0,0,0.4); cursor: pointer; transition: transform 0.1s;}
     .candy-circle:active { transform: scale(0.9);}
-    .c1 { background: radial-gradient(circle at 30% 30%, #58d68d, #27ae60); }
-    .c2 { background: repeating-linear-gradient(45deg, #e74c3c, #e74c3c 6px, #f5f6fa 6px, #f5f6fa 12px); }
-    .c3 { background: radial-gradient(circle at 30% 30%, #5dade2, #2980b9); }
-    .c4 { background: radial-gradient(circle at 30% 30%, #5d6d7e, #212f3d); }
-    .c5 { background: radial-gradient(circle at 30% 30%, #f1c40f, #f39c12); }
-    .c6 { background: radial-gradient(circle at 30% 30%, #af7ac5, #8e44ad); }
-    .candy-count { font-size: 12px; font-weight: 900; color: #fff;}
+    
+    /* Новые цвета как в Доте */
+    .c1 { background: radial-gradient(circle at 30% 30%, #58d68d, #229954); border: 1px solid #1e8449; } /* Зеленая (гаечки) */
+    .c2 { background: repeating-linear-gradient(45deg, #e74c3c, #e74c3c 6px, #f5f6fa 6px, #f5f6fa 12px); border: 1px solid #c0392b; } /* Мятная (красно-белая) */
+    .c3 { background: radial-gradient(circle at 30% 30%, #5dade2, #2980b9); border: 1px solid #2471a3; } /* Синяя (болтик) */
+    .c4 { background: radial-gradient(circle at 30% 30%, #4d5656, #1c2833); border: 1px solid #17202a; } /* Черный камень */
+    .c5 { background: radial-gradient(circle at 30% 30%, #f1c40f, #d35400); border: 1px solid #b9770e; } /* Желтая */
+    .c6 { background: radial-gradient(circle at 30% 30%, #af7ac5, #8e44ad); border: 1px solid #76448a; } /* Фиолетовая */
+    
+    .candy-count { font-size: 13px; font-weight: 900; color: #fff;}
     .exchange-row { background: #0a0b10; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;}
     .exchange-part { display: flex; align-items: center; gap: 5px;}
-    .exchange-part .candy-circle { width: 20px; height: 20px; border-width: 1px; font-size: 10px;}
+    .exchange-part .candy-circle { width: 22px; height: 22px; font-size: 10px;}
     .exchange-arrow { color: var(--text-muted); font-weight: bold; }
     .add-exchange-btn { width: 100%; background: transparent; border: 1px dashed var(--text-muted); color: var(--text-muted); padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 5px; cursor: pointer;}
     .calc-btn { width: 100%; background: var(--accent-gold); color: #000; font-weight: 900; padding: 15px; border-radius: 12px; border: none; font-size: 14px; text-transform: uppercase; margin-top: 10px;}
 
-    /* АНАЛИЗ ИГРОКОВ (НОВЫЙ РАЗДЕЛ) */
+    /* АНАЛИЗ ИГРОКОВ */
     .analyzer-input-group { display: flex; gap: 8px; margin-bottom: 20px; }
     .analyzer-input-group input { flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:15px; border-radius:12px; outline:none; font-weight:bold; font-size: 14px;}
     .analyzer-input-group button { background: var(--accent-blue); color: #fff; border: none; padding: 0 20px; border-radius: 12px; font-weight: 900; font-size: 14px; cursor: pointer; text-transform: uppercase;}
@@ -280,17 +285,17 @@
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/rubick.png">
         <div class="content"><h4>Анализ</h4><p>Поиск игроков</p></div>
       </div>
-      <div class="menu-card card-meta" onclick="switchTab('meta')">
-        <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/lina.png">
-        <div class="content"><h4>Мета патча</h4><p>Лучшие герои</p></div>
+      <div class="menu-card card-builds" onclick="switchTab('builds')">
+        <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/dawnbreaker.png">
+        <div class="content"><h4>Сборки</h4><p>Предметы и таланты</p></div>
       </div>
       <div class="menu-card card-candy" onclick="switchTab('candy')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/meepo.png">
         <div class="content"><h4>Калькулятор</h4><p>Конфетная лавка</p></div>
       </div>
-      <div class="menu-card card-chat" onclick="openGlobalChat()">
-        <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/crystal_maiden.png">
-        <div class="content"><h4>Общий чат</h4><p>Группа в Telegram</p></div>
+      <div class="menu-card card-meta" onclick="switchTab('meta')">
+        <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/lina.png">
+        <div class="content"><h4>Мета патча</h4><p>Лучшие герои</p></div>
       </div>
     </div>
   </div>
@@ -336,6 +341,33 @@
         <button class="btn-action" style="background:linear-gradient(135deg, var(--dire-red), #c0392b); padding:0 20px; border-radius:10px; font-size:13px;" onclick="searchCounters()">Найти</button>
       </div>
       <div id="counter-results" style="margin-top: 20px;"></div>
+    </div>
+  </div>
+
+  <div id="sec-builds" class="section-wrapper">
+    <div class="page-title">Сборки на героев</div>
+    <div style="background:var(--bg-card); padding:20px; border-radius:16px; border:1px solid var(--border-color);">
+      <p style="font-size:11px; color:var(--text-muted); margin-bottom:15px; font-weight:bold;">Введите имя героя, чтобы увидеть лучшие предметы меты.</p>
+      <div style="display: flex; gap: 8px; margin-bottom: 20px;">
+        <input type="text" id="buildInput" placeholder="Например: Pudge" style="flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:12px; border-radius:10px; outline:none; font-weight:bold;">
+        <button class="btn-action" style="background:linear-gradient(135deg, #e67e22, #d35400); padding:0 20px; border-radius:10px; font-size:13px;" onclick="searchBuilds()">Искать</button>
+      </div>
+      <div id="build-results" style="display:none;">
+        <div style="display:flex; align-items:center; gap:15px; margin-bottom:15px;">
+           <img id="build-hero-img" src="" style="width:60px; height:34px; border-radius:6px; object-fit:cover; border:1px solid #000;">
+           <h3 id="build-hero-name" style="color:var(--accent-gold);">Hero Name</h3>
+        </div>
+        <h4 style="font-size:12px; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Популярная сборка:</h4>
+        <div style="background:#0a0b10; border:1px solid var(--border-color); border-radius:10px; padding:10px; display:flex; gap:8px; flex-wrap:wrap;">
+           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 1</div>
+           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 2</div>
+           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 3</div>
+           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 4</div>
+           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 5</div>
+           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 6</div>
+        </div>
+        <p style="font-size:10px; color:var(--text-muted); margin-top:15px; text-align:center;">*Живые данные по предметам будут добавлены в следующем патче.</p>
+      </div>
     </div>
   </div>
 
@@ -404,7 +436,7 @@
           <div id="current-rank-label" style="font-size:16px; font-weight:bold;">Титан</div>
         </div>
         
-        <button onclick="toggleRankDropdown(event)" style="background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:8px; font-weight:bold;">Выбрать ▾</button>
+        <button onclick="toggleRankDropdown(event)" style="background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:8px; font-weight:bold; cursor:pointer;">Выбрать ▾</button>
         
         <div class="rank-dropdown-content" id="rankDropdown">
           <div class="rank-option" onclick="changeRank('herald', 'Рекрут', 'https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png')"><img src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_1.png"> Рекрут</div>
@@ -421,7 +453,7 @@
     </div>
   </div>
 
-  <div class="bottom-nav">
+  <div class="bottom-nav" id="bottomNav">
     <div class="nav-btn active" id="nav-main" onclick="switchTab('main')"><div class="icon">👑</div><div>Главная</div></div>
     <div class="nav-btn" id="nav-draft" onclick="switchTab('draft')"><div class="icon">🛡️</div><div>Драфтер</div></div>
     <div class="nav-btn" id="nav-analyzer" onclick="switchTab('analyzer')"><div class="icon">🔍</div><div>Анализ</div></div>
@@ -532,6 +564,7 @@
       { id: 145, name: "kez", title: "Kez", roles: [1] }
     ];
 
+    // ИСПРАВЛЕНА ОШИБКА фуриона (furion вместо np)
     const META_BY_RANK = {
       immortal: [{ name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид" }, { name: "furion", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард" }, { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард" }, { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри" }, { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Сап 4" }],
       divine: [{ name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" }, { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хардлейн" }, { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" }, { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Сап 4" }, { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }],
@@ -578,6 +611,7 @@
       document.getElementById('modalRoleTitle').innerText = "КТО ТВОЯ СИГНАТУРКА?";
       document.getElementById('modalRoleFilters').style.display = 'none';
       document.getElementById('heroModal').classList.add('active');
+      document.getElementById('bottomNav').style.display = 'none'; // Прячем нижнюю панель
       renderModalHeroes();
     }
 
@@ -679,9 +713,13 @@
       document.getElementById('modalRoleFilters').style.display = 'flex';
       setModalRole(pos);
       document.getElementById('heroModal').classList.add('active');
+      document.getElementById('bottomNav').style.display = 'none'; // Прячем панель навигации
     }
 
-    function closeHeroModal() { document.getElementById('heroModal').classList.remove('active'); }
+    function closeHeroModal() { 
+      document.getElementById('heroModal').classList.remove('active'); 
+      document.getElementById('bottomNav').style.display = 'flex'; // Возвращаем панель
+    }
 
     function renderModalHeroes(filter) {
       if (!filter) filter = "";
@@ -709,8 +747,8 @@
         const isPicked = selectedIds.includes(h.id);
         const card = document.createElement('div');
         card.className = "hero-pick-card" + (isPicked ? " disabled" : "");
-        // ИМЕНА УБРАНЫ (ПО ТВОЕМУ 3 ФОТО)
-        card.innerHTML = '<img src="' + getHeroImg(h.name) + '" loading="lazy" style="height: 100%; border-bottom: none; margin: 0;">';
+        // ИМЕНА УБРАНЫ (ПО ТВОЕМУ ФОТО)
+        card.innerHTML = '<img src="' + getHeroImg(h.name) + '" loading="lazy" style="height: 100%; border-bottom: none; margin: 0; border-radius: 8px;">';
         
         if (!isPicked) {
           card.onclick = function() {
@@ -779,7 +817,7 @@
       document.getElementById('bar-dir').innerText = dirScore + "%";
     }
 
-    // --- КОНТРПИКИ (КАК НА DOTABUFF - 2 КОЛОНКИ) ---
+    // --- КОНТРПИКИ (КАК НА DOTABUFF - 2 КОЛОНКИ С ПОЛОСАМИ) ---
     async function searchCounters() {
       const input = document.getElementById('heroInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('counter-results');
@@ -812,28 +850,34 @@
         let html = '<div class="counters-grid">';
         
         // Левая колонка (ПЛОХ ПРОТИВ)
-        html += '<div class="counters-col"><h4>' + target.title.toUpperCase() + ' ПЛОХ ПРОТИВ</h4>';
+        html += '<div class="counters-col"><h4 class="counters-col-title">' + target.title.toUpperCase() + ' ПЛОХ ПРОТИВ</h4>';
         badAgainst.forEach(function(c) {
           html += `
             <div class="counter-item-row">
               <div class="counter-item-hero"><img src="${getHeroImg(c.hero.name)}"><span>${c.hero.title}</span></div>
               <div class="counter-item-stats">
                 <div class="adv" style="color:var(--dire-red);">-${c.adv}%</div>
-                <div class="bar-bg"><div class="bar-fill" style="width:${c.winrate}%; background:var(--dire-red);"></div></div>
+                <div class="wr-container">
+                    <div class="wr-text" style="color:var(--dire-red);">${c.winrate}%</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width:${c.winrate}%; background:var(--dire-red);"></div></div>
+                </div>
               </div>
             </div>`;
         });
         html += '</div>';
 
         // Правая колонка (ЛЕГКО ИГРАЕТ)
-        html += '<div class="counters-col"><h4>' + target.title.toUpperCase() + ' ЛЕГКО ПРОТИВ</h4>';
+        html += '<div class="counters-col"><h4 class="counters-col-title">' + target.title.toUpperCase() + ' ЛЕГКО ПРОТИВ</h4>';
         goodAgainst.forEach(function(c) {
           html += `
             <div class="counter-item-row">
               <div class="counter-item-hero"><img src="${getHeroImg(c.hero.name)}"><span>${c.hero.title}</span></div>
               <div class="counter-item-stats">
                 <div class="adv" style="color:var(--accent-green);">+${c.adv}%</div>
-                <div class="bar-bg"><div class="bar-fill" style="width:${c.winrate}%; background:var(--accent-green);"></div></div>
+                <div class="wr-container">
+                    <div class="wr-text" style="color:var(--accent-green);">${c.winrate}%</div>
+                    <div class="bar-bg"><div class="bar-fill" style="width:${c.winrate}%; background:var(--accent-green);"></div></div>
+                </div>
               </div>
             </div>`;
         });
@@ -843,7 +887,21 @@
       } catch (e) { resultsDiv.innerHTML = "Ошибка загрузки."; }
     }
 
-    // --- НОВЫЙ РАЗДЕЛ: АНАЛИЗАТОР МАТЧЕЙ (STEAM ID) ---
+    // --- РАЗДЕЛ СБОРКИ (ЗАГОТОВКА) ---
+    function searchBuilds() {
+      const input = document.getElementById('buildInput').value.trim().toLowerCase();
+      const resultsDiv = document.getElementById('build-results');
+      if (!input) return;
+      
+      const target = ALL_HEROES.find(function(h) { return h.title.toLowerCase().includes(input) || h.name.includes(input); });
+      if (!target) { alert("Герой не найден."); return; }
+
+      document.getElementById('build-hero-img').src = getHeroImg(target.name);
+      document.getElementById('build-hero-name').innerText = target.title;
+      resultsDiv.style.display = 'block';
+    }
+
+    // --- АНАЛИЗАТОР МАТЧЕЙ (STEAM ID) ---
     async function loadPlayerAnalysis() {
       const steamId = document.getElementById('analyzerInput').value.trim();
       const resultsDiv = document.getElementById('analyzer-results');
@@ -915,6 +973,7 @@
       const bodyEl = document.getElementById('modalMatchBody');
 
       modal.classList.add('active');
+      document.getElementById('bottomNav').style.display = 'none'; // Прячем панель
       titleEl.innerText = "МАТЧ #" + matchId;
       bodyEl.innerHTML = "<div style='text-align:center; padding:30px; font-weight:bold; color:var(--accent-gold);'>🔄 Загружаю детали матча...</div>";
 
@@ -991,6 +1050,7 @@
 
     function closeMatchModal() {
       document.getElementById('matchDetailsModal').classList.remove('active');
+      document.getElementById('bottomNav').style.display = 'flex'; // Возвращаем панель
     }
 
     // --- МЕТА ---
