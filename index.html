@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Crownfall DraftMaster</title>
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800;900&display=swap');
 
@@ -38,33 +40,25 @@
     .banner-info h3 { font-size: 17px; margin-bottom: 4px; font-weight: 800; display: flex; align-items: center; gap: 6px;}
     .banner-info p { font-size: 11px; color: var(--text-muted); font-weight: 600;}
 
-    /* ВАЛЮТЫ */
     .currency-row { display: flex; justify-content: space-between; margin: 0 20px 20px; background: #0d0f14; border: 1px solid var(--border-color); border-radius: 12px; padding: 10px 15px; }
     .curr-item { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 800; }
     .curr-item .dot { width: 12px; height: 12px; border-radius: 50%; }
 
-    .section-header { margin: 0 20px 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; color: var(--text-light); display: flex; justify-content: space-between; align-items: center; }
+    .section-header { margin: 0 20px 12px; font-size: 14px; font-weight: 800; text-transform: uppercase; color: var(--text-light); }
 
     /* ГРИД КАРТОЧЕК МЕНЮ */
     .menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px 20px; }
-    .menu-card { position: relative; height: 100px; border-radius: 14px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: transform 0.1s, border-color 0.2s; background: var(--bg-card); }
+    .menu-card { position: relative; height: 100px; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 12px; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); background: var(--bg-card); }
     .menu-card:active { transform: scale(0.96); border-color: var(--accent-gold); }
-    .menu-card .bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; z-index: 0; transition: opacity 0.3s; }
+    .menu-card .bg-img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5; z-index: 0; }
     .menu-card::after { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.1) 100%); z-index: 1; }
     .menu-card .content { position: relative; z-index: 2; }
-    .menu-card h4 { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
-    .menu-card p { font-size: 9px; color: var(--accent-gold); font-weight: 600; text-shadow: 0 1px 2px rgba(0,0,0,0.8); text-transform: uppercase;}
-    
-    .card-draft { border-bottom: 3px solid #8e44ad; }
-    .card-counter { border-bottom: 3px solid #e74c3c; }
-    .card-builds { border-bottom: 3px solid #e67e22; }
-    .card-meta { border-bottom: 3px solid #2ecc71; }
-    .card-candy { border-bottom: 3px solid #1abc9c; }
-    .card-analyzer { border-bottom: 3px solid #f1c40f; }
+    .menu-card h4 { font-size: 13px; font-weight: 800; color: #fff; margin-bottom: 2px; }
+    .menu-card p { font-size: 9px; color: var(--accent-gold); font-weight: 600; text-transform: uppercase;}
 
     /* НИЖНЯЯ ПАНЕЛЬ */
     .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(10, 11, 16, 0.98); border-top: 1px solid var(--border-color); display: flex; justify-content: space-around; padding: 12px 0 25px; z-index: 1000; }
-    .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 10px; font-weight: 600; cursor: pointer; flex: 1; transition: color 0.2s; }
+    .nav-btn { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--text-muted); font-size: 10px; font-weight: 600; cursor: pointer; flex: 1; }
     .nav-btn.active { color: var(--accent-gold); }
     .nav-btn .icon { font-size: 20px; margin-bottom: 2px;}
 
@@ -77,28 +71,24 @@
     /* ОНБОРДИНГ */
     .onboarding-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 7, 10, 0.98); z-index: 999999; display: none; flex-direction: column; align-items: center; justify-content: center; padding: 20px; text-align: center; }
     .onboarding-overlay.active { display: flex; }
-    .onboarding-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px 20px; width: 100%; max-width: 340px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); position: relative; overflow: hidden; }
-    .onboarding-card::before { content:''; position:absolute; top:0; left:0; width:100%; height:4px; background: linear-gradient(90deg, var(--accent-gold), #fff, var(--accent-gold)); }
+    .onboarding-card { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 30px 20px; width: 100%; max-width: 340px; }
     .onboarding-step { display: none; animation: fadeIn 0.3s ease; }
     .onboarding-step.active { display: block; }
     .onboarding-card h2 { color: #fff; margin-bottom: 8px; font-size: 22px; font-weight: 900; text-transform: uppercase;}
     .onboarding-card p { font-size: 12px; color: var(--text-muted); margin-bottom: 25px; line-height: 1.4;}
-    .ob-input { width: 100%; background: #0a0b10; border: 1px solid var(--border-color); color: #fff; padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none; transition: border-color 0.2s;}
-    .ob-input:focus { border-color: var(--accent-gold); }
-    .ob-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%); color: #000; border: none; padding: 14px 20px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; margin-top: 10px; text-transform: uppercase; box-shadow: 0 4px 15px rgba(226, 192, 112, 0.2); }
+    .ob-input { width: 100%; background: #0a0b10; border: 1px solid var(--border-color); color: #fff; padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; font-size: 16px; font-weight: bold; outline: none;}
+    .ob-btn { background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold-dark) 100%); color: #000; border: none; padding: 14px 20px; width: 100%; border-radius: 12px; font-weight: 900; cursor: pointer; font-size: 15px; margin-top: 10px; text-transform: uppercase; }
     .role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
-    .role-select-btn { background: #0a0b10; border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; transition: all 0.2s;}
+    .role-select-btn { background: #0a0b10; border: 1px solid var(--border-color); color: var(--text-muted); padding: 12px; border-radius: 10px; font-size: 12px; font-weight: 800; cursor: pointer; }
     .role-select-btn.selected { background: rgba(226,192,112,0.1); color: var(--accent-gold); border-color: var(--accent-gold); }
 
     /* ДРАФТ */
     .teams-container { display: flex; flex-direction: column; gap: 15px; }
     .team-box { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 14px; padding: 12px; }
-    .team-box.radiant { border-left: 4px solid var(--accent-green); }
-    .team-box.dire { border-left: 4px solid var(--dire-red); }
     .slot-row { display: flex; align-items: center; margin-bottom: 8px; gap: 10px; background: #0a0b10; border: 1px solid var(--border-color); padding: 8px 12px; border-radius: 10px; cursor: pointer; }
     .slot-label { font-size: 11px; color: var(--text-muted); width: 85px; font-weight: 800; flex-shrink: 0; text-transform: uppercase; }
     .slot-hero-img { width: 44px; height: 24px; border-radius: 4px; object-fit: cover; background: #000; flex-shrink: 0; border: 1px solid #222; }
-    .slot-hero-name { flex: 1; font-size: 13px; font-weight: 800; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .slot-hero-name { flex: 1; font-size: 13px; font-weight: 800; color: #fff; }
     .slot-hero-name.empty { color: #4a4d57; font-weight: 600; }
     .btn-row { display: flex; gap: 10px; margin-top: 15px; }
     .btn-analyze { flex: 3; background: linear-gradient(135deg, #11998e, #2ecc71); color: #fff; border: none; border-radius: 10px; padding: 14px; font-weight: 900; font-size: 14px; cursor: pointer; text-transform: uppercase; }
@@ -108,38 +98,46 @@
     .winrate-radiant { background: linear-gradient(90deg, #11998e, #2ecc71); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
     .winrate-dire { background: linear-gradient(90deg, #c0392b, #e74c3c); height: 100%; text-align: center; font-size: 11px; line-height: 24px; font-weight: 900; color: #fff; }
 
-    /* МОДАЛКА ГЕРОЕВ (БЕЗ ТЕКСТА) */
+    /* МОДАЛКА ГЕРОЕВ (ОЧИЩЕННЫЕ КАРТОЧКИ) */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(6, 7, 10, 0.98); z-index: 999999; display: none; flex-direction: column; padding: 20px; }
     .modal-overlay.active { display: flex; }
     .modal-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; flex-shrink: 0; }
     .modal-role-title { font-size: 16px; font-weight: 900; color: #fff; text-transform: uppercase;}
     .modal-close { background: #1a1c23; border: 1px solid var(--border-color); color: #fff; padding: 8px 15px; border-radius: 10px; font-weight: bold; cursor: pointer; }
     .modal-search { background: #121318; border: 1px solid var(--border-color); border-radius: 10px; padding: 15px; color: #fff; outline: none; font-size: 14px; margin-bottom: 15px; flex-shrink: 0; font-weight: bold; width: 100%;}
-    .modal-search:focus { border-color: var(--accent-gold); }
     .role-filters { display: flex; gap: 6px; overflow-x: auto; margin-bottom: 15px; padding-bottom: 5px; flex-shrink: 0; scrollbar-width: none; }
     .role-btn { background: #121318; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; padding: 8px 12px; border-radius: 8px; white-space: nowrap; cursor: pointer; font-weight: 800;}
     .role-btn.active { background: var(--accent-gold-dark); color: #fff; border-color: var(--accent-gold); }
+    
     .heroes-grid-container { flex: 1; overflow-y: auto; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; align-content: start; padding-bottom: 40px; }
-    .hero-pick-card { background: #121318; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; cursor: pointer; transition: transform 0.1s;}
-    .hero-pick-card:active { transform: scale(0.9); border-color: var(--accent-gold);}
+    .hero-pick-card { background: transparent; border-radius: 8px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: transform 0.1s;}
+    .hero-pick-card:active { transform: scale(0.9); }
     .hero-pick-card.disabled { opacity: 0.2; pointer-events: none; }
-    /* Убрал отступы и сделал картинку на всю карточку */
-    .hero-pick-card img { width: 100%; height: 55px; object-fit: cover; display: block; border-radius: 8px;}
+    .hero-pick-card img { width: 100%; height: 50px; object-fit: cover; display: block; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.5);}
 
-    /* DOTABUFF КОНТРПИКИ (ТОЧЬ В ТОЧЬ КАК НА СКРИНЕ) */
-    .counters-grid { display: flex; gap: 15px; margin-top: 15px; flex-wrap: wrap;}
-    .counters-col { flex: 1; min-width: 300px;}
-    .counters-col-title { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; font-weight: bold; padding-bottom: 5px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between;}
-    .counter-item-row { display: flex; align-items: center; background: #0f1015; border-bottom: 1px solid var(--border-color); padding: 8px 5px; }
-    .counter-item-hero { display: flex; align-items: center; gap: 8px; flex: 1; overflow: hidden; }
-    .counter-item-hero img { width: 40px; height: 22px; border-radius: 3px; object-fit: cover; border: 1px solid #000; flex-shrink: 0; }
-    .counter-item-hero span { font-size: 12px; font-weight: 800; color: #fff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
-    .counter-item-stats { display: flex; align-items: center; gap: 15px; }
-    .counter-item-stats .adv { font-size: 11px; font-weight: bold; width: 45px; text-align: right; }
-    .counter-item-stats .wr-container { display: flex; flex-direction: column; align-items: flex-end; width: 60px; }
-    .counter-item-stats .wr-text { font-size: 11px; font-weight: bold; margin-bottom: 2px;}
-    .counter-item-stats .bar-bg { width: 100%; height: 4px; background: #222; border-radius: 2px; overflow: hidden; }
-    .counter-item-stats .bar-fill { height: 100%; }
+    /* DOTABUFF КОНТРПИКИ (ТОЧЬ В ТОЧЬ) */
+    .counters-grid { display: flex; flex-direction: column; gap: 20px; margin-top: 15px; }
+    .counters-col h4 { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; font-weight: bold; padding-bottom: 5px; border-bottom: 1px solid var(--border-color); }
+    .counter-item-row { display: flex; align-items: center; background: #0f1015; border-bottom: 1px solid var(--border-color); padding: 8px; border-radius: 8px; margin-bottom: 6px;}
+    .counter-item-hero { display: flex; align-items: center; gap: 10px; flex: 1; overflow: hidden; }
+    .counter-item-hero img { width: 45px; height: 26px; border-radius: 4px; object-fit: cover; border: 1px solid #000; flex-shrink: 0; }
+    .counter-item-hero span { font-size: 12px; font-weight: 900; color: #fff; white-space: nowrap; text-overflow: ellipsis; overflow: hidden;}
+    .counter-item-stats { display: flex; align-items: center; gap: 12px; flex-shrink: 0;}
+    .counter-item-stats .adv { font-size: 12px; font-weight: 900; width: 50px; text-align: right; }
+    .counter-item-stats .wr-container { display: flex; flex-direction: column; align-items: flex-end; width: 65px; }
+    .counter-item-stats .wr-text { font-size: 11px; font-weight: bold; margin-bottom: 4px;}
+    .counter-item-stats .bar-bg { width: 100%; height: 6px; background: #222; border-radius: 3px; overflow: hidden; }
+    .counter-item-stats .bar-fill { height: 100%; border-radius: 3px;}
+
+    /* СБОРКИ (НОВЫЙ РАЗДЕЛ) */
+    .build-item-slot { width: 45px; height: 35px; background: #0a0b10; border: 1px solid var(--border-color); border-radius: 6px; display: flex; align-items: center; justify-content: center; box-shadow: inset 0 2px 5px rgba(0,0,0,0.8); }
+    .build-item-slot img { width: 100%; height: 100%; object-fit: cover; border-radius: 5px; }
+
+    /* АНАЛИЗ ИГРОКОВ */
+    .analyzer-input-group { display: flex; gap: 8px; margin-bottom: 20px; }
+    .analyzer-input-group input { flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:15px; border-radius:12px; outline:none; font-weight:bold; font-size: 14px;}
+    .analyzer-input-group button { background: var(--accent-blue); color: #fff; border: none; padding: 0 20px; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase;}
+    .info-btn { background: linear-gradient(135deg, var(--accent-blue), #2980b9); border: none; color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);}
 
     /* МЕТА И РАНГИ */
     .meta-hero-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
@@ -147,45 +145,19 @@
     .meta-hero-stats { margin-top: 4px; display: flex; gap: 15px;}
     .meta-hero-stats span { font-size: 10px; color: var(--text-muted); font-weight: 600;}
     .meta-hero-stats b { color: #fff;}
-    .meta-winrate { color: var(--accent-green) !important; font-weight: 900 !important; font-size: 11px;}
 
     .rank-dropdown-content { position: absolute; right: 20px; top: 70px; background: #0a0b10; border: 1px solid var(--border-color); border-radius: 12px; display: none; flex-direction: column; z-index: 10; overflow: hidden; width: 160px; box-shadow: 0 10px 20px rgba(0,0,0,0.5);}
     .rank-dropdown-content.show { display: flex; }
     .rank-option { padding: 12px; font-size: 12px; color: var(--text-light); cursor: pointer; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; font-weight: bold;}
-    .rank-option:hover { background: #1a1c23; color: var(--accent-gold); }
     .rank-option img { width: 20px; margin-right: 10px; }
 
-    /* КАЛЬКУЛЯТОР КОНФЕТ (ИСПРАВЛЕННЫЕ ЦВЕТА) */
-    .candy-section { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 16px; padding: 15px; margin-bottom: 15px;}
-    .candy-section h3 { font-size: 12px; color: var(--text-muted); text-transform: uppercase; margin-bottom: 12px;}
-    .candy-inventory-grid { display: flex; gap: 8px; justify-content: space-between; margin-bottom: 10px;}
-    .candy-item { display: flex; flex-direction: column; align-items: center; gap: 5px; }
-    
-    .candy-circle { width: 38px; height: 38px; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: inset -3px -3px 6px rgba(0,0,0,0.5), inset 2px 2px 4px rgba(255,255,255,0.3), 0 3px 5px rgba(0,0,0,0.4); cursor: pointer; transition: transform 0.1s;}
-    .candy-circle:active { transform: scale(0.9);}
-    
-    /* Новые цвета как в Доте */
-    .c1 { background: radial-gradient(circle at 30% 30%, #58d68d, #229954); border: 1px solid #1e8449; } /* Зеленая (гаечки) */
-    .c2 { background: repeating-linear-gradient(45deg, #e74c3c, #e74c3c 6px, #f5f6fa 6px, #f5f6fa 12px); border: 1px solid #c0392b; } /* Мятная (красно-белая) */
-    .c3 { background: radial-gradient(circle at 30% 30%, #5dade2, #2980b9); border: 1px solid #2471a3; } /* Синяя (болтик) */
-    .c4 { background: radial-gradient(circle at 30% 30%, #4d5656, #1c2833); border: 1px solid #17202a; } /* Черный камень */
-    .c5 { background: radial-gradient(circle at 30% 30%, #f1c40f, #d35400); border: 1px solid #b9770e; } /* Желтая */
-    .c6 { background: radial-gradient(circle at 30% 30%, #af7ac5, #8e44ad); border: 1px solid #76448a; } /* Фиолетовая */
-    
-    .candy-count { font-size: 13px; font-weight: 900; color: #fff;}
-    .exchange-row { background: #0a0b10; border: 1px solid var(--border-color); border-radius: 8px; padding: 10px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;}
-    .exchange-part { display: flex; align-items: center; gap: 5px;}
-    .exchange-part .candy-circle { width: 22px; height: 22px; font-size: 10px;}
-    .exchange-arrow { color: var(--text-muted); font-weight: bold; }
-    .add-exchange-btn { width: 100%; background: transparent; border: 1px dashed var(--text-muted); color: var(--text-muted); padding: 10px; border-radius: 8px; font-weight: bold; margin-top: 5px; cursor: pointer;}
-    .calc-btn { width: 100%; background: var(--accent-gold); color: #000; font-weight: 900; padding: 15px; border-radius: 12px; border: none; font-size: 14px; text-transform: uppercase; margin-top: 10px;}
-
-    /* АНАЛИЗ ИГРОКОВ */
-    .analyzer-input-group { display: flex; gap: 8px; margin-bottom: 20px; }
-    .analyzer-input-group input { flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:15px; border-radius:12px; outline:none; font-weight:bold; font-size: 14px;}
-    .analyzer-input-group button { background: var(--accent-blue); color: #fff; border: none; padding: 0 20px; border-radius: 12px; font-weight: 900; font-size: 14px; cursor: pointer; text-transform: uppercase;}
-    .info-btn { background: linear-gradient(135deg, var(--accent-blue), #2980b9); border: none; color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: transform 0.1s;}
-    .info-btn:active { transform: scale(0.9); }
+    /* ====== МИНИ-ИГРА "УГАДАЙ КТО?" ====== */
+    .mg-lobby-box { background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); text-align: center; }
+    .mg-hero-card { position: relative; border-radius: 8px; overflow: hidden; transition: 0.1s; cursor: pointer; border: 2px solid transparent; }
+    .mg-hero-card img { width: 100%; height: 55px; object-fit: cover; display: block; border-radius: 6px; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
+    .mg-hero-card .attr-dot { position: absolute; bottom: 4px; right: 4px; width: 10px; height: 10px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.8); }
+    .mg-hero-card.selected { border-color: var(--accent-gold); transform: scale(0.95); box-shadow: 0 0 15px rgba(226,192,112,0.8); }
+    .mg-hero-card.crossed { opacity: 0.2; filter: grayscale(100%); pointer-events: none; }
   </style>
 </head>
 <body>
@@ -224,7 +196,7 @@
   </div>
 
   <div class="onboarding-overlay" id="profileSettingsModal">
-    <div style="background:var(--bg-card); width:100%; max-width: 340px; border-radius:20px; display:flex; flex-direction:column; padding:25px 20px; border:1px solid var(--accent-gold); box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+    <div style="background:var(--bg-card); width:100%; max-width: 340px; border-radius:20px; display:flex; flex-direction:column; padding:25px 20px; border:1px solid var(--accent-gold);">
       <div class="modal-top">
         <div class="modal-role-title">Твой Профиль</div>
         <button class="modal-close" onclick="document.getElementById('profileSettingsModal').classList.remove('active')">✕</button>
@@ -236,16 +208,13 @@
       </div>
       <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px;">
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Рейтинг (MMR):</span><span id="ps-mmr" style="font-weight: 800; color: var(--accent-green);">0</span>
+          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Рейтинг:</span><span id="ps-mmr" style="font-weight: 800; color: var(--accent-green);">0</span>
         </div>
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Часов в игре:</span><span id="ps-hours" style="font-weight: 800; color: var(--accent-blue);">0</span>
+          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Часов:</span><span id="ps-hours" style="font-weight: 800; color: var(--accent-blue);">0</span>
         </div>
         <div style="display: flex; justify-content: space-between; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
           <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Роль:</span><span id="ps-role" style="font-weight: 800; color: #9b59b6;">Нет</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 8px;">
-          <span style="color: var(--text-muted); font-size: 12px; font-weight: 600;">Сигнатурка:</span><img id="ps-hero" src="" style="width: 44px; height: 24px; border-radius: 4px; object-fit: cover; border: 1px solid #000; display: none;">
         </div>
       </div>
       <button class="ob-btn" onclick="restartOnboarding()">Изменить данные</button>
@@ -271,6 +240,7 @@
       <div class="curr-item"><div class="dot" style="background:var(--accent-blue);"></div> <span id="stat-hours">0</span> ч.</div>
       <div class="curr-item"><div class="dot" style="background:#9b59b6;"></div> <span id="stat-role">Нет</span></div>
     </div>
+    
     <div class="section-header">Разделы</div>
     <div class="menu-grid">
       <div class="menu-card card-draft" onclick="switchTab('draft')">
@@ -279,7 +249,7 @@
       </div>
       <div class="menu-card card-counter" onclick="switchTab('counter')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/phantom_assassin.png">
-        <div class="content"><h4>Контрпики</h4><p>Анализ врагов</p></div>
+        <div class="content"><h4>Контрпики</h4><p>База Dotabuff</p></div>
       </div>
       <div class="menu-card card-analyzer" onclick="switchTab('analyzer')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/rubick.png">
@@ -287,11 +257,11 @@
       </div>
       <div class="menu-card card-builds" onclick="switchTab('builds')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/dawnbreaker.png">
-        <div class="content"><h4>Сборки</h4><p>Предметы и таланты</p></div>
+        <div class="content"><h4>Сборки</h4><p>Предметы и скиллы</p></div>
       </div>
-      <div class="menu-card card-candy" onclick="switchTab('candy')">
+      <div class="menu-card card-candy" onclick="switchTab('minigame')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/meepo.png">
-        <div class="content"><h4>Калькулятор</h4><p>Конфетная лавка</p></div>
+        <div class="content"><h4>Угадай Кто</h4><p>Мини-игра с другом</p></div>
       </div>
       <div class="menu-card card-meta" onclick="switchTab('meta')">
         <img class="bg-img" src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/heroes/crops/lina.png">
@@ -340,12 +310,12 @@
         <input type="text" id="heroInput" placeholder="Имя героя..." style="flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:12px; border-radius:10px; outline:none; font-weight:bold;">
         <button class="btn-action" style="background:linear-gradient(135deg, var(--dire-red), #c0392b); padding:0 20px; border-radius:10px; font-size:13px;" onclick="searchCounters()">Найти</button>
       </div>
-      <div id="counter-results" style="margin-top: 20px;"></div>
+      <div id="counter-results"></div>
     </div>
   </div>
 
   <div id="sec-builds" class="section-wrapper">
-    <div class="page-title">Сборки на героев</div>
+    <div class="page-title">Сборки героев</div>
     <div style="background:var(--bg-card); padding:20px; border-radius:16px; border:1px solid var(--border-color);">
       <p style="font-size:11px; color:var(--text-muted); margin-bottom:15px; font-weight:bold;">Введите имя героя, чтобы увидеть лучшие предметы меты.</p>
       <div style="display: flex; gap: 8px; margin-bottom: 20px;">
@@ -359,14 +329,13 @@
         </div>
         <h4 style="font-size:12px; color:var(--text-muted); margin-bottom:8px; text-transform:uppercase;">Популярная сборка:</h4>
         <div style="background:#0a0b10; border:1px solid var(--border-color); border-radius:10px; padding:10px; display:flex; gap:8px; flex-wrap:wrap;">
-           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 1</div>
-           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 2</div>
-           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 3</div>
-           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 4</div>
-           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 5</div>
-           <div style="width:40px; height:30px; background:#222; border:1px solid #444; border-radius:4px; display:flex; align-items:center; justify-content:center; font-size:10px;">Item 6</div>
+           <div class="build-item-slot"><img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/power_treads.png"></div>
+           <div class="build-item-slot"><img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/black_king_bar.png"></div>
+           <div class="build-item-slot"><img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/blink.png"></div>
+           <div class="build-item-slot"><img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/ultimate_scepter.png"></div>
+           <div class="build-item-slot"><img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/heart.png"></div>
+           <div class="build-item-slot"><img src="https://cdn.cloudflare.steamstatic.com/apps/dota2/images/dota_react/items/shivas_guard.png"></div>
         </div>
-        <p style="font-size:10px; color:var(--text-muted); margin-top:15px; text-align:center;">*Живые данные по предметам будут добавлены в следующем патче.</p>
       </div>
     </div>
   </div>
@@ -383,48 +352,56 @@
     </div>
   </div>
 
-  <div id="sec-candy" class="section-wrapper">
-    <div class="page-title">Калькулятор конфет</div>
+  <div id="sec-minigame" class="section-wrapper">
+    <div class="page-title">Угадай Героя</div>
     
-    <div class="candy-section">
-      <h3>Ваш инвентарь</h3>
-      <div class="candy-inventory-grid">
-        <div class="candy-item"><div class="candy-circle c1" onclick="changeCandy('inv', 1, 1)"></div><span class="candy-count" id="inv-1">0</span></div>
-        <div class="candy-item"><div class="candy-circle c2" onclick="changeCandy('inv', 2, 1)"></div><span class="candy-count" id="inv-2">0</span></div>
-        <div class="candy-item"><div class="candy-circle c3" onclick="changeCandy('inv', 3, 1)"></div><span class="candy-count" id="inv-3">0</span></div>
-        <div class="candy-item"><div class="candy-circle c4" onclick="changeCandy('inv', 4, 1)"></div><span class="candy-count" id="inv-4">0</span></div>
-        <div class="candy-item"><div class="candy-circle c5" onclick="changeCandy('inv', 5, 1)"></div><span class="candy-count" id="inv-5">0</span></div>
-        <div class="candy-item"><div class="candy-circle c6" onclick="changeCandy('inv', 6, 1)"></div><span class="candy-count" id="inv-6">0</span></div>
-      </div>
-      <button style="width:100%; margin-top:10px; background:transparent; border:none; color:var(--text-muted); font-size:10px; cursor:pointer;" onclick="resetCandies('inv')">Очистить инвентарь</button>
+    <div id="mg-lobby" class="mg-lobby-box">
+        <button class="ob-btn" style="margin-bottom:15px;" onclick="mgShowCreate()">Создать игру</button>
+        <div style="color:var(--text-muted); font-size:12px; margin-bottom:15px; font-weight:bold;">ИЛИ ВОЙТИ К ДРУГУ:</div>
+        <input type="text" id="mg-join-input" class="ob-input" placeholder="Код комнаты (напр. 4512)">
+        <button class="ob-btn" style="background:linear-gradient(135deg, var(--accent-blue), #2980b9);" onclick="joinGame()">Войти</button>
     </div>
 
-    <div class="candy-section">
-      <h3>Обмены</h3>
-      <div id="exchange-list">
-        <div class="exchange-row">
-          <div class="exchange-part"><div class="candy-circle c1"></div><div class="candy-circle c1"></div><div class="candy-circle c2"></div></div>
-          <div class="exchange-arrow">➔</div>
-          <div class="exchange-part"><div class="candy-circle c3"></div></div>
+    <div id="mg-create" class="mg-lobby-box" style="display:none;">
+        <h3 style="color:var(--accent-gold); margin-bottom:15px; text-transform:uppercase;">Выберите режим</h3>
+        <button class="ob-btn" onclick="createGame(24)" style="margin-bottom:12px; background:linear-gradient(135deg, #1abc9c, #16a085);">24 героя (2 категории)</button>
+        <button class="ob-btn" onclick="createGame(60)" style="margin-bottom:12px; background:linear-gradient(135deg, #f39c12, #d35400);">60 героев</button>
+        <button class="ob-btn" onclick="createGame(124)" style="background:linear-gradient(135deg, #8e44ad, #9b59b6);">Все 124 героя</button>
+        <button class="ob-btn" style="margin-top:20px; background:transparent; border:1px solid var(--text-muted); color:var(--text-muted);" onclick="showMgScreen('mg-lobby')">Назад</button>
+    </div>
+
+    <div id="mg-waiting" style="display:none; text-align:center; padding:30px 0;">
+        <h2 style="color:#fff; font-size:24px;">КОД: <span id="mg-room-code-display" style="color:var(--accent-gold); font-size:36px;"></span></h2>
+        <p style="color:var(--text-muted); margin-top:15px; font-weight:bold;">Скажи этот код другу.<br>Ждем подключения...</p>
+    </div>
+
+    <div id="mg-picking" style="display:none;">
+        <div style="background:#0a0b10; border:1px solid var(--accent-gold); padding:15px; border-radius:12px; margin-bottom:15px; text-align:center;">
+            <h3 style="color:#fff; text-transform:uppercase; font-size:16px;">Выбери своего героя</h3>
+            <p style="font-size:11px; color:var(--text-muted); font-weight:bold; margin-top:4px;">Друг будет пытаться его угадать!</p>
         </div>
-      </div>
-      <button class="add-exchange-btn">+ Добавить обмен</button>
+        <div class="heroes-grid-container" id="mg-pick-grid"></div>
     </div>
 
-    <div class="candy-section">
-      <h3>Нужная награда</h3>
-      <div class="candy-inventory-grid">
-        <div class="candy-item"><div class="candy-circle c1" onclick="changeCandy('target', 1, 1)"></div><span class="candy-count" id="target-1">0</span></div>
-        <div class="candy-item"><div class="candy-circle c2" onclick="changeCandy('target', 2, 1)"></div><span class="candy-count" id="target-2">0</span></div>
-        <div class="candy-item"><div class="candy-circle c3" onclick="changeCandy('target', 3, 1)"></div><span class="candy-count" id="target-3">0</span></div>
-        <div class="candy-item"><div class="candy-circle c4" onclick="changeCandy('target', 4, 1)"></div><span class="candy-count" id="target-4">0</span></div>
-        <div class="candy-item"><div class="candy-circle c5" onclick="changeCandy('target', 5, 1)"></div><span class="candy-count" id="target-5">0</span></div>
-        <div class="candy-item"><div class="candy-circle c6" onclick="changeCandy('target', 6, 1)"></div><span class="candy-count" id="target-6">0</span></div>
-      </div>
+    <div id="mg-playing" style="display:none;">
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#0a0b10; padding:12px; border-radius:12px; border:1px solid var(--accent-gold); margin-bottom:15px;">
+          <div>
+             <div style="font-size:10px; color:var(--text-muted); font-weight:bold; text-transform:uppercase;">Твой герой:</div>
+             <img id="mg-my-pick-img" style="width:50px; height:28px; object-fit:cover; border-radius:4px; margin-top:4px; border:1px solid #000;">
+          </div>
+          <div style="text-align:right;">
+             <div style="font-size:10px; color:var(--text-muted); font-weight:bold; text-transform:uppercase;">Попытки:</div>
+             <span id="mg-attempts-display" style="font-size:24px; font-weight:900; color:var(--accent-green);">5</span>
+          </div>
+        </div>
+        
+        <div class="heroes-grid-container" id="mg-play-grid" style="padding-bottom: 90px;"></div>
+        
+        <div style="position:fixed; bottom:0; left:0; width:100%; background:rgba(10,11,16,0.98); padding:15px 20px 25px; display:flex; gap:15px; border-top:1px solid var(--border-color); z-index:100;">
+            <button class="ob-btn" style="background:linear-gradient(135deg, var(--dire-red), #c0392b); margin:0; font-size:13px;" onclick="clickCrossOut()">❌ ВЫЧЕРКНУТЬ</button>
+            <button class="ob-btn" style="background:linear-gradient(135deg, #2ecc71, #27ae60); margin:0; font-size:13px;" onclick="clickGuess()">🎯 УГАДАТЬ</button>
+        </div>
     </div>
-
-    <button class="calc-btn" onclick="calculateCandyPath()">Рассчитать путь</button>
-    <div id="candy-calc-result" style="margin-top:15px; text-align:center; font-size:12px; font-weight:bold; color:var(--accent-gold); display:none;"></div>
   </div>
 
   <div id="sec-meta" class="section-wrapper">
@@ -435,7 +412,6 @@
           <img id="current-rank-icon" src="https://www.opendota.com/assets/images/dota2/rank_icons/rank_icon_8.png" style="width: 32px; height: 32px; object-fit: contain;">
           <div id="current-rank-label" style="font-size:16px; font-weight:bold;">Титан</div>
         </div>
-        
         <button onclick="toggleRankDropdown(event)" style="background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:8px 12px; border-radius:8px; font-weight:bold; cursor:pointer;">Выбрать ▾</button>
         
         <div class="rank-dropdown-content" id="rankDropdown">
@@ -457,7 +433,7 @@
     <div class="nav-btn active" id="nav-main" onclick="switchTab('main')"><div class="icon">👑</div><div>Главная</div></div>
     <div class="nav-btn" id="nav-draft" onclick="switchTab('draft')"><div class="icon">🛡️</div><div>Драфтер</div></div>
     <div class="nav-btn" id="nav-analyzer" onclick="switchTab('analyzer')"><div class="icon">🔍</div><div>Анализ</div></div>
-    <div class="nav-btn" id="nav-candy" onclick="switchTab('candy')"><div class="icon">🍬</div><div>Лавка</div></div>
+    <div class="nav-btn" id="nav-minigame" onclick="switchTab('minigame')"><div class="icon">🎮</div><div>Игра</div></div>
     <div class="nav-btn" id="nav-meta" onclick="switchTab('meta')"><div class="icon">📊</div><div>Мета</div></div>
   </div>
 
@@ -491,7 +467,7 @@
   </div>
 
   <script>
-    // --- 1. ТЕЛЕГРАМ ---
+    // --- 1. ТЕЛЕГРАМ И FIREBASE ---
     let tg = null;
     try {
       if (window.Telegram && window.Telegram.WebApp) {
@@ -500,71 +476,82 @@
       }
     } catch(e) { console.log(e); }
 
-    // --- 2. БАЗА ГЕРОЕВ ---
+    let db = null;
+    try {
+      const firebaseConfig = {
+        apiKey: "AIzaSyA5znZK90JTExNeyemOmxL5FR1K-wLhxXk",
+        authDomain: "draftmaster-chat.firebaseapp.com",
+        databaseURL: "https://draftmaster-chat-default-rtdb.firebaseio.com",
+        projectId: "draftmaster-chat"
+      };
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+      db = firebase.database();
+    } catch (e) { console.error("Firebase error", e); }
+
+    // --- 2. БАЗА ГЕРОЕВ С АТРИБУТАМИ ---
     const ALL_HEROES = [
-      { id: 1, name: "antimage", title: "Anti-Mage", roles: [1] }, { id: 2, name: "axe", title: "Axe", roles: [3] },
-      { id: 3, name: "bane", title: "Bane", roles: [5] }, { id: 4, name: "bloodseeker", title: "Bloodseeker", roles: [1, 2] },
-      { id: 5, name: "crystal_maiden", title: "Crystal Maiden", roles: [5] }, { id: 6, name: "drow_ranger", title: "Drow Ranger", roles: [1] },
-      { id: 7, name: "earthshaker", title: "Earthshaker", roles: [4, 3] }, { id: 8, name: "juggernaut", title: "Juggernaut", roles: [1] },
-      { id: 9, name: "mirana", title: "Mirana", roles: [4, 2] }, { id: 10, name: "morphling", title: "Morphling", roles: [1, 2] },
-      { id: 11, name: "nevermore", title: "Shadow Fiend", roles: [2, 1] }, { id: 12, name: "phantom_lancer", title: "Phantom Lancer", roles: [1] },
-      { id: 13, name: "puck", title: "Puck", roles: [2] }, { id: 14, name: "pudge", title: "Pudge", roles: [4, 1, 3] },
-      { id: 15, name: "razor", title: "Razor", roles: [2, 3] }, { id: 16, name: "sand_king", title: "Sand King", roles: [3, 4] },
-      { id: 17, name: "storm_spirit", title: "Storm Spirit", roles: [2] }, { id: 18, name: "sven", title: "Sven", roles: [1, 3] },
-      { id: 19, name: "tiny", title: "Tiny", roles: [4, 2, 1] }, { id: 20, name: "vengefulspirit", title: "Vengeful Spirit", roles: [5, 4] },
-      { id: 21, name: "windrunner", title: "Windranger", roles: [2, 4] }, { id: 22, name: "zuus", title: "Zeus", roles: [2, 4] },
-      { id: 23, name: "kunkka", title: "Kunkka", roles: [2, 3] }, { id: 25, name: "lina", title: "Lina", roles: [2, 1] },
-      { id: 26, name: "lion", title: "Lion", roles: [4, 5] }, { id: 27, name: "shadow_shaman", title: "Shadow Shaman", roles: [5, 4] },
-      { id: 28, name: "slardar", title: "Slardar", roles: [3] }, { id: 29, name: "tidehunter", title: "Tidehunter", roles: [3] },
-      { id: 30, name: "witch_doctor", title: "Witch Doctor", roles: [5] }, { id: 31, name: "lich", title: "Lich", roles: [5] },
-      { id: 32, name: "riki", title: "Riki", roles: [1, 4] }, { id: 33, name: "enigma", title: "Enigma", roles: [3] },
-      { id: 34, name: "tinker", title: "Tinker", roles: [2, 4] }, { id: 35, name: "sniper", title: "Sniper", roles: [2, 1] },
-      { id: 36, name: "necrolyte", title: "Necrophos", roles: [2, 3] }, { id: 37, name: "warlock", title: "Warlock", roles: [5] },
-      { id: 38, name: "beastmaster", title: "Beastmaster", roles: [3] }, { id: 39, name: "queenofpain", title: "Queen of Pain", roles: [2] },
-      { id: 40, name: "venomancer", title: "Venomancer", roles: [4, 5] }, { id: 41, name: "faceless_void", title: "Faceless Void", roles: [1] },
-      { id: 42, name: "skeleton_king", title: "Wraith King", roles: [1, 3] }, { id: 44, name: "phantom_assassin", title: "Phantom Assassin", roles: [1] },
-      { id: 45, name: "pugna", title: "Pugna", roles: [4, 5, 2] }, { id: 46, name: "templar_assassin", title: "Templar Assassin", roles: [2, 1] },
-      { id: 47, name: "viper", title: "Viper", roles: [2, 3] }, { id: 48, name: "luna", title: "Luna", roles: [1] },
-      { id: 49, name: "dragon_knight", title: "Dragon Knight", roles: [2, 3] }, { id: 50, name: "dazzle", title: "Dazzle", roles: [5] },
-      { id: 51, name: "rattletrap", title: "Clockwerk", roles: [4, 5] }, { id: 52, name: "leshrac", title: "Leshrac", roles: [2] },
-      { id: 53, name: "furion", title: "Nature's Prophet", roles: [4, 3, 1] }, { id: 54, name: "life_stealer", title: "Lifestealer", roles: [1] },
-      { id: 55, name: "dark_seer", title: "Dark Seer", roles: [3] }, { id: 56, name: "clinkz", title: "Clinkz", roles: [1, 4] },
-      { id: 57, name: "omniknight", title: "Omniknight", roles: [3, 5] }, { id: 58, name: "enchantress", title: "Enchantress", roles: [5] },
-      { id: 59, name: "huskar", title: "Huskar", roles: [2] }, { id: 60, name: "night_stalker", title: "Night Stalker", roles: [3] },
-      { id: 61, name: "broodmother", title: "Broodmother", roles: [3, 2] }, { id: 62, name: "bounty_hunter", title: "Bounty Hunter", roles: [4] },
-      { id: 63, name: "weaver", title: "Weaver", roles: [1, 4] }, { id: 64, name: "jakiro", title: "Jakiro", roles: [5] },
-      { id: 65, name: "batrider", title: "Batrider", roles: [2, 3] }, { id: 67, name: "spectre", title: "Spectre", roles: [1] },
-      { id: 68, name: "ancient_apparition", title: "Ancient Apparition", roles: [5] }, { id: 69, name: "doom_bringer", title: "Doom", roles: [3] },
-      { id: 70, name: "ursa", title: "Ursa", roles: [1] }, { id: 71, name: "spirit_breaker", title: "Spirit Breaker", roles: [4, 3] },
-      { id: 72, name: "gyrocopter", title: "Gyrocopter", roles: [1, 4] }, { id: 73, name: "alchemist", title: "Alchemist", roles: [1, 2] },
-      { id: 74, name: "invoker", title: "Invoker", roles: [2] }, { id: 75, name: "silencer", title: "Silencer", roles: [5, 4] },
-      { id: 76, name: "obsidian_destroyer", title: "Outworld Destroyer", roles: [2] }, { id: 77, name: "lycan", title: "Lycan", roles: [3, 1] },
-      { id: 78, name: "brewmaster", title: "Brewmaster", roles: [3] }, { id: 79, name: "shadow_demon", title: "Shadow Demon", roles: [5, 4] },
-      { id: 81, name: "chaos_knight", title: "Chaos Knight", roles: [1, 3] }, { id: 82, name: "meepo", title: "Meepo", roles: [2] },
-      { id: 83, name: "treant", title: "Treant Protector", roles: [5] }, { id: 84, name: "ogre_magi", title: "Ogre Magi", roles: [5, 3] },
-      { id: 85, name: "undying", title: "Undying", roles: [5] }, { id: 86, name: "rubick", title: "Rubick", roles: [4] },
-      { id: 87, name: "disruptor", title: "Disruptor", roles: [5] }, { id: 88, name: "nyx_assassin", title: "Nyx Assassin", roles: [4] },
-      { id: 89, name: "naga_siren", title: "Naga Siren", roles: [1, 5] }, { id: 90, name: "keeper_of_the_light", title: "Keeper of the Light", roles: [5, 4] },
-      { id: 93, name: "slark", title: "Slark", roles: [1] }, { id: 94, name: "medusa", title: "Medusa", roles: [1] },
-      { id: 95, name: "troll_warlord", title: "Troll Warlord", roles: [1] }, { id: 96, name: "centaur", title: "Centaur Warrunner", roles: [3] },
-      { id: 97, name: "magnataur", title: "Magnus", roles: [3, 2] }, { id: 98, name: "shredder", title: "Timbersaw", roles: [3, 2] },
-      { id: 99, name: "bristleback", title: "Bristleback", roles: [3, 1] }, { id: 100, name: "tusk", title: "Tusk", roles: [4] },
-      { id: 101, name: "skywrath_mage", title: "Skywrath Mage", roles: [4, 5] }, { id: 102, name: "abaddon", title: "Abaddon", roles: [5, 1] },
-      { id: 104, name: "legion_commander", title: "Legion Commander", roles: [3] }, { id: 106, name: "ember_spirit", title: "Ember Spirit", roles: [2, 1] },
-      { id: 107, name: "earth_spirit", title: "Earth Spirit", roles: [4, 2] }, { id: 108, name: "abyssal_underlord", title: "Underlord", roles: [3] },
-      { id: 109, name: "terrorblade", title: "Terrorblade", roles: [1] }, { id: 110, name: "phoenix", title: "Phoenix", roles: [4, 5] },
-      { id: 111, name: "oracle", title: "Oracle", roles: [5] }, { id: 112, name: "winter_wyvern", title: "Winter Wyvern", roles: [5] },
-      { id: 113, name: "arc_warden", title: "Arc Warden", roles: [2, 1] }, { id: 114, name: "monkey_king", title: "Monkey King", roles: [1, 2] },
-      { id: 119, name: "dark_willow", title: "Dark Willow", roles: [4, 5] }, { id: 120, name: "pangolier", title: "Pangolier", roles: [2, 3] },
-      { id: 121, name: "grimstroke", title: "Grimstroke", roles: [5, 4] }, { id: 123, name: "hoodwink", title: "Hoodwink", roles: [4] },
-      { id: 126, name: "void_spirit", title: "Void Spirit", roles: [2] }, { id: 128, name: "snapfire", title: "Snapfire", roles: [4, 5] },
-      { id: 129, name: "mars", title: "Mars", roles: [3] }, { id: 135, name: "dawnbreaker", title: "Dawnbreaker", roles: [3, 1] },
-      { id: 136, name: "marci", title: "Marci", roles: [4, 1] }, { id: 137, name: "primal_beast", title: "Primal Beast", roles: [3, 2] },
-      { id: 138, name: "muerta", title: "Muerta", roles: [1, 4] }, { id: 140, name: "ringmaster", title: "Ringmaster", roles: [4, 5] },
-      { id: 145, name: "kez", title: "Kez", roles: [1] }
+      { id: 1, name: "antimage", title: "Anti-Mage", roles: [1], attr: 'agi' }, { id: 2, name: "axe", title: "Axe", roles: [3], attr: 'str' },
+      { id: 3, name: "bane", title: "Bane", roles: [5], attr: 'uni' }, { id: 4, name: "bloodseeker", title: "Bloodseeker", roles: [1, 2], attr: 'agi' },
+      { id: 5, name: "crystal_maiden", title: "Crystal Maiden", roles: [5], attr: 'int' }, { id: 6, name: "drow_ranger", title: "Drow Ranger", roles: [1], attr: 'agi' },
+      { id: 7, name: "earthshaker", title: "Earthshaker", roles: [4, 3], attr: 'str' }, { id: 8, name: "juggernaut", title: "Juggernaut", roles: [1], attr: 'agi' },
+      { id: 9, name: "mirana", title: "Mirana", roles: [4, 2], attr: 'uni' }, { id: 10, name: "morphling", title: "Morphling", roles: [1, 2], attr: 'agi' },
+      { id: 11, name: "nevermore", title: "Shadow Fiend", roles: [2, 1], attr: 'agi' }, { id: 12, name: "phantom_lancer", title: "Phantom Lancer", roles: [1], attr: 'agi' },
+      { id: 13, name: "puck", title: "Puck", roles: [2], attr: 'int' }, { id: 14, name: "pudge", title: "Pudge", roles: [4, 1, 3], attr: 'str' },
+      { id: 15, name: "razor", title: "Razor", roles: [2, 3], attr: 'agi' }, { id: 16, name: "sand_king", title: "Sand King", roles: [3, 4], attr: 'str' },
+      { id: 17, name: "storm_spirit", title: "Storm Spirit", roles: [2], attr: 'int' }, { id: 18, name: "sven", title: "Sven", roles: [1, 3], attr: 'str' },
+      { id: 19, name: "tiny", title: "Tiny", roles: [4, 2, 1], attr: 'str' }, { id: 20, name: "vengefulspirit", title: "Vengeful Spirit", roles: [5, 4], attr: 'uni' },
+      { id: 21, name: "windrunner", title: "Windranger", roles: [2, 4], attr: 'uni' }, { id: 22, name: "zuus", title: "Zeus", roles: [2, 4], attr: 'int' },
+      { id: 23, name: "kunkka", title: "Kunkka", roles: [2, 3], attr: 'str' }, { id: 25, name: "lina", title: "Lina", roles: [2, 1], attr: 'int' },
+      { id: 26, name: "lion", title: "Lion", roles: [4, 5], attr: 'int' }, { id: 27, name: "shadow_shaman", title: "Shadow Shaman", roles: [5, 4], attr: 'int' },
+      { id: 28, name: "slardar", title: "Slardar", roles: [3], attr: 'str' }, { id: 29, name: "tidehunter", title: "Tidehunter", roles: [3], attr: 'str' },
+      { id: 30, name: "witch_doctor", title: "Witch Doctor", roles: [5], attr: 'int' }, { id: 31, name: "lich", title: "Lich", roles: [5], attr: 'int' },
+      { id: 32, name: "riki", title: "Riki", roles: [1, 4], attr: 'agi' }, { id: 33, name: "enigma", title: "Enigma", roles: [3], attr: 'uni' },
+      { id: 34, name: "tinker", title: "Tinker", roles: [2, 4], attr: 'int' }, { id: 35, name: "sniper", title: "Sniper", roles: [2, 1], attr: 'agi' },
+      { id: 36, name: "necrolyte", title: "Necrophos", roles: [2, 3], attr: 'int' }, { id: 37, name: "warlock", title: "Warlock", roles: [5], attr: 'int' },
+      { id: 38, name: "beastmaster", title: "Beastmaster", roles: [3], attr: 'str' }, { id: 39, name: "queenofpain", title: "Queen of Pain", roles: [2], attr: 'int' },
+      { id: 40, name: "venomancer", title: "Venomancer", roles: [4, 5], attr: 'uni' }, { id: 41, name: "faceless_void", title: "Faceless Void", roles: [1], attr: 'agi' },
+      { id: 42, name: "skeleton_king", title: "Wraith King", roles: [1, 3], attr: 'str' }, { id: 44, name: "phantom_assassin", title: "Phantom Assassin", roles: [1], attr: 'agi' },
+      { id: 45, name: "pugna", title: "Pugna", roles: [4, 5, 2], attr: 'int' }, { id: 46, name: "templar_assassin", title: "Templar Assassin", roles: [2, 1], attr: 'agi' },
+      { id: 47, name: "viper", title: "Viper", roles: [2, 3], attr: 'agi' }, { id: 48, name: "luna", title: "Luna", roles: [1], attr: 'agi' },
+      { id: 49, name: "dragon_knight", title: "Dragon Knight", roles: [2, 3], attr: 'str' }, { id: 50, name: "dazzle", title: "Dazzle", roles: [5], attr: 'int' },
+      { id: 51, name: "rattletrap", title: "Clockwerk", roles: [4, 5], attr: 'str' }, { id: 52, name: "leshrac", title: "Leshrac", roles: [2], attr: 'int' },
+      { id: 53, name: "furion", title: "Nature's Prophet", roles: [4, 3, 1], attr: 'int' }, { id: 54, name: "life_stealer", title: "Lifestealer", roles: [1], attr: 'str' },
+      { id: 55, name: "dark_seer", title: "Dark Seer", roles: [3], attr: 'uni' }, { id: 56, name: "clinkz", title: "Clinkz", roles: [1, 4], attr: 'agi' },
+      { id: 57, name: "omniknight", title: "Omniknight", roles: [3, 5], attr: 'str' }, { id: 58, name: "enchantress", title: "Enchantress", roles: [5], attr: 'int' },
+      { id: 59, name: "huskar", title: "Huskar", roles: [2], attr: 'str' }, { id: 60, name: "night_stalker", title: "Night Stalker", roles: [3], attr: 'str' },
+      { id: 61, name: "broodmother", title: "Broodmother", roles: [3, 2], attr: 'uni' }, { id: 62, name: "bounty_hunter", title: "Bounty Hunter", roles: [4], attr: 'agi' },
+      { id: 63, name: "weaver", title: "Weaver", roles: [1, 4], attr: 'agi' }, { id: 64, name: "jakiro", title: "Jakiro", roles: [5], attr: 'int' },
+      { id: 65, name: "batrider", title: "Batrider", roles: [2, 3], attr: 'uni' }, { id: 67, name: "spectre", title: "Spectre", roles: [1], attr: 'agi' },
+      { id: 68, name: "ancient_apparition", title: "Ancient Apparition", roles: [5], attr: 'int' }, { id: 69, name: "doom_bringer", title: "Doom", roles: [3], attr: 'str' },
+      { id: 70, name: "ursa", title: "Ursa", roles: [1], attr: 'agi' }, { id: 71, name: "spirit_breaker", title: "Spirit Breaker", roles: [4, 3], attr: 'str' },
+      { id: 72, name: "gyrocopter", title: "Gyrocopter", roles: [1, 4], attr: 'agi' }, { id: 73, name: "alchemist", title: "Alchemist", roles: [1, 2], attr: 'str' },
+      { id: 74, name: "invoker", title: "Invoker", roles: [2], attr: 'int' }, { id: 75, name: "silencer", title: "Silencer", roles: [5, 4], attr: 'int' },
+      { id: 76, name: "obsidian_destroyer", title: "Outworld Destroyer", roles: [2], attr: 'int' }, { id: 77, name: "lycan", title: "Lycan", roles: [3, 1], attr: 'str' },
+      { id: 78, name: "brewmaster", title: "Brewmaster", roles: [3], attr: 'str' }, { id: 79, name: "shadow_demon", title: "Shadow Demon", roles: [5, 4], attr: 'int' },
+      { id: 81, name: "chaos_knight", title: "Chaos Knight", roles: [1, 3], attr: 'str' }, { id: 82, name: "meepo", title: "Meepo", roles: [2], attr: 'agi' },
+      { id: 83, name: "treant", title: "Treant Protector", roles: [5], attr: 'str' }, { id: 84, name: "ogre_magi", title: "Ogre Magi", roles: [5, 3], attr: 'str' },
+      { id: 85, name: "undying", title: "Undying", roles: [5], attr: 'str' }, { id: 86, name: "rubick", title: "Rubick", roles: [4], attr: 'int' },
+      { id: 87, name: "disruptor", title: "Disruptor", roles: [5], attr: 'int' }, { id: 88, name: "nyx_assassin", title: "Nyx Assassin", roles: [4], attr: 'uni' },
+      { id: 89, name: "naga_siren", title: "Naga Siren", roles: [1, 5], attr: 'agi' }, { id: 90, name: "keeper_of_the_light", title: "Keeper of the Light", roles: [5, 4], attr: 'int' },
+      { id: 93, name: "slark", title: "Slark", roles: [1], attr: 'agi' }, { id: 94, name: "medusa", title: "Medusa", roles: [1], attr: 'agi' },
+      { id: 95, name: "troll_warlord", title: "Troll Warlord", roles: [1], attr: 'agi' }, { id: 96, name: "centaur", title: "Centaur Warrunner", roles: [3], attr: 'str' },
+      { id: 97, name: "magnataur", title: "Magnus", roles: [3, 2], attr: 'str' }, { id: 98, name: "shredder", title: "Timbersaw", roles: [3, 2], attr: 'str' },
+      { id: 99, name: "bristleback", title: "Bristleback", roles: [3, 1], attr: 'str' }, { id: 100, name: "tusk", title: "Tusk", roles: [4], attr: 'str' },
+      { id: 101, name: "skywrath_mage", title: "Skywrath Mage", roles: [4, 5], attr: 'int' }, { id: 102, name: "abaddon", title: "Abaddon", roles: [5, 1], attr: 'str' },
+      { id: 104, name: "legion_commander", title: "Legion Commander", roles: [3], attr: 'str' }, { id: 106, name: "ember_spirit", title: "Ember Spirit", roles: [2, 1], attr: 'agi' },
+      { id: 107, name: "earth_spirit", title: "Earth Spirit", roles: [4, 2], attr: 'str' }, { id: 108, name: "abyssal_underlord", title: "Underlord", roles: [3], attr: 'str' },
+      { id: 109, name: "terrorblade", title: "Terrorblade", roles: [1], attr: 'agi' }, { id: 110, name: "phoenix", title: "Phoenix", roles: [4, 5], attr: 'uni' },
+      { id: 111, name: "oracle", title: "Oracle", roles: [5], attr: 'int' }, { id: 112, name: "winter_wyvern", title: "Winter Wyvern", roles: [5], attr: 'int' },
+      { id: 113, name: "arc_warden", title: "Arc Warden", roles: [2, 1], attr: 'agi' }, { id: 114, name: "monkey_king", title: "Monkey King", roles: [1, 2], attr: 'agi' },
+      { id: 119, name: "dark_willow", title: "Dark Willow", roles: [4, 5], attr: 'int' }, { id: 120, name: "pangolier", title: "Pangolier", roles: [2, 3], attr: 'uni' },
+      { id: 121, name: "grimstroke", title: "Grimstroke", roles: [5, 4], attr: 'int' }, { id: 123, name: "hoodwink", title: "Hoodwink", roles: [4], attr: 'agi' },
+      { id: 126, name: "void_spirit", title: "Void Spirit", roles: [2], attr: 'uni' }, { id: 128, name: "snapfire", title: "Snapfire", roles: [4, 5], attr: 'uni' },
+      { id: 129, name: "mars", title: "Mars", roles: [3], attr: 'str' }, { id: 135, name: "dawnbreaker", title: "Dawnbreaker", roles: [3, 1], attr: 'str' },
+      { id: 136, name: "marci", title: "Marci", roles: [4, 1], attr: 'uni' }, { id: 137, name: "primal_beast", title: "Primal Beast", roles: [3, 2], attr: 'str' },
+      { id: 138, name: "muerta", title: "Muerta", roles: [1, 4], attr: 'int' }, { id: 140, name: "ringmaster", title: "Ringmaster", roles: [4, 5], attr: 'int' },
+      { id: 145, name: "kez", title: "Kez", roles: [1], attr: 'agi' }
     ];
 
-    // ИСПРАВЛЕНА ОШИБКА фуриона (furion вместо np)
     const META_BY_RANK = {
       immortal: [{ name: "lina", title: "Lina", wr: "54.8%", pick: "22.4%", best: "Мид" }, { name: "furion", title: "Nature's Prophet", wr: "53.9%", pick: "26.1%", best: "Хард" }, { name: "primal_beast", title: "Primal Beast", wr: "53.5%", pick: "18.3%", best: "Хард" }, { name: "templar_assassin", title: "Templar Assassin", wr: "52.9%", pick: "15.0%", best: "Керри" }, { name: "rubick", title: "Rubick", wr: "52.2%", pick: "31.5%", best: "Сап 4" }],
       divine: [{ name: "lina", title: "Lina", wr: "53.7%", pick: "20.1%", best: "Мид" }, { name: "mars", title: "Mars", wr: "53.1%", pick: "19.4%", best: "Хардлейн" }, { name: "slark", title: "Slark", wr: "52.6%", pick: "16.8%", best: "Керри" }, { name: "earthshaker", title: "Earthshaker", wr: "52.0%", pick: "21.0%", best: "Сап 4" }, { name: "invoker", title: "Invoker", wr: "51.8%", pick: "25.4%", best: "Мид" }],
@@ -573,10 +560,10 @@
       archon: [{ name: "sniper", title: "Sniper", wr: "56.0%", pick: "35.4%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.4%", pick: "29.1%", best: "Керри" }, { name: "viper", title: "Viper", wr: "54.1%", pick: "25.0%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.6%", pick: "42.0%", best: "Сап 5" }, { name: "bounty_hunter", title: "Bounty Hunter", wr: "52.8%", pick: "16.4%", best: "Сап 4" }],
       crusader: [{ name: "sniper", title: "Sniper", wr: "56.8%", pick: "38.1%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.9%", pick: "31.0%", best: "Керри" }, { name: "zeus", title: "Zeus", wr: "54.5%", pick: "34.2%", best: "Мид" }, { name: "lion", title: "Lion", wr: "53.9%", pick: "45.1%", best: "Саппорт" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "53.1%", pick: "28.0%", best: "Керри" }],
       guardian: [{ name: "sniper", title: "Sniper", wr: "57.5%", pick: "40.2%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "56.4%", pick: "33.5%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "54.8%", pick: "30.2%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.2%", pick: "48.0%", best: "Саппорт" }, { name: "zuus", title: "Zeus", wr: "53.9%", pick: "36.1%", best: "Мид" }],
-      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "wraith_king", title: "Wraith King", wr: "55.5%", pick: "32.1%", best: "Керри" }, { name: "lion", title: "Lion", wr: "54.8%", pick: "50.2%", best: "Саппорт" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
+      herald: [{ name: "sniper", title: "Sniper", wr: "58.2%", pick: "44.0%", best: "Керри" }, { name: "phantom_assassin", title: "Phantom Assassin", wr: "56.1%", pick: "35.5%", best: "Керри" }, { name: "axe", title: "Axe", wr: "53.9%", pick: "20.1%", best: "Хард" }]
     };
 
-    // --- ОНБОРДИНГ И ПРОФИЛЬ ---
+    // --- ОНБОРДИНГ ---
     let tempRole = null;
     let onboardingHeroSelectMode = false;
 
@@ -611,7 +598,7 @@
       document.getElementById('modalRoleTitle').innerText = "КТО ТВОЯ СИГНАТУРКА?";
       document.getElementById('modalRoleFilters').style.display = 'none';
       document.getElementById('heroModal').classList.add('active');
-      document.getElementById('bottomNav').style.display = 'none'; // Прячем нижнюю панель
+      document.getElementById('bottomNav').style.display = 'none';
       renderModalHeroes();
     }
 
@@ -680,7 +667,6 @@
     function switchTab(tabId) {
       document.querySelectorAll('.section-wrapper').forEach(function(el) { el.classList.remove('active'); });
       document.querySelectorAll('.nav-btn').forEach(function(el) { el.classList.remove('active'); });
-      
       const sec = document.getElementById('sec-' + tabId);
       const nav = document.getElementById('nav-' + tabId);
       if(sec) sec.classList.add('active');
@@ -817,7 +803,7 @@
       document.getElementById('bar-dir').innerText = dirScore + "%";
     }
 
-    // --- КОНТРПИКИ (КАК НА DOTABUFF - 2 КОЛОНКИ С ПОЛОСАМИ) ---
+    // --- КОНТРПИКИ (2 КОЛОНКИ С ПОЛОСАМИ) ---
     async function searchCounters() {
       const input = document.getElementById('heroInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('counter-results');
@@ -831,7 +817,6 @@
         const fetchRes = await fetch(res);
         const matchups = await fetchRes.json();
         
-        // Плох против
         const badAgainst = matchups.filter(function(m) { return m.games_played > 30 && (m.wins / m.games_played) < 0.5; })
           .map(function(m) {
             const h = ALL_HEROES.find(function(x) { return x.id === m.hero_id; });
@@ -839,7 +824,6 @@
             return { hero: h, winrate: wr, adv: (50 - wr).toFixed(2) };
           }).filter(function(c) { return c.hero; }).sort(function(a, b) { return a.winrate - b.winrate; }).slice(0, 5);
 
-        // Хорош против
         const goodAgainst = matchups.filter(function(m) { return m.games_played > 30 && (m.wins / m.games_played) >= 0.5; })
           .map(function(m) {
             const h = ALL_HEROES.find(function(x) { return x.id === m.hero_id; });
@@ -849,7 +833,7 @@
 
         let html = '<div class="counters-grid">';
         
-        // Левая колонка (ПЛОХ ПРОТИВ)
+        // ПЛОХ ПРОТИВ
         html += '<div class="counters-col"><h4 class="counters-col-title">' + target.title.toUpperCase() + ' ПЛОХ ПРОТИВ</h4>';
         badAgainst.forEach(function(c) {
           html += `
@@ -866,7 +850,7 @@
         });
         html += '</div>';
 
-        // Правая колонка (ЛЕГКО ИГРАЕТ)
+        // ЛЕГКО ИГРАЕТ
         html += '<div class="counters-col"><h4 class="counters-col-title">' + target.title.toUpperCase() + ' ЛЕГКО ПРОТИВ</h4>';
         goodAgainst.forEach(function(c) {
           html += `
@@ -887,12 +871,11 @@
       } catch (e) { resultsDiv.innerHTML = "Ошибка загрузки."; }
     }
 
-    // --- РАЗДЕЛ СБОРКИ (ЗАГОТОВКА) ---
+    // --- СБОРКИ ---
     function searchBuilds() {
       const input = document.getElementById('buildInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('build-results');
       if (!input) return;
-      
       const target = ALL_HEROES.find(function(h) { return h.title.toLowerCase().includes(input) || h.name.includes(input); });
       if (!target) { alert("Герой не найден."); return; }
 
@@ -901,7 +884,7 @@
       resultsDiv.style.display = 'block';
     }
 
-    // --- АНАЛИЗАТОР МАТЧЕЙ (STEAM ID) ---
+    // --- АНАЛИЗАТОР МАТЧЕЙ ---
     async function loadPlayerAnalysis() {
       const steamId = document.getElementById('analyzerInput').value.trim();
       const resultsDiv = document.getElementById('analyzer-results');
@@ -973,7 +956,7 @@
       const bodyEl = document.getElementById('modalMatchBody');
 
       modal.classList.add('active');
-      document.getElementById('bottomNav').style.display = 'none'; // Прячем панель
+      document.getElementById('bottomNav').style.display = 'none';
       titleEl.innerText = "МАТЧ #" + matchId;
       bodyEl.innerHTML = "<div style='text-align:center; padding:30px; font-weight:bold; color:var(--accent-gold);'>🔄 Загружаю детали матча...</div>";
 
@@ -1004,7 +987,6 @@
           const heroName = heroesMap[p.hero_id] || ("Hero_" + p.hero_id);
           const hObj = ALL_HEROES.find(function(h) { return h.id === p.hero_id; });
           const heroSlug = hObj ? hObj.name : 'antimage';
-          
           html += `
             <div style="display:flex; align-items:center; gap:10px; font-size:11px; padding:8px; border-bottom:1px solid var(--border-color); background:#0a0b10; border-radius:8px; margin-bottom:6px;">
               <img src="${getHeroImg(heroSlug)}" style="width:40px; height:22px; border-radius:4px; object-fit:cover; border:1px solid #000;">
@@ -1026,7 +1008,6 @@
           const heroName = heroesMap[p.hero_id] || ("Hero_" + p.hero_id);
           const hObj = ALL_HEROES.find(function(h) { return h.id === p.hero_id; });
           const heroSlug = hObj ? hObj.name : 'antimage';
-          
           html += `
             <div style="display:flex; align-items:center; gap:10px; font-size:11px; padding:8px; border-bottom:1px solid var(--border-color); background:#0a0b10; border-radius:8px; margin-bottom:6px;">
               <img src="${getHeroImg(heroSlug)}" style="width:40px; height:22px; border-radius:4px; object-fit:cover; border:1px solid #000;">
@@ -1050,7 +1031,7 @@
 
     function closeMatchModal() {
       document.getElementById('matchDetailsModal').classList.remove('active');
-      document.getElementById('bottomNav').style.display = 'flex'; // Возвращаем панель
+      document.getElementById('bottomNav').style.display = 'flex';
     }
 
     // --- МЕТА ---
@@ -1074,39 +1055,219 @@
       }).join('');
     }
 
-    // --- КАЛЬКУЛЯТОР КОНФЕТ ---
-    let candies = { inv: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0}, target: {1:0, 2:0, 3:0, 4:0, 5:0, 6:0} };
+    // --- МИНИ-ИГРА "УГАДАЙ КТО?" (FIREBASE) ---
+    let mgRoomCode = null;
+    let mgRole = null;
+    let currentGameData = null;
+    let mgLocalCrossed = [];
+    let mgSelectedHero = null;
+    let mgAttempts = 5;
 
-    function changeCandy(type, id, amount) {
-      candies[type][id] = Math.max(0, candies[type][id] + amount);
-      document.getElementById(type + '-' + id).innerText = candies[type][id];
-      document.getElementById('candy-calc-result').style.display = 'none';
+    function showMgScreen(screen) {
+        ['mg-lobby', 'mg-create', 'mg-waiting', 'mg-picking', 'mg-playing'].forEach(id => {
+            document.getElementById(id).style.display = 'none';
+        });
+        document.getElementById(screen).style.display = 'block';
+        if(screen === 'mg-playing' || screen === 'mg-picking') {
+            document.getElementById('bottomNav').style.display = 'none';
+        } else {
+            document.getElementById('bottomNav').style.display = 'flex';
+        }
     }
 
-    function resetCandies(type) {
-      for(let i=1; i<=6; i++) {
-        candies[type][i] = 0;
-        document.getElementById(type + '-' + i).innerText = '0';
-      }
-      document.getElementById('candy-calc-result').style.display = 'none';
+    function mgShowCreate() { showMgScreen('mg-create'); }
+
+    function generate24Pool() {
+        const attrs = ['str', 'agi', 'int', 'uni'].sort(() => 0.5 - Math.random()).slice(0, 2);
+        let pool = [];
+        attrs.forEach(a => {
+            const hList = ALL_HEROES.filter(h => h.attr === a).sort(() => 0.5 - Math.random()).slice(0, 12);
+            pool = pool.concat(hList.map(h => h.id));
+        });
+        return pool.sort(() => 0.5 - Math.random());
     }
 
-    function calculateCandyPath() {
-      const res = document.getElementById('candy-calc-result');
-      let invSum = 0; let targetSum = 0;
-      for(let i=1; i<=6; i++) { invSum += candies.inv[i]; targetSum += candies.target[i]; }
+    function createGame(mode) {
+        if(!db) { alert("База данных недоступна. Включите интернет."); return; }
+        mgRoomCode = Math.floor(1000 + Math.random() * 9000).toString();
+        mgRole = 'host';
+        
+        let pool = [];
+        if(mode === 24) pool = generate24Pool();
+        else if(mode === 60) pool = ALL_HEROES.sort(()=>0.5-Math.random()).slice(0,60).map(h=>h.id);
+        else pool = ALL_HEROES.map(h=>h.id);
+        
+        db.ref('minigames/' + mgRoomCode).set({
+            host: localStorage.getItem('dota_nickname') || 'Host',
+            guest: '',
+            mode: mode,
+            pool: pool,
+            state: 'waiting',
+            host_pick: 0,
+            guest_pick: 0,
+            winner: '',
+            reason: ''
+        });
+        
+        document.getElementById('mg-room-code-display').innerText = mgRoomCode;
+        showMgScreen('mg-waiting');
+        listenToGame();
+    }
 
-      if (targetSum === 0) {
-        res.innerHTML = "❌ Выберите конфеты для награды!";
-        res.style.color = "var(--dire-red)";
-      } else if (invSum >= targetSum) {
-        res.innerHTML = "✅ Конфет достаточно! (Можно получить через обмены)";
-        res.style.color = "var(--accent-green)";
-      } else {
-        res.innerHTML = "❌ Не хватает конфет! (Нужно еще " + (targetSum - invSum) + " шт.)";
-        res.style.color = "var(--dire-red)";
-      }
-      res.style.display = 'block';
+    function joinGame() {
+        mgRoomCode = document.getElementById('mg-join-input').value.trim();
+        if(!mgRoomCode) return;
+        mgRole = 'guest';
+        
+        db.ref('minigames/' + mgRoomCode).once('value', snap => {
+            if(snap.exists()) {
+                db.ref('minigames/' + mgRoomCode).update({ 
+                    guest: localStorage.getItem('dota_nickname') || 'Guest', 
+                    state: 'picking' 
+                });
+                listenToGame();
+            } else {
+                alert("Комната не найдена");
+            }
+        });
+    }
+
+    function listenToGame() {
+        if(!db) return;
+        db.ref('minigames/' + mgRoomCode).on('value', snap => {
+            if(!snap.exists()) return;
+            currentGameData = snap.val();
+            
+            if(currentGameData.state === 'picking') {
+                if(document.getElementById('mg-picking').style.display !== 'block') {
+                    showMgScreen('mg-picking');
+                    renderMgPickGrid();
+                }
+            } 
+            else if (currentGameData.state === 'playing') {
+                if(document.getElementById('mg-playing').style.display !== 'block') {
+                    showMgScreen('mg-playing');
+                    mgLocalCrossed = [];
+                    mgAttempts = 5;
+                    mgSelectedHero = null;
+                    document.getElementById('mg-attempts-display').innerText = mgAttempts;
+                    
+                    const myPickId = mgRole === 'host' ? currentGameData.host_pick : currentGameData.guest_pick;
+                    const myHero = ALL_HEROES.find(h => h.id === myPickId);
+                    document.getElementById('mg-my-pick-img').src = getHeroImg(myHero.name);
+                }
+                renderMgPlayGrid();
+            }
+            else if (currentGameData.state === 'gameover') {
+                const isMe = currentGameData.winner === mgRole;
+                alert(isMe ? "🎉 ТЫ ПОБЕДИЛ!\n\n" + currentGameData.reason : "💀 ТЫ ПРОИГРАЛ!\n\n" + currentGameData.reason);
+                db.ref('minigames/' + mgRoomCode).update({ state: 'picking', host_pick: 0, guest_pick: 0, winner: '', reason: '' });
+                showMgScreen('mg-picking');
+                renderMgPickGrid();
+            }
+        });
+    }
+
+    function renderMgPickGrid() {
+        const grid = document.getElementById('mg-pick-grid');
+        grid.innerHTML = '';
+        const poolHeroes = ALL_HEROES.filter(h => currentGameData.pool.includes(h.id));
+        poolHeroes.forEach(h => {
+            const card = document.createElement('div');
+            card.className = "mg-hero-card";
+            card.innerHTML = `<img src="${getHeroImg(h.name)}">`;
+            card.onclick = () => {
+                const update = {};
+                update[mgRole + '_pick'] = h.id;
+                db.ref('minigames/' + mgRoomCode).update(update);
+                card.style.borderColor = 'var(--accent-green)';
+                card.style.transform = 'scale(0.9)';
+                checkTransitionToPlay();
+            };
+            grid.appendChild(card);
+        });
+    }
+
+    function checkTransitionToPlay() {
+        db.ref('minigames/' + mgRoomCode).once('value', snap => {
+            const d = snap.val();
+            if(d.host_pick > 0 && d.guest_pick > 0 && d.state !== 'playing') {
+                db.ref('minigames/' + mgRoomCode).update({ state: 'playing' });
+            }
+        });
+    }
+
+    function renderMgPlayGrid() {
+        const grid = document.getElementById('mg-play-grid');
+        grid.innerHTML = '';
+        const poolHeroes = ALL_HEROES.filter(h => currentGameData.pool.includes(h.id));
+        
+        poolHeroes.forEach(h => {
+            const card = document.createElement('div');
+            card.className = "mg-hero-card";
+            if(mgLocalCrossed.includes(h.id)) card.classList.add('crossed');
+            if(mgSelectedHero === h.id) card.classList.add('selected');
+            
+            let attrColor = h.attr === 'str' ? '#e74c3c' : h.attr === 'agi' ? '#2ecc71' : h.attr === 'int' ? '#3498db' : '#9b59b6';
+            
+            card.innerHTML = `
+                <img src="${getHeroImg(h.name)}">
+                <div class="attr-dot" style="background:${attrColor};"></div>
+            `;
+            
+            card.onclick = () => {
+                if(mgLocalCrossed.includes(h.id)) return;
+                mgSelectedHero = h.id;
+                renderMgPlayGrid();
+            };
+            grid.appendChild(card);
+        });
+    }
+
+    function clickCrossOut() {
+        if(!mgSelectedHero) { alert("Сначала нажми на героя!"); return; }
+        const oppPick = mgRole === 'host' ? currentGameData.guest_pick : currentGameData.host_pick;
+        
+        if(mgSelectedHero === oppPick) {
+            db.ref('minigames/' + mgRoomCode).update({
+                state: 'gameover',
+                winner: mgRole === 'host' ? 'guest' : 'host',
+                reason: "Твой друг случайно вычеркнул твоего героя!"
+            });
+        } else {
+            mgLocalCrossed.push(mgSelectedHero);
+            mgSelectedHero = null;
+            renderMgPlayGrid();
+        }
+    }
+
+    function clickGuess() {
+        if(!mgSelectedHero) { alert("Сначала нажми на героя!"); return; }
+        const oppPick = mgRole === 'host' ? currentGameData.guest_pick : currentGameData.host_pick;
+        
+        if(mgSelectedHero === oppPick) {
+            db.ref('minigames/' + mgRoomCode).update({
+                state: 'gameover',
+                winner: mgRole,
+                reason: "Он угадал твоего героя!"
+            });
+        } else {
+            mgAttempts--;
+            document.getElementById('mg-attempts-display').innerText = mgAttempts;
+            mgLocalCrossed.push(mgSelectedHero);
+            mgSelectedHero = null;
+            renderMgPlayGrid();
+            
+            if(mgAttempts <= 0) {
+                db.ref('minigames/' + mgRoomCode).update({
+                    state: 'gameover',
+                    winner: mgRole === 'host' ? 'guest' : 'host',
+                    reason: "Потрачены все 5 попыток!"
+                });
+            } else {
+                alert("❌ Не угадал! Осталось попыток: " + mgAttempts);
+            }
+        }
     }
 
     // Запуск
