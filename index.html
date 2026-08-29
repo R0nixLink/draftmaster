@@ -137,7 +137,8 @@
     .analyzer-input-group { display: flex; gap: 8px; margin-bottom: 20px; }
     .analyzer-input-group input { flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:15px; border-radius:12px; outline:none; font-weight:bold; font-size: 14px;}
     .analyzer-input-group button { background: var(--accent-blue); color: #fff; border: none; padding: 0 20px; border-radius: 12px; font-weight: 900; cursor: pointer; text-transform: uppercase;}
-    .info-btn { background: linear-gradient(135deg, var(--accent-blue), #2980b9); border: none; color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.5);}
+    .info-btn { background: linear-gradient(135deg, var(--accent-blue), #2980b9); border: none; color: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 900; cursor: pointer; font-size: 16px; box-shadow: 0 2px 5px rgba(0,0,0,0.5); transition: transform 0.1s;}
+    .info-btn:active { transform: scale(0.9); }
 
     /* МЕТА И РАНГИ */
     .meta-hero-row { background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 12px; padding: 12px; display: flex; align-items: center; gap: 15px; margin-bottom: 10px; }
@@ -158,6 +159,10 @@
     .mg-hero-card .attr-dot { position: absolute; bottom: 4px; right: 4px; width: 10px; height: 10px; border-radius: 50%; border: 1px solid #fff; box-shadow: 0 0 5px rgba(0,0,0,0.8); }
     .mg-hero-card.selected { border-color: var(--accent-gold); transform: scale(0.95); box-shadow: 0 0 15px rgba(226,192,112,0.8); }
     .mg-hero-card.crossed { opacity: 0.2; filter: grayscale(100%); pointer-events: none; }
+    
+    /* Кнопки вычеркивания целых категорий (Сила, Ловкость и тд) */
+    .attr-cross-btn { flex: 1; background: #0a0b10; border: 1px solid var(--border-color); padding: 8px 0; border-radius: 8px; font-size: 10px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: transform 0.1s; }
+    .attr-cross-btn:active { transform: scale(0.9); }
   </style>
 </head>
 <body>
@@ -310,7 +315,7 @@
         <input type="text" id="heroInput" placeholder="Имя героя..." style="flex:1; background:#0a0b10; border:1px solid var(--border-color); color:#fff; padding:12px; border-radius:10px; outline:none; font-weight:bold;">
         <button class="btn-action" style="background:linear-gradient(135deg, var(--dire-red), #c0392b); padding:0 20px; border-radius:10px; font-size:13px;" onclick="searchCounters()">Найти</button>
       </div>
-      <div id="counter-results"></div>
+      <div id="counter-results" style="margin-top: 20px;"></div>
     </div>
   </div>
 
@@ -393,6 +398,13 @@
              <div style="font-size:10px; color:var(--text-muted); font-weight:bold; text-transform:uppercase;">Попытки:</div>
              <span id="mg-attempts-display" style="font-size:24px; font-weight:900; color:var(--accent-green);">5</span>
           </div>
+        </div>
+
+        <div style="display:flex; gap:6px; margin-bottom:10px;">
+            <button class="attr-cross-btn" style="color:#e74c3c; border-color:#e74c3c;" onclick="crossOutAttribute('str')">Сила</button>
+            <button class="attr-cross-btn" style="color:#2ecc71; border-color:#2ecc71;" onclick="crossOutAttribute('agi')">Ловк.</button>
+            <button class="attr-cross-btn" style="color:#3498db; border-color:#3498db;" onclick="crossOutAttribute('int')">Инт.</button>
+            <button class="attr-cross-btn" style="color:#9b59b6; border-color:#9b59b6;" onclick="crossOutAttribute('uni')">Унив.</button>
         </div>
         
         <div class="heroes-grid-container" id="mg-play-grid" style="padding-bottom: 90px;"></div>
@@ -699,12 +711,12 @@
       document.getElementById('modalRoleFilters').style.display = 'flex';
       setModalRole(pos);
       document.getElementById('heroModal').classList.add('active');
-      document.getElementById('bottomNav').style.display = 'none'; // Прячем панель навигации
+      document.getElementById('bottomNav').style.display = 'none'; 
     }
 
     function closeHeroModal() { 
       document.getElementById('heroModal').classList.remove('active'); 
-      document.getElementById('bottomNav').style.display = 'flex'; // Возвращаем панель
+      document.getElementById('bottomNav').style.display = 'flex'; 
     }
 
     function renderModalHeroes(filter) {
@@ -733,8 +745,7 @@
         const isPicked = selectedIds.includes(h.id);
         const card = document.createElement('div');
         card.className = "hero-pick-card" + (isPicked ? " disabled" : "");
-        // ИМЕНА УБРАНЫ (ПО ТВОЕМУ ФОТО)
-        card.innerHTML = '<img src="' + getHeroImg(h.name) + '" loading="lazy" style="height: 100%; border-bottom: none; margin: 0; border-radius: 8px;">';
+        card.innerHTML = '<img src="' + getHeroImg(h.name) + '" loading="lazy">';
         
         if (!isPicked) {
           card.onclick = function() {
@@ -803,7 +814,7 @@
       document.getElementById('bar-dir').innerText = dirScore + "%";
     }
 
-    // --- КОНТРПИКИ (2 КОЛОНКИ С ПОЛОСАМИ) ---
+    // --- КОНТРПИКИ (DOTABUFF СТИЛЬ) ---
     async function searchCounters() {
       const input = document.getElementById('heroInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('counter-results');
@@ -833,7 +844,6 @@
 
         let html = '<div class="counters-grid">';
         
-        // ПЛОХ ПРОТИВ
         html += '<div class="counters-col"><h4 class="counters-col-title">' + target.title.toUpperCase() + ' ПЛОХ ПРОТИВ</h4>';
         badAgainst.forEach(function(c) {
           html += `
@@ -850,7 +860,6 @@
         });
         html += '</div>';
 
-        // ЛЕГКО ИГРАЕТ
         html += '<div class="counters-col"><h4 class="counters-col-title">' + target.title.toUpperCase() + ' ЛЕГКО ПРОТИВ</h4>';
         goodAgainst.forEach(function(c) {
           html += `
@@ -1055,7 +1064,7 @@
       }).join('');
     }
 
-    // --- МИНИ-ИГРА "УГАДАЙ КТО?" (FIREBASE) ---
+    // --- МИНИ-ИГРА "УГАДАЙ КТО?" ---
     let mgRoomCode = null;
     let mgRole = null;
     let currentGameData = null;
@@ -1270,12 +1279,39 @@
         }
     }
 
+    // НОВАЯ ФУНКЦИЯ ВЫЧЕРКИВАНИЯ КАТЕГОРИИ
+    function crossOutAttribute(attr) {
+        if(!currentGameData) return;
+        const oppPick = mgRole === 'host' ? currentGameData.guest_pick : currentGameData.host_pick;
+        let lost = false;
+        
+        const poolHeroes = ALL_HEROES.filter(h => currentGameData.pool.includes(h.id) && h.attr === attr);
+        
+        poolHeroes.forEach(h => {
+            if (h.id === oppPick) {
+                lost = true;
+            } else if (!mgLocalCrossed.includes(h.id)) {
+                mgLocalCrossed.push(h.id);
+            }
+        });
+        
+        if (lost) {
+            db.ref('minigames/' + mgRoomCode).update({
+                state: 'gameover',
+                winner: mgRole === 'host' ? 'guest' : 'host',
+                reason: "Ты вычеркнул категорию, в которой был загаданный герой!"
+            });
+        } else {
+            renderMgPlayGrid();
+        }
+    }
+
     // Запуск
     checkOnboarding();
     renderMeta('immortal');
 
     window.onclick = function(event) {
-      if (!event.target.closest('.rank-select-wrapper')) {
+      if (!event.target.closest('.rank-select-wrapper') && !event.target.closest('.menu-icon')) {
         const dropdown = document.getElementById('rankDropdown');
         if (dropdown && dropdown.classList.contains('show')) dropdown.classList.remove('show');
       }
